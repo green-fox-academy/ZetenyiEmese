@@ -14,7 +14,7 @@ public class DrawPyramid {
             for (int j = 0; j < number-i-1; j++) {
                 spaces = spaces + " ";
             }
-            oneLine =  spaces + stars + spaces;
+            oneLine = spaces + stars + spaces;
             System.out.println(oneLine);
             stars = stars + "**";
             spaces = "";

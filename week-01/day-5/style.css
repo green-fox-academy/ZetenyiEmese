@@ -1,0 +1,41 @@
+main {
+    padding: 10%; 
+    background-image: url(topography.png);
+}
+
+#navbar {
+    background-color: #333333;
+    padding:10px 3%; 
+}
+
+.nav-left {
+    text-align:left;
+    padding: 10px 5%;
+}
+
+.nav-right {
+    float:right;
+    padding: 10px 5%;
+}
+ 
+.link {
+    font-size: 15px;  
+    color:#ff0099;    
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Merriweather', serif;
+}
+
+h4 {
+    color:#ff0099;    
+}
+
+p {
+    font-family: consolas, courier;
+}
+
+.center {
+    text-align: center;
+}
+

@@ -9,12 +9,12 @@ public class CountFromTo {
         System.out.println("Please enter the second number (integer):");
         int secondNumber = intInput.nextInt();
 
-        if (!(secondNumber>firstNumber)) {
+        if (!(secondNumber > firstNumber)) {
             System.out.println("The second number should be bigger");
         } else {
             int difference = secondNumber - firstNumber;
-            for (int i=0; i<difference; i++){
-                System.out.println(firstNumber+i);
+            for (int i=0; i < difference; i++){
+                System.out.println(firstNumber + i);
             }
         }
     }

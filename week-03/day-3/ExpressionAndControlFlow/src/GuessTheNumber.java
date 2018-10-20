@@ -7,7 +7,7 @@ public class GuessTheNumber {
         System.out.println("Try to guess the number:");
         int guessNumber = intInput.nextInt();
 
-        while (storedNumber!=guessNumber) {
+        while (storedNumber != guessNumber) {
             if (storedNumber > guessNumber) {
                 System.out.println("The stored number is higher");
             } else {

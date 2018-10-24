@@ -1,0 +1,10 @@
+public class Doubling {
+    public static void main(String[] args) {
+        int baseNum = 123;
+        System.out.println("Double: " + doubling(baseNum));
+    }
+
+    public static int doubling(int x){
+        return 2*x;
+    }
+}

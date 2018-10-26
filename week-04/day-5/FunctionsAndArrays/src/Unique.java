@@ -35,57 +35,12 @@ public class Unique {
         for (int i = 0; i <= array.length-2; i++) {
             for (int j = i + 1; j <= array.length-1; j++) {
                 if (array[j] == array[i]) {
-                    len = len - 1;
-                    System.out.println(len);
+                    len--;
                 }
             }
         }
         return len;
     }
-
-
-
-
-
-
-   /* public static String unique(int[] array){
-        int[] uniqArray = array;
-        int item;
-        // len = uniqArray.length;
-        for (int i = 0; i <= uniqArray.length - 2; i++) {
-            for (int j = i + 1; j <= uniqArray.length - 1; j++) {
-                if (uniqArray[j] == uniqArray[i]) {
-                    item = uniqArray[j];
-                    uniqArray = createNewUniqueArray(uniqArray, item);
-                    break;
-                }
-            }
-        }
-        return Arrays.toString(uniqArray);
-    }
-
-    public static int[] createNewUniqueArray(int[] array, int item){
-        nr = 0;
-        for (int i = 0; i < array.length; i++) {
-            if (array[i]==item){
-                nr++;
-            }
-        }
-
-        int[] newUniqueArray = new int[array.length-nr+1];
-
-        newUniqueArray[0] = array[0];
-
-        for (int i = 1; i < array.length ; i++) {
-
-            if (array[i] != item){
-                newUniqueArray[i] = array[i];
-            } else {
-                newUniqueArray[i] =
-            }
-
-        }
-*/
-
+    
 }
 

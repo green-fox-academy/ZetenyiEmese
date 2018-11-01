@@ -7,7 +7,7 @@ public class Unique {
         System.out.println(Arrays.toString(unique(numbers)));
     }
 
-
+    //returns an array of numbers without duplicates
     public static int[] unique(int[] array){
         int[] uniqueArray = new int[lengthOfUniqueArray(array)];
         uniqueArray[0] = array[0];
@@ -15,7 +15,7 @@ public class Unique {
 
         for (int i = 1; i <= array.length-1; i++) {
             boolean isInUniqueArray = false;
-            for (int j = 0; j <= uniqueArray.length-1; j++) {
+            for (int j = 0; j <= index; j++) {
                 if (array[i] == uniqueArray[j]){
                     isInUniqueArray = true;
                     break;
@@ -30,6 +30,7 @@ public class Unique {
         return uniqueArray;
     }
 
+    //finds the length of the unique array without duplicates
     public static int lengthOfUniqueArray(int[] array){
         int len = array.length;
         for (int i = 0; i <= array.length-2; i++) {
@@ -41,6 +42,6 @@ public class Unique {
         }
         return len;
     }
-    
+
 }
 

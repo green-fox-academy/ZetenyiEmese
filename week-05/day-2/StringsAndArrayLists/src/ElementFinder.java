@@ -9,7 +9,7 @@ public class ElementFinder {
 
     public static String containsSeven(ArrayList<Integer> list){
         for (Integer number: list) {
-            if (number.equals(new Integer(7))) {
+            if (number.equals(new Integer(7))) { //Instead of new Integer(7) you can simply write 7
                 return "Hoorray!";
             }
         }

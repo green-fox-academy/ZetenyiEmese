@@ -13,9 +13,9 @@ public class Candyshop {
 
     public static ArrayList<Object> sweets(ArrayList<Object> list){
         for (Object item: list) {
-            if(item.equals(new Integer(2))){
+            if(item.equals(new Integer(2))){ //Instead of new Integer(2) you can simply write 2
                 list.set(list.indexOf(item), "Croissant");
-            } else if (item.equals(new Boolean(false))){
+            } else if (item.equals(new Boolean(false))){ //Instead of new Boolean(false) you can simply write false
                 list.set(list.indexOf(item), "Ice cream");
             }
         }

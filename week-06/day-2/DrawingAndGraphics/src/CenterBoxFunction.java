@@ -2,13 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
-public class FourRectangles {
+public class CenterBoxFunction {
     public static void mainDraw(Graphics graphics){
-        // draw four different size and color rectangles.
+        // create a square drawing function that takes 1 parameter:
+        // the square size
+        // and draws a square of that size to the center of the canvas.
+        // draw 3 squares with that function.
         // avoid code duplication.
 
-        for (int i = 0; i < 4; i++) {
-            drawRectangle(graphics);
+        for (int i = 0; i < 3; i++) {
+            int size = (int)(Math.random() * WIDTH); //the size of the square
+            drawCenteredSquare(size, graphics);
         }
     }
 
@@ -16,14 +20,9 @@ public class FourRectangles {
         return new Color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
     }
 
-    public static void drawRectangle(Graphics g){
+    public static void drawCenteredSquare(int size, Graphics g){
         g.setColor(newColor());
-        int a = (int)(Math.random() * WIDTH); //the one size of the rectangle
-        int b = (int)(Math.random() * HEIGHT); //the other size of the rectangle
-
-        int x = (int)(Math.random() * (WIDTH - a)); //the x coordinate of the rectangle's upper-left corner
-        int y = (int)(Math.random() * (HEIGHT - b)); //the y coordinate of the rectangle's upper-left corner
-        g.drawRect(x, y, a, b);
+        g.drawRect(WIDTH/2 - size/2, HEIGHT/2 - size/2, size, size);
     }
 
     // Don't touch the code below

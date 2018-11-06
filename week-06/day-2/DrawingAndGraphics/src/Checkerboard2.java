@@ -1,29 +1,33 @@
+
 import javax.swing.*;
 import java.awt.*;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
-public class FourRectangles {
+public class Checkerboard2{
     public static void mainDraw(Graphics graphics){
-        // draw four different size and color rectangles.
-        // avoid code duplication.
+        int x0 = 50;
+        int y0 = 50;
+        int size = 20;
 
-        for (int i = 0; i < 4; i++) {
-            drawRectangle(graphics);
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if ((i + j) % 2 == 0){
+                    drawBlackSquare(x0 + j*size, y0 + i*size, size, graphics);
+                } else {
+                    drawWhiteSquare(x0 + j*size, y0 + i*size, size, graphics);
+                }
+            }
         }
     }
 
-    public static Color newColor(){
-        return new Color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
+    public static void drawBlackSquare(int x, int y, int size, Graphics g){
+        g.setColor(Color.BLACK);
+        g.fillRect(x, y, size, size);
     }
 
-    public static void drawRectangle(Graphics g){
-        g.setColor(newColor());
-        int a = (int)(Math.random() * WIDTH); //the one size of the rectangle
-        int b = (int)(Math.random() * HEIGHT); //the other size of the rectangle
-
-        int x = (int)(Math.random() * (WIDTH - a)); //the x coordinate of the rectangle's upper-left corner
-        int y = (int)(Math.random() * (HEIGHT - b)); //the y coordinate of the rectangle's upper-left corner
-        g.drawRect(x, y, a, b);
+    public static void drawWhiteSquare(int x, int y, int size, Graphics g){
+        g.setColor(Color.WHITE);
+        g.fillRect(x, y, size, size);
     }
 
     // Don't touch the code below
@@ -49,5 +53,4 @@ public class FourRectangles {
         }
     }
 }
-
 

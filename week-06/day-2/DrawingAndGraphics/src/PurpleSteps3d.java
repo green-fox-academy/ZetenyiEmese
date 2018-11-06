@@ -2,21 +2,22 @@ import javax.swing.*;
 import java.awt.*;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
-public class ColoredBox {
-    public static void mainDraw(Graphics graphics) {
-        //draw a box that has different colored lines on each edge
+public class PurpleSteps3d{
+    public static void mainDraw(Graphics graphics){
+        int x = 10;
+        int y = 10;
+        int size = 10;
+        for (int i = 0; i < 6; i++) {
+            drawPurpleSquare(x, y, size, graphics);
+            x += size;
+            y += size;
+            size += size/2;
+        }
+    }
 
-        graphics.setColor(Color.RED);
-        graphics.drawLine(20, 20, 220, 20);
-
-        graphics.setColor(Color.GREEN);
-        graphics.drawLine(220, 20, 220, 120);
-
-        graphics.setColor(Color.ORANGE);
-        graphics.drawLine(220, 120, 20, 120);
-
-        graphics.setColor(Color.BLUE);
-        graphics.drawLine(20, 120, 20, 20);
+    public static void drawPurpleSquare(int x, int y, int size, Graphics g){
+        g.setColor(new Color(153, 0, 255));
+        g.fillRect(x, y, size, size);
     }
 
     // Don't touch the code below
@@ -42,3 +43,4 @@ public class ColoredBox {
         }
     }
 }
+

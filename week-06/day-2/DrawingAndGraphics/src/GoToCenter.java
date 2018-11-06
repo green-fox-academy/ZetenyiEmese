@@ -10,8 +10,8 @@ public class GoToCenter {
         // Draw 3 lines with that function. Use loop for that.
 
         for (int i = 0; i < 3; i++) {
-            int startX = (int)(Math.random()*(WIDTH + 1)); //a random integer value between 0 and WIDTH
-            int startY = (int)(Math.random()*(HEIGHT + 1)); //a random integer value between 0 and HEIGHT
+            int startX = (int)(Math.random() * (WIDTH + 1)); //a random integer value between 0 and WIDTH
+            int startY = (int)(Math.random() * (HEIGHT + 1)); //a random integer value between 0 and HEIGHT
             drawLine(startX, startY, graphics);
         }
     }

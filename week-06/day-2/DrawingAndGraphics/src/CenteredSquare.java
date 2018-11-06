@@ -5,13 +5,11 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 public class CenteredSquare {
     public static void mainDraw(Graphics graphics){
         //Draw a green 10x10 square to the canvas' center.
+
         graphics.setColor(Color.GREEN);
-        int x0 = WIDTH/2;
-        int y0 = HEIGHT/2;
-        int[] xpoints = {x0-5, x0+5, x0+5, x0-5, x0-5};
-        int[] ypoints = {y0-5, y0-5, y0+5, y0+5, y0-5};
-        int npoints = 5;
-        graphics.drawPolygon(xpoints, ypoints, npoints);
+        int x0 = WIDTH / 2;
+        int y0 = HEIGHT / 2;
+        graphics.drawRect(x0 - 5, y0 - 5, 10, 10);
     }
 
     // Don't touch the code below

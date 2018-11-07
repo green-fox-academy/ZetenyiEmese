@@ -1,20 +1,17 @@
-
 import javax.swing.*;
 import java.awt.*;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 public class Checkerboard2{
     public static void mainDraw(Graphics graphics){
-        int x0 = 50;
-        int y0 = 50;
-        int size = 20;
+        int size = WIDTH / 8;
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if ((i + j) % 2 == 0){
-                    drawBlackSquare(x0 + j*size, y0 + i*size, size, graphics);
+                    drawBlackSquare(j*size, i*size, size, graphics);
                 } else {
-                    drawWhiteSquare(x0 + j*size, y0 + i*size, size, graphics);
+                    drawWhiteSquare(j*size, i*size, size, graphics);
                 }
             }
         }

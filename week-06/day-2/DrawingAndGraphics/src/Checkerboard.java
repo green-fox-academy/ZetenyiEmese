@@ -4,19 +4,16 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 public class Checkerboard{
     public static void mainDraw(Graphics graphics){
-        int x0 = 50;
-        int y0 = 50;
-        int x = x0;
-        int y = y0;
-        int size = 20;
+        int x = 0;
+        int y = 0;
+        int size = WIDTH / 8;
+
         for (int i = 0; i < 8; i++) {
            if (i%2 == 0) {
                drawLine1(x, y, size, graphics);
-               x = x0;
                y += size;
            } else {
                drawLine2(x, y, size, graphics);
-               x = x0;
                y += size;
            }
         }

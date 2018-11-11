@@ -17,7 +17,4 @@ public class Reverse2 {
 
         return newText.toString();
     }
-
-
-
 }

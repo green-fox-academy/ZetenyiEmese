@@ -18,7 +18,4 @@ public class Reverse4 {
 
         return new String(charArray);
     }
-
-
-
 }

@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,11 +23,10 @@ public class CountLines {
         //try to read from the file
         try {
             lines = Files.readAllLines(filePath);
-        } catch (Exception e) {
-            System.out.println("Unable to read file: my-file.txt!");
+        } catch (IOException e) {
+            System.out.println("Unable to read file: " + fileName);
             return 0;
         }
-
         return lines.size(); //returns the number of lines in the file
     }
 }

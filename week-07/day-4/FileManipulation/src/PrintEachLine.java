@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
@@ -16,7 +17,7 @@ public class PrintEachLine {
         //try to read from the file and put the lines as strings into a stringlist
         try {
             lines = Files.readAllLines(filePath);
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Unable to read file: my-file.txt!");
         }
 
@@ -26,7 +27,7 @@ public class PrintEachLine {
                 System.out.println(line);
             }
         } catch (NullPointerException e){
-            System.out.println("HU-ha");
+            System.out.println("Hey, it's a non-existing list!");
         }
     }
 }

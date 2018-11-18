@@ -14,30 +14,13 @@ public class Doubled {
         System.out.println("Decryption succeeded: " + decryptFromTo(fileFrom, fileTo));
     }
 
-    public static ArrayList<String> readFile(String fileName){
-        Path filePath = Paths.get("src/" + fileName);
-        ArrayList<String> lines = new ArrayList<>();
-
-        try {
-            lines = (ArrayList<String>) Files.readAllLines(filePath); //converting List to ArrayList
-        } catch (IOException e) {
-            System.out.println("Unable to read file: " + fileName);
-        }
-        return lines;
-    }
-
     public static boolean decryptFromTo(String fileFrom, String fileTo){
-        try {
-            Files.write(Paths.get("src/" + fileTo), decrypt(fileFrom));
-            return true;
-        } catch (IOException e) {
-            //e.printStackTrace();
-            return false;
-        }
+        ArrayList<String> lines = readFile(fileFrom);
+        ArrayList<String> decryptedLines = removeDuplicatedCharacters(lines);
+        return writeFile(fileTo, decryptedLines);
     }
 
-    public static ArrayList<String> decrypt(String fileName){
-        ArrayList<String> lines = readFile(fileName);
+    public static ArrayList<String> removeDuplicatedCharacters(ArrayList<String> lines){
         ArrayList<String> newLines = new ArrayList<>();
 
         for (String line : lines) {
@@ -50,5 +33,27 @@ public class Doubled {
         }
 
         return newLines;
+    }
+
+    public static ArrayList<String> readFile(String fileName){
+        Path filePath = Paths.get("src/" + fileName);
+        ArrayList<String> lines = new ArrayList<>();
+
+        try {
+            lines = (ArrayList<String>) Files.readAllLines(filePath); //converting List to ArrayList
+        } catch (IOException e) {
+            System.out.println("Unable to read file: " + fileName);
+        }
+        return lines;
+    }
+
+    public static boolean writeFile(String fileTo, ArrayList<String> lines) {
+        try {
+            Files.write(Paths.get("src/" + fileTo), lines);
+            return true;
+        } catch (IOException e) {
+            //e.printStackTrace();
+            return false;
+        }
     }
 }

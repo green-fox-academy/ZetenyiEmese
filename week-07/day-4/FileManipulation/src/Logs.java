@@ -23,7 +23,7 @@ public class Logs {
         ArrayList<String> lines = new ArrayList<>();
 
         try {
-            lines = (ArrayList<String>)Files.readAllLines(filePath); //converting List to ArrayList
+            lines = (ArrayList<String>) Files.readAllLines(filePath); //converting List to ArrayList
         } catch (IOException e) {
             System.out.println("Unable to read file: " + fileName);
         }

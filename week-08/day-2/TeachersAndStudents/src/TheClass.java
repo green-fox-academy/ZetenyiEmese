@@ -23,11 +23,13 @@ public class TheClass {
 
     public static List<Student> initializeClass(){
         List<Student> theClass = new ArrayList<>();
+
         theClass.add(new Student("George"));
         theClass.add(new Student("Mary"));
         theClass.add(new Student("Paul"));
         theClass.add(new Student("Susan"));
         theClass.add(new Student("Sam"));
+
         return theClass;
     }
 }

@@ -4,7 +4,7 @@ public class Farm {
     private static int maxSlots = 10; //maximum number of animals on the farm (the capacity)
     private ArrayList<Animal> animals;
 
-    public Farm(){
+    public Farm() {
         this(8);
     }
 
@@ -13,16 +13,16 @@ public class Farm {
     }
 
     public ArrayList<Animal> initializeAnimals(int numberOfAnimals) {
-        ArrayList<Animal> sharpies = new ArrayList<>();
+        ArrayList<Animal> animals = new ArrayList<>();
         if (numberOfAnimals > maxSlots) {
             numberOfAnimals = maxSlots;
         }
 
         for (int i = 0; i < numberOfAnimals; i++) {
-            sharpies.add(new Animal());
+            animals.add(new Animal());
         }
 
-        return sharpies;
+        return animals;
     }
 
     public ArrayList<Animal> getAnimals() {
@@ -33,12 +33,12 @@ public class Farm {
         return maxSlots - animals.size();
     }
 
-    public void feed(Animal animal){
+    public void feed(Animal animal) {
         animal.eat();
         animal.drink();
     }
 
-    public void feed(){
+    public void feed() {
         for (Animal animal : animals) {
             animal.eat();
             animal.drink();

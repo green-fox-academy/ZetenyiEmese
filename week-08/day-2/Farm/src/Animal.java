@@ -11,15 +11,15 @@ public class Animal {
         return hunger;
     }
 
-    public void eat(){
+    public void eat() {
         hunger--;
     }
 
-    public void drink(){
+    public void drink() {
         thirst--;
     }
 
-    public void play(){
+    public void play() {
         hunger++;
         thirst++;
     }

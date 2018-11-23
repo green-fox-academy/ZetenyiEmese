@@ -40,8 +40,7 @@ public class Farm {
 
     public void feed() {
         for (Animal animal : animals) {
-            animal.eat();
-            animal.drink();
+            feed(animal);
         }
     }
 

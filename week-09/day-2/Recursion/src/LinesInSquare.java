@@ -45,6 +45,7 @@ public class LinesInSquare {
         @Override
         protected void paintComponent(Graphics graphics) {
             super.paintComponent(graphics);
+            this.setBackground(Color.YELLOW);
             mainDraw(graphics);
         }
     }

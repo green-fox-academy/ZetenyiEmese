@@ -8,7 +8,7 @@ public class LinesInSquare {
         drawLinesInSquare(0, 0, WIDTH, 4, graphics);
     }
 
-    public static void drawLinesInSquare(int x0, int y0, int size, int n, Graphics g){
+    public static void drawLinesInSquare(int x0, int y0, int size, int n, Graphics g) {
         drawLines(x0, y0, size, g);
 
         if (n > 0) {
@@ -19,7 +19,7 @@ public class LinesInSquare {
         }
     }
 
-    public static void drawLines(int x0, int y0, int size, Graphics g){
+    public static void drawLines(int x0, int y0, int size, Graphics g) {
         g.drawLine(x0 + size/3, y0, x0 + size/3, y0 + size);
         g.drawLine(x0 + 2*size/3, y0, x0 + 2*size/3, y0 + size);
         g.drawLine(x0, y0 + size/3, x0 + size, y0 + size/3);

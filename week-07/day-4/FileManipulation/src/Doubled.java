@@ -14,13 +14,13 @@ public class Doubled {
         System.out.println("Decryption succeeded: " + decryptFromTo(fileFrom, fileTo));
     }
 
-    public static boolean decryptFromTo(String fileFrom, String fileTo){
+    public static boolean decryptFromTo(String fileFrom, String fileTo) {
         ArrayList<String> lines = readFile(fileFrom);
         ArrayList<String> decryptedLines = removeDuplicatedCharacters(lines);
         return writeFile(fileTo, decryptedLines);
     }
 
-    public static ArrayList<String> removeDuplicatedCharacters(ArrayList<String> lines){
+    public static ArrayList<String> removeDuplicatedCharacters(ArrayList<String> lines) {
         ArrayList<String> newLines = new ArrayList<>();
 
         for (String line : lines) {
@@ -35,7 +35,7 @@ public class Doubled {
         return newLines;
     }
 
-    public static ArrayList<String> readFile(String fileName){
+    public static ArrayList<String> readFile(String fileName) {
         Path filePath = Paths.get("src/" + fileName);
         ArrayList<String> lines = new ArrayList<>();
 

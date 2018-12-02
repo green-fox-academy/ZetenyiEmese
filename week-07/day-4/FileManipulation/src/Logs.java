@@ -3,7 +3,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Logs {
     public static void main(String[] args) {
@@ -18,7 +17,7 @@ public class Logs {
         System.out.println("GET/POST ratio: " + countGetPostRatio(fileLines));
     }
 
-    public static ArrayList<String> readFile(String fileName){
+    public static ArrayList<String> readFile(String fileName) {
         Path filePath = Paths.get("src/" + fileName);
         ArrayList<String> lines = new ArrayList<>();
 
@@ -30,7 +29,7 @@ public class Logs {
         return lines;
     }
 
-    public static double countGetPostRatio(ArrayList<String> fileLines){
+    public static double countGetPostRatio(ArrayList<String> fileLines) {
         int sumGET = 0;
         int sumPOST = 0;
 
@@ -43,14 +42,14 @@ public class Logs {
             }
         }
 
-        return (double)sumGET/sumPOST;
+        return (double) sumGET/sumPOST;
     }
 
-    public static boolean contains(String searchMe, String findMe){
+    public static boolean contains(String searchMe, String findMe) {
         return searchMe.contains(findMe);
     }
 
-    public static String[] getIPAdresses(ArrayList<String> fileLines){
+    public static String[] getIPAdresses(ArrayList<String> fileLines) {
         ArrayList<String> listIPAdresses = new ArrayList<>();
 
         for (int i = 0; i < fileLines.size(); i++) {
@@ -61,14 +60,14 @@ public class Logs {
         //removing multiple elements
         for (int i = 0; i <= listIPAdresses.size() - 2; i++) {
             for (int j = i + 1; j <= listIPAdresses.size() - 1; j++) {
-                if (listIPAdresses.get(j).equals(listIPAdresses.get(i))){
+                if (listIPAdresses.get(j).equals(listIPAdresses.get(i))) {
                     listIPAdresses.remove(j);
                     j--;
                 }
             }
         }
 
-        //System.out.println(listIPAdresses.size());
+        System.out.println(listIPAdresses.size());
 
         String[] arrayIPAdresses = new String[listIPAdresses.size()];
 

@@ -12,9 +12,11 @@ public class Main {
         System.out.println(garden);
 
         garden.water(40);
+        System.out.println("Watering with 40");
         System.out.println(garden);
 
         garden.water(70);
+        System.out.println("Watering with 70");
         System.out.println(garden);
     }
 }

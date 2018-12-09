@@ -30,9 +30,7 @@ public class Carrier {
 
     public void fill() {
         fill(getAircraftsWithThisPriority(true));
-        //System.out.println(getStatus());
         fill(getAircraftsWithThisPriority(false));
-        //System.out.println(getStatus());
     }
 
 

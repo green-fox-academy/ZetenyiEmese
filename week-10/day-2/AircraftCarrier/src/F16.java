@@ -9,7 +9,8 @@ public class F16 extends Aircraft {
         super();
     }
 
-    public static String getType() {
+    @Override
+    public String getType() {
         return type;
     }
 
@@ -23,13 +24,9 @@ public class F16 extends Aircraft {
         return baseDamage;
     }
 
-    public static boolean isPriority() {
+    @Override
+    public boolean isPriority() {
         return priority;
-    }
-
-    public String getStatus() {
-        int allDamage = getAmmo() * baseDamage;
-        return "Type: " + type + ", Ammo: " + getAmmo() + ", Base Damage: " + baseDamage + ", All Damage: " + allDamage;
     }
 
 }

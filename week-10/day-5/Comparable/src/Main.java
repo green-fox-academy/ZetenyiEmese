@@ -20,6 +20,24 @@ public class Main {
         // the order of your dominoes should look like this: [[1,5], [2,4], [4,6], [5,2], [6,7], [7,1]]
         System.out.println(dominoes);
 
+
+
+        List<ToDo> toDos = new ArrayList<>();
+        toDos.add(new ToDo("Get milk"));
+        toDos.add(new ToDo("Remove the obstacles"));
+
+        ToDo toDo3 = new ToDo("Stand up");
+        toDo3.complete();
+        toDos.add(toDo3);
+
+        ToDo toDo4  = new ToDo("Eat lunch");
+        toDo4.complete();
+        toDos.add(toDo4);
+
+        System.out.println(toDos);
+
+        Collections.sort(toDos);
+        System.out.println(toDos);
     }
 
 }

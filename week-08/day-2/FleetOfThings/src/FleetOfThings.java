@@ -15,7 +15,7 @@ public class FleetOfThings {
         thing3.complete();
         fleet.add(thing3);
 
-        Thing thing4 = new Thing("Stand up");
+        Thing thing4 = new Thing("Eat Lunch");
         thing4.complete();
         fleet.add(thing4);
 

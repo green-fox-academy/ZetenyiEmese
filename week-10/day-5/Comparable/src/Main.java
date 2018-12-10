@@ -13,6 +13,9 @@ public class Main {
         dominoes.add(new Domino(6, 7));
         dominoes.add(new Domino(2, 4));
         dominoes.add(new Domino(7, 1));
+        dominoes.add(new Domino(2, 3));
+        dominoes.add(new Domino(5, 1));
+
 
         System.out.println(dominoes);
 
@@ -21,14 +24,14 @@ public class Main {
         System.out.println(dominoes);
 
 
-
         List<ToDo> toDos = new ArrayList<>();
-        toDos.add(new ToDo("Get milk"));
         toDos.add(new ToDo("Remove the obstacles"));
 
         ToDo toDo3 = new ToDo("Stand up");
         toDo3.complete();
         toDos.add(toDo3);
+
+        toDos.add(new ToDo("Get milk"));
 
         ToDo toDo4  = new ToDo("Eat lunch");
         toDo4.complete();

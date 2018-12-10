@@ -21,14 +21,14 @@ public class ToDo implements Comparable<ToDo> {
 
     @Override
     public int compareTo(ToDo otherToDo) {
-        if (completed) {
-            if (!otherToDo.isCompleted()) {
+        if (!completed) {
+            if (otherToDo.isCompleted()) {
                 return -1;
             } else {
                 return description.compareTo(otherToDo.getDescription());
             }
         } else {
-            if (otherToDo.isCompleted()) {
+            if (!otherToDo.isCompleted()) {
                 return 1;
             } else {
                 return description.compareTo(otherToDo.getDescription());

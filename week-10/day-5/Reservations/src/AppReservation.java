@@ -18,7 +18,6 @@ public class AppReservation {
     }
 
     public static void display(ArrayList<Reservation> reservations) {
-
         for (Reservation res : reservations) {
             System.out.println(res);
         }

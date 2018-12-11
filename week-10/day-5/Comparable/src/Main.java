@@ -20,7 +20,7 @@ public class Main {
         System.out.println(dominoes);
 
         Collections.sort(dominoes);
-        // the order of your dominoes should look like this: [[1,5], [2,4], [4,6], [5,2], [6,7], [7,1]]
+        // the order of your dominoes should look like this: [[1,5], [2,3], [2,4], [4,6], [5,1], [5,2], [6,7], [7,1]]
         System.out.println(dominoes);
 
 

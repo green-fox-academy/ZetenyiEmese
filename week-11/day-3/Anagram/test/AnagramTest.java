@@ -13,7 +13,7 @@ public class AnagramTest {
     }
 
     @Test
-    public void areAnagrams_should_return_true() {
+    public void areAnagrams_should_return_true_when_strings_are_anagrams() {
         String word1 = "binary";
         String word2 = "bRaIny";
 
@@ -24,7 +24,7 @@ public class AnagramTest {
 
 
     @Test
-    public void areAnagrams_should_return_false() {
+    public void areAnagrams_should_return_false_when_strings_are_not_anagrams() {
         String word1 = "binary";
         String word2 = "br ai ny";
 
@@ -85,32 +85,31 @@ public class AnagramTest {
 
 
     @Test
-    public void testSortedString() {
+    public void testSortString() {
         String string = "messages";
         String expected = "aeegmsss";
 
-        String result = anagram.sortedString(string);
+        String result = anagram.sortString(string);
 
         assertEquals(expected, result);
     }
 
     @Test
-    public void testSortedStringWithEmptyString() {
+    public void testSortStringWithEmptyString() {
         String string = "";
         String expected = "";
 
-        String result = anagram.sortedString(string);
+        String result = anagram.sortString(string);
 
         assertEquals(expected, result);
     }
 
-
     @Test
-    public void testSortedStringWithNull() {
+    public void testSortStringWithNull() {
         String string = null;
         String expected = "";
 
-        String result = anagram.sortedString(string);
+        String result = anagram.sortString(string);
 
         assertEquals(expected, result);
     }

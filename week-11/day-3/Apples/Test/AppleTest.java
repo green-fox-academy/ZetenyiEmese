@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 public class AppleTest {
 
     @Test
-    public void getApple() {
+    public void testGetApple() {
         Apple apple = new Apple();
         String expectedResult = "apple";
 

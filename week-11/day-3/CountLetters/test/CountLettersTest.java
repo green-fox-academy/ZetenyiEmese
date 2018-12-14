@@ -39,7 +39,6 @@ public class CountLettersTest {
 
     @Test
     public void testCountLettersWithNull() {
-        CountLetters countLetters = new CountLetters();
         String string = null;
         HashMap<Character, Integer> expected = new HashMap<>();
 

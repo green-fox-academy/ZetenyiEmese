@@ -113,4 +113,14 @@ public class ExtensionTest {
         assertEquals("avaavaavaava", extension.translate("aaaa"));
     }
 
+    @Test
+    public void testTranslate_Empty() {
+        assertEquals("", extension.translate(""));
+    }
+
+    @Test
+    public void testTranslate_Null() {
+        assertEquals("", extension.translate(null));
+    }
+
 }

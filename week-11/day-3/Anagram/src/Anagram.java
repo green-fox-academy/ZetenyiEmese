@@ -6,12 +6,13 @@ public class Anagram {
         if (word1 == null || word2 == null) return false;
         if (word1.length() != word2.length()) return false;
 
-        return sortString(word1).equals(sortString(word2));
+        return sortString(word1.toLowerCase()).equals(sortString(word2.toLowerCase()));
     }
 
     public String sortString(String string) {
         if (string == null) return "";
-        char[] chars = string.toLowerCase().toCharArray();
+
+        char[] chars = string.toCharArray();
         Arrays.sort(chars);
 
         return new String(chars);

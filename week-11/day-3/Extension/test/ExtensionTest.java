@@ -39,6 +39,11 @@ public class ExtensionTest {
     }
 
     @Test
+    public void testMaxOfThree_With_Zeros() {
+        assertEquals(0, extension.maxOfThree(0, 0, 0));
+    }
+
+    @Test
     public void testMedian_one() {
         assertEquals(5, extension.median(Arrays.asList(5)));
     }

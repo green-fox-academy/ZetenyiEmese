@@ -2,12 +2,6 @@ import java.util.HashMap;
 
 public class Fibonacci {
 
-    //public static double fibonacci(int n) {
-    //    if (n < 1) return 0;
-    //    if (n == 1) return 1;
-    //    return fibonacci(n-2) + fibonacci(n-1);
-    //}
-
     private HashMap<Integer, Long> hm;
 
     public Fibonacci() {
@@ -28,9 +22,17 @@ public class Fibonacci {
         }
     }
 
-    //public static void main(String[] args) {
-    //    Fibonacci fib = new Fibonacci();
-    //    System.out.println(fib.countFibonacci(50));
+    //public static long fibonacci(int n) {
+    //    if (n < 1) return 0;
+    //    if (n == 1) return 1;
+    //    return fibonacci(n-2) + fibonacci(n-1);
     //}
+
+    public static void main(String[] args) {
+        Fibonacci fib = new Fibonacci();
+        System.out.println(fib.countFibonacci(50));
+
+        //System.out.println(fibonacci(50));
+    }
 
 }

@@ -33,7 +33,7 @@ public class FibonacciTest {
         int n = -5;
         long expected = 0;
 
-        long result = fibonacci.countFibonacci(-1);
+        long result = fibonacci.countFibonacci(-5);
 
         assertEquals(expected, result);
     }

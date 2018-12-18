@@ -13,6 +13,22 @@ public class TodoList implements Serializable {
         list.add(todo);
     }
 
+    public void remove(int which) {
+        try {
+            list.remove(which - 1);
+        } catch (Exception e) {
+            System.out.println("Unable to remove: index is out of bound");
+        }
+    }
+
+    public void check(int which) {
+        try {
+            list.get(which - 1).complete();
+        } catch (Exception e) {
+            System.out.println("Unable to check: index is out of bound");
+        }
+    }
+
     public boolean isEmpty() {
         return list.isEmpty();
     }

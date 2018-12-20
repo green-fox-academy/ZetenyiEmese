@@ -33,12 +33,28 @@ public class TodoList implements Serializable {
         return list.isEmpty();
     }
 
+    public String getUncheckedTodos() {
+        String result = "";
+        int i = 0;
+
+        for (Todo todo : list) {
+            if (!todo.isCompleted()) {
+                result += (i+1) + " - " + todo.toString() + "\n";
+                i++;
+            }
+        }
+
+        return result;
+    }
+
     @Override
     public String toString() {
         String result = "";
+
         for(int i = 0; i < list.size(); i++) {
-            result += (i+1) + " - " + list.get(i) + "\n";
+            result += (i+1) + " - " + list.get(i).toString() + "\n";
         }
+
         return result;
     }
 

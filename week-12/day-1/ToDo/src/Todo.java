@@ -14,6 +14,10 @@ public class Todo implements Serializable {
         this.completed = true;
     }
 
+    public boolean isCompleted() {
+        return completed;
+    }
+
     @Override
     public String toString() {
         return (completed ? "[x] " : "[ ] ") + description;

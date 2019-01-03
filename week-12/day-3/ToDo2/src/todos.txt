@@ -1,0 +1,4 @@
+Feed the cat;false
+Feed the dog;true
+Get milk;false
+Clean the house;true

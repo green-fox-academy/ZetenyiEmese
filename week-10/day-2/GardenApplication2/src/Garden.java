@@ -12,8 +12,8 @@ public class Garden {
         plants.add(plant);
     }
 
-    public void water(int waterAmount) {
-        System.out.println("Watering with " + waterAmount);
+    public void water(float waterAmount) {
+        System.out.println("Watering with " + (int)waterAmount);
 
         int numberOfThirstyPlants = countThirstyPlants();
         //System.out.println(numberOfThirstyPlants);

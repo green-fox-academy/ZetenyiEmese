@@ -18,7 +18,7 @@ public class Plant {
         return waterLevel < criticalWaterLevel;
     }
 
-    public void water(int waterAmount) {
+    public void water(float waterAmount) {
         waterLevel += waterAmount * waterAbsorption;
     }
 

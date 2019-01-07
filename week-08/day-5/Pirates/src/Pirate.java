@@ -1,6 +1,6 @@
 public class Pirate {
 
-    private int maxConsumedRum = 5;
+    private static int maxConsumedRum = 5;
     private String name;
     private int consumedRum;
     private boolean alive;

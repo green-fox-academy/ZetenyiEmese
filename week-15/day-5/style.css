@@ -1,0 +1,34 @@
+.box {
+    font-family: Arial;
+    margin: auto;
+    width: 500px;
+    padding: 25px;
+    background-color: #3385ff;
+}
+
+table, th, td {
+    border-collapse: collapse;
+    text-align: left;
+    padding: 25px;
+    color: #495861af;
+    font-size: larger;
+}
+
+th, td {
+    width: 220px;
+    border: 2px solid #9bb1bdaf;
+}
+
+th {
+    background-color: black;
+    color: #e6edf0af;
+    font-size: 30px;
+}
+
+tr:nth-child(even) {
+    background-color: #DCDCDC;
+}
+
+tr:nth-child(odd) {
+    background-color: #ffffff;
+}

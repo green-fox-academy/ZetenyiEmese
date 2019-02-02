@@ -31,11 +31,11 @@ public class TodoList {
   public void remove(int which) {
     try {
       list.remove(which - 1);
+      FileIO.writeArrayListOfTodosToFile2(fileName, list);
+      //FileIO.writeArrayListOfTodosToFile(fileName, list);
     } catch (Exception e) {
       System.out.println("Unable to remove: index is out of bound!");
     }
-    FileIO.writeArrayListOfTodosToFile2(fileName, list);
-    //FileIO.writeArrayListOfTodosToFile(fileName, list);
   }
 
 //  public void remove(int id) {
@@ -46,14 +46,19 @@ public class TodoList {
   public void check(int which) {
     try {
       list.get(which - 1).complete();
+      FileIO.writeArrayListOfTodosToFile2(fileName, list);
+      //FileIO.writeArrayListOfTodosToFile(fileName, list);
     } catch (Exception e) {
       System.out.println("Unable to check: index is out of bound!");
     }
-    FileIO.writeArrayListOfTodosToFile2(fileName, list);
-    //FileIO.writeArrayListOfTodosToFile(fileName, list);
   }
 
   public void update(int id, String newDescription) {
+    if (newDescription.isEmpty()) {
+      System.out.println("Enter the new description!");
+      return;
+    }
+
     for (Todo todo : list) {
       if (todo.getId() == id) {
         todo.setDescription(newDescription);

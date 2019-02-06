@@ -3,6 +3,7 @@ package com.greenfoxacademy.springstart.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HelloToTheWorldWebController {
@@ -19,12 +20,25 @@ public class HelloToTheWorldWebController {
     return "greetingInManyLanguages";
   }
 
+  @RequestMapping("/web/greetingFromTheWorld")
+  public String greetingFromTheWorld(Model model, @RequestParam String name) {
+    model.addAttribute("name", name);
+    model.addAttribute("greeting", findRamdomGreeting());
+    return "greetingInManyLanguages";
+  }
+
   private String createGreetings() {
     String result = "";
     for (String hello : hellos) {
       result += hello + ", ";
     }
     return result;
+  }
+
+  private String findRamdomGreeting() {
+    int size = hellos.length;
+    int randomIndex = (int) (Math.random() * size);
+    return hellos[randomIndex];
   }
 
 }

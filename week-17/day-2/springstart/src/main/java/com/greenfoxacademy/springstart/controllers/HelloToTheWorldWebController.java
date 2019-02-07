@@ -13,6 +13,8 @@ public class HelloToTheWorldWebController {
           "Salve", "Ciao", "Kon-nichiwa", "An-nyong Ha-se-yo", "Salvëte", "Ni hao", "Dzien' dobry", "Olá", "Bunã ziua", "Zdravstvuyte", "Hola", "Jambo", "Hujambo", "Hej",
           "Sa-wat-dee", "Merhaba", "Selam", "Vitayu", "Xin chào", "Hylo", "Sut Mae", "Sholem Aleychem", "Sawubona"};
 
+  private String[] colors = {"red", "blue", "yellow", "green", "black", "magenta", "pink", "orange"};
+
   @RequestMapping("/web/greetingToTheWorld")
   public String greetingToTheWorld(Model model) {
     String greetings = createGreetings();
@@ -23,7 +25,9 @@ public class HelloToTheWorldWebController {
   @RequestMapping("/web/greetingFromTheWorld")
   public String greetingFromTheWorld(Model model, @RequestParam String name) {
     model.addAttribute("name", name);
-    model.addAttribute("greeting", findRamdomGreeting());
+    model.addAttribute("greeting", findRandomGreeting());
+    model.addAttribute("color", findRandomColor());
+    model.addAttribute("fontSize", findRandomFontSize());
     return "greetingInManyLanguages";
   }
 
@@ -35,10 +39,20 @@ public class HelloToTheWorldWebController {
     return result;
   }
 
-  private String findRamdomGreeting() {
+  private String findRandomGreeting() {
     int size = hellos.length;
     int randomIndex = (int) (Math.random() * size);
     return hellos[randomIndex];
+  }
+
+  private String findRandomColor() {
+    int size = colors.length;
+    int randomIndex = (int) (Math.random() * size);
+    return colors[randomIndex];
+  }
+
+  private int findRandomFontSize() {
+    return (int) (Math.random() * 70) + 20;
   }
 
 }

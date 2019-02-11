@@ -15,12 +15,12 @@ public class BankAccountController {
 
   public BankAccountController() {
     bankAccounts.add(new BankAccount("Simba", 1500, "lion"));
-    bankAccounts.add(new BankAccount("Nala", 500, "lion"));
-    bankAccounts.add(new BankAccount("Zazu", 700, "hornbill"));
-    bankAccounts.add(new BankAccount("Zordon", 1000, "lion"));
-    bankAccounts.add(new BankAccount("Ed", 100, "hyena"));
-    bankAccounts.add(new BankAccount("Timon", 150, "meerkat"));
-    bankAccounts.add(new BankAccount("Pumbaa", 300, "warthog"));
+    bankAccounts.add(new BankAccount("Nala", 500, "lion", false));
+    bankAccounts.add(new BankAccount("Zazu", 700, "hornbill", false));
+    bankAccounts.add(new BankAccount("Zordon", 1000, "lion", false));
+    bankAccounts.add(new BankAccount("Ed", 100, "hyena", false));
+    bankAccounts.add(new BankAccount("Timon", 150, "meerkat", false));
+    bankAccounts.add(new BankAccount("Pumbaa", 300, "warthog", false));
   }
 
   @GetMapping("/showSimba")

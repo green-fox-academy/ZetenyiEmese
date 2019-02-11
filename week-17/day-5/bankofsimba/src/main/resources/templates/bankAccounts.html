@@ -13,12 +13,15 @@
         <th>Name</th>
         <th>Balance</th>
         <th>Animal type</th>
+        <th>King</th>
     </tr>
     <tr th:each="account : ${bankAccounts}">
         <td th:text="${accountStat.index} + 1"></td>
         <td th:text="${account.name}"></td>
         <td th:text="${account.balance}"></td>
         <td th:text="${account.animalType}"></td>
+        <td th:text="${account.king}? King : ''" style="color: red"></td>
+        <!--<td th:if="${account.king}">King</td>-->
     </tr>
 </table>
 

@@ -9,11 +9,13 @@
 <table>
     <caption>Bankaccounts</caption>
     <tr>
+        <th></th>
         <th>Name</th>
         <th>Balance</th>
         <th>Animal type</th>
     </tr>
     <tr th:each="account : ${bankAccounts}">
+        <td th:text="${accountStat.index} + 1"></td>
         <td th:text="${account.name}"></td>
         <td th:text="${account.balance}"></td>
         <td th:text="${account.animalType}"></td>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Bankaccount</title>
+    <title>Bankaccounts</title>
     <meta charset="utf-8" />
 </head>
 <body>
@@ -26,6 +26,13 @@
         <td th:text="${account.goodGuy}? true : false"></td>
     </tr>
 </table>
+
+<div>
+    <a th:href="@{/balanceRaising}">Raise the balance</a>
+</div>
+<div>
+    <a th:href="@{/creatingNewAccount}">Add new bankaccount</a>
+</div>
 
 </body>
 </html>

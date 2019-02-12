@@ -40,4 +40,8 @@ public class BankAccount {
     return goodGuy;
   }
 
+  public void setBalance(int balance) {
+    this.balance = balance;
+  }
+
 }

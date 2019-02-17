@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Students</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+
+<div>
+    <div th:each="studentName : ${studentNames}">
+        <h2 th:text="${studentName}"></h2>
+    </div>
+    <br>
+    <a href="/gfa/add" style="font-size: 20px">Add new student</a>
+    <br>
+    <a href="/gfa" style="font-size: 20px">Back</a>
+</div>
+
+</body>
+</html>

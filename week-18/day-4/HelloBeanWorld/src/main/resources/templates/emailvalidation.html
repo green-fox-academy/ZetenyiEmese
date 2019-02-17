@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Emailvalidation</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+
+<div>
+    <!--<p th:if="${isValid}" th:text="${emailAddress} + ' ,is a valid email address'" th:style="'color:green'"></p>-->
+    <!--<p th:unless="${isValid}" th:text="${emailAddress} + ' ,is not a valid email address'" th:style="'color:red'"></p>-->
+
+    <div th:style="${isValid} ? 'color:green' : 'color:red'">
+        <p th:if="${isValid}" th:text="${emailAddress} + ' ,is a valid email address'"></p>
+        <p th:unless="${isValid}" th:text="${emailAddress} + ' ,is not a valid email address'"></p>
+    </div>
+
+    <br>
+    <a href="/useful" style="font-size: 20px">Back</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Emailvalidation</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+
+<div>
+    <form th:object="${email}" action="/useful/emailvalidation"  method="post">
+        <h2>Enter an email to check:</h2>
+        <label for="email">Email:</label>
+        <input type="text" name="email" id="email" th:field="${email.address}">
+
+        <button type="submit">Check</button>
+    </form>
+
+    <div th:object="${email}" th:if="${isValid}!=null">
+        <div th:style="${isValid} ? 'color:green' : 'color:red'">
+            <p th:if="${isValid}" th:text="${email.address} + ' ,is a valid email address'"></p>
+            <p th:unless="${isValid}" th:text="${email.address} + ' ,is not a valid email address'"></p>
+        </div>
+    </div>
+    <br>
+    <a href="/useful" style="font-size: 20px">Back</a>
+</div>
+
+</body>
+</html>

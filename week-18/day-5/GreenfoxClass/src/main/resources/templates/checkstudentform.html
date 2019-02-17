@@ -16,8 +16,8 @@
 
     <div th:if="${isInTheClass}!=null">
         <div th:style="${isInTheClass} ? 'color:black' : 'color:red'">
-            <p th:if="${isInTheClass}" th:text="${name} + ' ,is in the class.'"></p>
-            <p th:unless="${isInTheClass}" th:text="${name} + ' ,is not in the class.'"></p>
+            <p th:if="${isInTheClass}" th:text="${name} + ' is in the class.'"></p>
+            <p th:unless="${isInTheClass}" th:text="${name} + ' is not in the class.'"></p>
         </div>
     </div>
     <br>

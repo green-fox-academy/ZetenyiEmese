@@ -16,13 +16,17 @@ public class FoxService {
     this.foxRepository = foxRepository;
   }
 
-  public Fox checkLogin(String name) {
+  public Fox findOrCreateFoxByName(String name) {
     Fox fox = foxRepository.findByName(name);
     if (fox == null){
       fox = new Fox(name);
       foxRepository.save(fox);
     }
     return fox;
+  }
+
+  public Fox findFoxByName(String name) {
+    return foxRepository.findByName(name);
   }
 
 }

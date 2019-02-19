@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title></title>
+    <title>Information</title>
     <meta charset="utf-8" />
 </head>
 <body>
 
-<div>
+<div th:object="${fox}">
     <div>
-        <a href="/" style="color:darkblue">Information</a>
+        <a th:href="'/?name=' + *{name}" style="color:darkblue">Information</a>
+    </div>
+    <div>
+        <a th:href="'/nutritionStore?name=' + *{name}" style="color:darkblue">Nutrition Store</a>
+    </div>
+    <div>
+        <a th:href="'/trickCenter?name=' + *{name}" style="color:darkblue">Trick Center</a>
     </div>
     <div>
         <img src="/img/greenfox.png">
     </div>
-    <p th:text="'This is ' + ${fox.name} + '. Currently living on ' + ${fox.getFood()} + ' and ' + ${fox.getDrink()} + '. He knows ' + ${fox.countTricks()} + ' tricks.'"></p>
+
+    <p th:text="'This is ' + *{name} + '. Currently living on ' + *{food} + ' and ' + *{drink} + '. He knows ' + ${fox.countTricks()} + ' tricks.'"></p>
 
     <h1>Known tricks</h1>
     <p th:if="${fox.countTricks()==0}">You know no tricks yet. Go and learn some.</p>

@@ -1,6 +1,7 @@
 package com.greenfoxacademy.programmerfoxclub.controllers;
 
 import com.greenfoxacademy.programmerfoxclub.models.Fox;
+import com.greenfoxacademy.programmerfoxclub.services.FoodAndDrinkService;
 import com.greenfoxacademy.programmerfoxclub.services.FoxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,20 +14,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MainController {
 
   private FoxService foxService;
+  private FoodAndDrinkService foodAndDrinkService;
 
   @Autowired
-  public MainController(FoxService foxService) {
+  public MainController(FoxService foxService, FoodAndDrinkService foodAndDrinkService) {
     this.foxService = foxService;
+    this.foodAndDrinkService = foodAndDrinkService;
   }
 
   @GetMapping("/")
-  public String showInformation(@RequestParam(required = false) String name, Model model) {
+  public String showInformationPage(@RequestParam(required = false) String name, Model model) {
     if (name == null) {
       return "login";
     }
 
-    Fox fox = foxService.checkLogin(name);
-    model.addAttribute("fox", fox);
+    model.addAttribute("fox", foxService.findOrCreateFoxByName(name));
     return "index";
   }
 
@@ -37,6 +39,22 @@ public class MainController {
 
   @PostMapping("/login")
   public String postLoginForm(@RequestParam String name) {
+    return "redirect:/?name=" + name;
+  }
+
+  @GetMapping("/nutritionStore")
+  public String showNutritionPage(@RequestParam String name, Model model){
+    model.addAttribute("fox", foxService.findFoxByName(name));
+    model.addAttribute("foods", foodAndDrinkService.findAllFoods());
+    model.addAttribute("drinks", foodAndDrinkService.findAllDrinks());
+    return "nutrition";
+  }
+
+  @PostMapping("/nutritionStore")
+  public String showNutritionPage(@RequestParam String name, @RequestParam String food, @RequestParam String drink, Model model){
+    Fox fox = foxService.findFoxByName(name);
+    fox.setFood(food);
+    fox.setDrink(drink);
     return "redirect:/?name=" + name;
   }
 

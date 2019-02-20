@@ -1,5 +1,7 @@
 package com.greenfoxacademy.programmerfoxclub.services;
 
+import com.greenfoxacademy.programmerfoxclub.repositories.TrickRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -7,22 +9,15 @@ import java.util.ArrayList;
 @Service
 public class TrickService {
 
-  private ArrayList<String> tricks;
+  private TrickRepository trickRepository;
 
-  public TrickService() {
-    tricks = new ArrayList<>();
+  @Autowired
+  public TrickService(TrickRepository trickRepository) {
+    this.trickRepository = trickRepository;
   }
 
-  public void add(String trick) {
-    tricks.add(trick);
-  }
-
-  public ArrayList<String> getTricks() {
-    return tricks;
-  }
-
-  public int countTricks() {
-    return tricks.size();
+  public ArrayList<String> findAllTricks() {
+    return trickRepository.findAll();
   }
 
 }

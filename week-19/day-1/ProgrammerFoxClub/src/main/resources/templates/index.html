@@ -17,6 +17,9 @@
         <a th:href="'/trickCenter?name=' + *{name}" style="color:darkblue">Trick Center</a>
     </div>
     <div>
+        <a th:href="'/actionHistory?name=' + *{name}" style="color:darkblue">Action History</a>
+    </div>
+    <div>
         <img src="/img/greenfox.png">
     </div>
 
@@ -24,8 +27,9 @@
 
     <h1>Known tricks</h1>
     <p th:if="${fox.countTricks()==0}">You know no tricks yet. Go and learn some.</p>
-    <ul th:if="${fox.countTricks()!=0}" th:each="trick:${fox.tricks}">
-        <li th:text="${trick}"></li>
+
+    <ul th:if="${fox.countTricks()!=0}">
+        <li th:each="trick:${fox.tricks}" th:text="${trick}"></li>
     </ul>
 </div>
 

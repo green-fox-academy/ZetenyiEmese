@@ -30,16 +30,18 @@ public class Fox {
     return tricks;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public void setFood(String food) {
     this.food = food;
   }
 
   public void setDrink(String drink) {
     this.drink = drink;
+  }
+
+  public void add(String trick) {
+    if (!tricks.contains(trick)) {
+      tricks.add(trick);
+    }
   }
 
   public int countTricks() {

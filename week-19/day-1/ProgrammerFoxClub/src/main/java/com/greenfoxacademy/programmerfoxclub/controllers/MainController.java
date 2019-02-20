@@ -3,6 +3,7 @@ package com.greenfoxacademy.programmerfoxclub.controllers;
 import com.greenfoxacademy.programmerfoxclub.models.Fox;
 import com.greenfoxacademy.programmerfoxclub.services.FoodAndDrinkService;
 import com.greenfoxacademy.programmerfoxclub.services.FoxService;
+import com.greenfoxacademy.programmerfoxclub.services.TrickService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +16,13 @@ public class MainController {
 
   private FoxService foxService;
   private FoodAndDrinkService foodAndDrinkService;
+  private TrickService trickService;
 
   @Autowired
-  public MainController(FoxService foxService, FoodAndDrinkService foodAndDrinkService) {
+  public MainController(FoxService foxService, FoodAndDrinkService foodAndDrinkService, TrickService trickService) {
     this.foxService = foxService;
     this.foodAndDrinkService = foodAndDrinkService;
+    this.trickService = trickService;
   }
 
   @GetMapping("/")
@@ -55,6 +58,20 @@ public class MainController {
     Fox fox = foxService.findFoxByName(name);
     fox.setFood(food);
     fox.setDrink(drink);
+    return "redirect:/?name=" + name;
+  }
+
+  @GetMapping("/trickCenter")
+  public String showTrickCenterPage(@RequestParam String name, Model model){
+    model.addAttribute("fox", foxService.findFoxByName(name));
+    model.addAttribute("tricks", trickService.findAllTricks());
+    return "trickcenter";
+  }
+
+  @PostMapping("/trickCenter")
+  public String showTrickCenterPage(@RequestParam String name, @RequestParam String trick, Model model){
+    Fox fox = foxService.findFoxByName(name);
+    fox.add(trick);
     return "redirect:/?name=" + name;
   }
 

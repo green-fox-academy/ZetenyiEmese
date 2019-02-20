@@ -20,17 +20,13 @@
         <a th:href="'/actionHistory?name=' + *{name}" style="color:darkblue">Action History</a>
     </div>
     <br>
-    <form th:action="'/nutritionStore?name=' + *{name}" method="post">
+    <form th:action="'/trickCenter?name=' + *{name}" method="post">
         <div>
-            <label for="food">Food:</label>
-            <select id="food" name="food">
-                <option th:each="food:${foods}" th:text="${food}"></option>
+            <label for="trick">Tricks:</label>
+            <select id="trick" name="trick">
+                <option th:each="trick:${tricks}" th:text="${trick}"></option>
             </select>
-            <label for="drink">Drink:</label>
-            <select id="drink" name="drink">
-                <option th:each="drink:${drinks}" th:text="${drink}"></option>
-            </select>
-            <input type="submit" value="Change">
+            <input type="submit" value="Learn">
         </div>
     </form>
 </div>

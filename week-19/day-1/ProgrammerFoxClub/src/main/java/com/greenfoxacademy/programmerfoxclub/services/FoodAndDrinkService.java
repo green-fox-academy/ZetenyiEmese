@@ -9,7 +9,7 @@ import java.util.ArrayList;
 @Service
 public class FoodAndDrinkService {
 
-  FoodAndDrinkRepository foodAndDrinkRepository;
+  private FoodAndDrinkRepository foodAndDrinkRepository;
 
   @Autowired
   public FoodAndDrinkService(FoodAndDrinkRepository foodAndDrinkRepository) {

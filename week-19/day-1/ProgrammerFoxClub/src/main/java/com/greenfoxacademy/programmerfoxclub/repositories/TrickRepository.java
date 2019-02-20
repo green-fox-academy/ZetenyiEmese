@@ -18,7 +18,7 @@ public class TrickRepository {
     tricks.add("make cheesecake");
     tricks.add("play the guitar");
     tricks.add("climb tree");
-    tricks.add("walk backwards");
+    tricks.add("walk on the Moon");
     tricks.add("dance with you");
     tricks.add("speak English");
   }

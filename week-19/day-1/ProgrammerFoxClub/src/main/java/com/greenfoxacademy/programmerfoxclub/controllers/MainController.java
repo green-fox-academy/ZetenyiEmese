@@ -63,8 +63,10 @@ public class MainController {
 
   @GetMapping("/trickCenter")
   public String showTrickCenterPage(@RequestParam String name, Model model){
-    model.addAttribute("fox", foxService.findFoxByName(name));
-    model.addAttribute("tricks", trickService.findAllTricks());
+    Fox fox = foxService.findFoxByName(name);
+    model.addAttribute("fox", fox);
+  //model.addAttribute("tricks", trickService.findAllTricks());
+    model.addAttribute("tricks", trickService.findTricksNotKnown(fox));
     return "trickcenter";
   }
 

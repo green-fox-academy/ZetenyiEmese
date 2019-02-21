@@ -55,9 +55,7 @@ public class MainController {
 
   @PostMapping("/nutritionStore")
   public String showNutritionPage(@RequestParam String name, @RequestParam String food, @RequestParam String drink, Model model){
-    Fox fox = foxService.findFoxByName(name);
-    fox.setFood(food);
-    fox.setDrink(drink);
+    foxService.setFoodAndDrinkForFox(name, food, drink);
     return "redirect:/?name=" + name;
   }
 
@@ -65,16 +63,21 @@ public class MainController {
   public String showTrickCenterPage(@RequestParam String name, Model model){
     Fox fox = foxService.findFoxByName(name);
     model.addAttribute("fox", fox);
-  //model.addAttribute("tricks", trickService.findAllTricks());
     model.addAttribute("tricks", trickService.findTricksNotKnown(fox));
     return "trickcenter";
   }
 
   @PostMapping("/trickCenter")
   public String showTrickCenterPage(@RequestParam String name, @RequestParam String trick, Model model){
-    Fox fox = foxService.findFoxByName(name);
-    fox.add(trick);
+    foxService.addTrickForFox(name, trick);
     return "redirect:/?name=" + name;
+  }
+
+  @GetMapping("/actionHistory")
+  public String showActionHistoryPage(@RequestParam String name, Model model){
+    Fox fox = foxService.findFoxByName(name);
+    model.addAttribute("fox", fox);
+    return "actionhistory";
   }
 
 }

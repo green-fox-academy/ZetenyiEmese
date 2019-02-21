@@ -23,10 +23,7 @@ public class FoxRepository {
   }
 
   public Fox findByName(String foxName) {
-    if (foxes.containsKey(foxName)) {
-      return foxes.get(foxName);
-    }
-    return null;
+    return foxes.get(foxName);
   }
 
 }

@@ -8,10 +8,12 @@ public class Fox {
   private String food;
   private String drink;
   private ArrayList<String> tricks;
+  private ArrayList<String> actions;
 
   public Fox(String name) {
     this.name = name;
     tricks = new ArrayList<>();
+    actions = new ArrayList<>();
   }
 
   public String getName() {
@@ -30,18 +32,16 @@ public class Fox {
     return tricks;
   }
 
+  public ArrayList<String> getActions() {
+    return actions;
+  }
+
   public void setFood(String food) {
     this.food = food;
   }
 
   public void setDrink(String drink) {
     this.drink = drink;
-  }
-
-  public void add(String trick) {
-    if (!tricks.contains(trick)) {
-      tricks.add(trick);
-    }
   }
 
   public int countTricks() {

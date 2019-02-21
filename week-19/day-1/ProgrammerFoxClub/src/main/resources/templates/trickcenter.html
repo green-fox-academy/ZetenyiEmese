@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Nutrition</title>
+    <title>Trick Center</title>
     <meta charset="utf-8" />
 </head>
 <body>
@@ -20,7 +20,10 @@
         <a th:href="'/actionHistory?name=' + *{name}" style="color:darkblue">Action History</a>
     </div>
     <br>
-    <form th:action="'/trickCenter?name=' + *{name}" method="post">
+
+    <p th:if="${tricks.isEmpty()}" style="color:green">There is no more to learn.</p>
+
+    <form th:if="${!tricks.isEmpty()}" th:action="'/trickCenter?name=' + *{name}" method="post">
         <div>
             <label for="trick">Tricks:</label>
             <select id="trick" name="trick">

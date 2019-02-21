@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Information</title>
+    <title>Action History</title>
     <meta charset="utf-8" />
 </head>
 <body>
@@ -22,17 +22,8 @@
     <div>
         <img src="/img/greenfox.png">
     </div>
+    <br>
 
-    <p th:text="'This is ' + *{name} + '. Currently living on ' + *{food} + ' and ' + *{drink} + '. He knows ' + ${fox.countTricks()} + ' tricks.'"></p>
-
-    <h1>Known tricks</h1>
-    <p th:if="${fox.tricks.isEmpty()}">You know no tricks yet. Go and learn some.</p>
-
-    <ul>
-        <li th:each="trick:${fox.tricks}" th:text="${trick}"></li>
-    </ul>
-
-    <h1 th:unless="${fox.actions.isEmpty()}">Action History</h1>
     <ul>
         <li th:each="action:${fox.actions}" th:text="${action}"></li>
     </ul>

@@ -32,9 +32,10 @@
         <li th:each="trick:${fox.tricks}" th:text="${trick}"></li>
     </ul>
 
-    <h1 th:unless="${fox.actions.isEmpty()}">Action History</h1>
+    <p th:if="${lastactions.isEmpty()}">No actions have been made yet.</p>
+    <h1 th:unless="${lastactions.isEmpty()}">Action History</h1>
     <ul>
-        <li th:each="action:${fox.actions}" th:text="${action}"></li>
+        <li th:each="action:${lastactions}" th:text="${action}"></li>
     </ul>
 </div>
 

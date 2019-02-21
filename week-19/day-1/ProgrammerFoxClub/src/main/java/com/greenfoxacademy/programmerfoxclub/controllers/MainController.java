@@ -30,8 +30,8 @@ public class MainController {
     if (name == null) {
       return "login";
     }
-
     model.addAttribute("fox", foxService.findOrCreateFoxByName(name));
+    model.addAttribute("lastactions", foxService.findLastActions(name));
     return "index";
   }
 

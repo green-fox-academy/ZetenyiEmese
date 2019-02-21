@@ -42,22 +42,17 @@ public class FoxService {
   }
 
   private void setFoodForFox(Fox fox, String newFood) {
-    String pastFood = fox.getFood();
+    String currentFood = fox.getFood();
     fox.setFood(newFood);
-    addFoodOrDrinkActionForFox(fox, pastFood, newFood, true);
+    String action = createFormattedDateTime() + ": Food has been changed from: " + currentFood + " to: " + newFood;
+    fox.getActions().add(action);
   }
 
   private void setDrinkForFox(Fox fox, String newDrink) {
-    String pastDrink = fox.getDrink();
+    String currentDrink = fox.getDrink();
     fox.setDrink(newDrink);
-    addFoodOrDrinkActionForFox(fox, pastDrink, newDrink, false);
-  }
-
-  private void addFoodOrDrinkActionForFox(Fox fox, String pastFood, String newFood, boolean isFood) {
-    ArrayList<String> actions = fox.getActions();
-    String action = createFormattedDateTime() +
-                    (isFood ? ": Food" : ": Drink") + " has been changed from: " + pastFood + " to: "+ newFood;
-    actions.add(action);
+    String action = createFormattedDateTime() + ": Drink has been changed from: " + currentDrink + " to: " + newDrink;
+    fox.getActions().add(action);
   }
 
   public void addTrickForFox(String name, String newTrick) {
@@ -77,9 +72,26 @@ public class FoxService {
   }
 
   private String createFormattedDateTime() {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMMM-dd HH:mm:ss");
     String formattedDateTime = LocalDateTime.now().format(formatter);
     return formattedDateTime;
+  }
+
+  public ArrayList<String> findLastActions(String name) {
+    Fox fox = foxRepository.findByName(name);
+    ArrayList<String> actions = fox.getActions();
+    ArrayList<String> lastActions = new ArrayList<>();
+    int size = actions.size();
+
+    if (size >= 5) {
+      for (int i = 5; i > 0; i--) {
+        lastActions.add(actions.get(size - i));
+      }
+    } else {
+      lastActions = actions;
+    }
+
+    return lastActions;
   }
 
 }

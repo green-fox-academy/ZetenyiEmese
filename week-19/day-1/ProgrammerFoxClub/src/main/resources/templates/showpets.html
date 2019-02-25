@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Foxes</title>
+</head>
+<body>
+
+<div>
+    <p style="font-size:20px">These are your pets:</p>
+    <div th:each="fox:${foxes}">
+        <div>
+            <a th:href="'/foxclub/info?name=' + ${fox.name} + '&imageURL=' + ${fox.imageURL}"><img th:src="${fox.imageURL}" width="120"></a>
+        </div>
+        <div>
+            <p th:text="${fox.name}"></p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

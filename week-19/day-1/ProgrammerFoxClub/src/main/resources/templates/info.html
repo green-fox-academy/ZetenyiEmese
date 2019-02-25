@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Information</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+
+<div th:object="${fox}">
+    <div>
+        <a th:href="'/foxclub/info/?name=' + *{name}" style="color:darkblue">Information</a>
+    </div>
+    <div>
+        <a th:href="'/foxclub/nutritionStore?name=' + *{name}" style="color:darkblue">Nutrition Store</a>
+    </div>
+    <div>
+        <a th:href="'/foxclub/trickCenter?name=' + *{name}" style="color:darkblue">Trick Center</a>
+    </div>
+    <div>
+        <a th:href="'/foxclub/actionHistory?name=' + *{name}" style="color:darkblue">Action History</a>
+    </div>
+    <div>
+        <a href="/foxclub/showPets" style="color:darkred">List of all pets</a>
+    </div>
+    <div>
+        <a href="/foxclub/register" style="color:darkred">Register new pet</a>
+    </div>
+
+    <div>
+        <img th:src="*{imageURL}" width="130px" height="auto">
+    </div>
+
+    <p th:text="'This is ' + *{name} + '. Currently living on ' + *{food} + ' and ' + *{drink} + '. He knows ' + ${fox.countTricks()} + ' tricks.'"></p>
+
+    <h1>Known tricks</h1>
+    <p th:if="*{tricks.isEmpty()}">You know no tricks yet.
+        <a th:href="'/foxclub/trickCenter?name=' + *{name}" style="color:darkblue">Go and learn some.</a></p>
+
+    <ul>
+        <li th:each="trick:*{tricks}" th:text="${trick}"></li>
+    </ul>
+
+    <p th:if="${lastactions.isEmpty()}">No actions have been made yet.</p>
+    <h1 th:unless="${lastactions.isEmpty()}">Action History</h1>
+    <ul>
+        <li th:each="action:${lastactions}" th:text="${action}"></li>
+    </ul>
+</div>
+
+</body>
+</html>

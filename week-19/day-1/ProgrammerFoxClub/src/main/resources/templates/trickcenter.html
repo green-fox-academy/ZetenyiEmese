@@ -8,22 +8,22 @@
 
 <div th:object="${fox}">
     <div>
-        <a th:href="'/?name=' + *{name}" style="color:darkblue">Information</a>
+        <a th:href="'/foxclub/info/?name=' + *{name}" style="color:darkblue">Information</a>
     </div>
     <div>
-        <a th:href="'/nutritionStore?name=' + *{name}" style="color:darkblue">Nutrition Store</a>
+        <a th:href="'/foxclub/nutritionStore?name=' + *{name}" style="color:darkblue">Nutrition Store</a>
     </div>
     <div>
-        <a th:href="'/trickCenter?name=' + *{name}" style="color:darkblue">Trick Center</a>
+        <a th:href="'/foxclub/trickCenter?name=' + *{name}" style="color:darkblue">Trick Center</a>
     </div>
     <div>
-        <a th:href="'/actionHistory?name=' + *{name}" style="color:darkblue">Action History</a>
+        <a th:href="'/foxclub/actionHistory?name=' + *{name}" style="color:darkblue">Action History</a>
     </div>
     <br>
 
     <p th:if="${tricks.isEmpty()}" style="color:green">There is no more to learn.</p>
 
-    <form th:if="${!tricks.isEmpty()}" th:action="'/trickCenter?name=' + *{name}" method="post">
+    <form th:if="${!tricks.isEmpty()}" th:action="'/foxclub/trickCenter?name=' + *{name}" method="post">
         <div>
             <label for="trick">Tricks:</label>
             <select id="trick" name="trick">

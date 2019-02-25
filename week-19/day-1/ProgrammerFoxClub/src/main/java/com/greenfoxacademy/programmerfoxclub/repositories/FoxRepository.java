@@ -14,8 +14,8 @@ public class FoxRepository {
     this.foxes = new HashMap<>();
   }
 
-  public void save(Fox newFox) {
-    foxes.put(newFox.getName(), newFox);
+  public void save(Fox fox) {
+    foxes.put(fox.getName(), fox);
   }
 
   public HashMap<String, Fox> findAll() {

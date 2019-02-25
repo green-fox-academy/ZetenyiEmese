@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 @Service
@@ -20,20 +21,44 @@ public class FoxService {
     this.foxRepository = foxRepository;
   }
 
-  public Fox findOrCreateFoxByName(String name) {
+  public Fox createFoxByName(String name, String imageURL) {
     Fox fox;
     if (foxRepository.findAll().containsKey(name)) {
       fox = foxRepository.findByName(name);
     } else {
-      fox = new Fox(name);
+      fox = new Fox(name, imageURL);
       foxRepository.save(fox);
     }
     return fox;
   }
 
+  public boolean checkFoxByName(String name) {
+    return foxRepository.findAll().containsKey(name);
+  }
+
   public Fox findFoxByName(String name) {
     return foxRepository.findByName(name);
   }
+
+  public ArrayList<Fox> findAllFoxes() {
+    HashMap<String, Fox> foxHashMap = foxRepository.findAll();
+    ArrayList<Fox> foxes = new ArrayList<>();
+
+    for (String foxName : foxHashMap.keySet()) {
+      foxes.add(foxHashMap.get(foxName));
+    }
+    return foxes;
+  }
+//  public Fox findOrCreateFoxByName(String name) {
+//    Fox fox;
+//    if (foxRepository.findAll().containsKey(name)) {
+//      fox = foxRepository.findByName(name);
+//    } else {
+//      fox = new Fox(name);
+//      foxRepository.save(fox);
+//    }
+//    return fox;
+//  }
 
   public void setFoodAndDrinkForFox(String name, String newFood, String newDrink) {
     Fox fox = foxRepository.findByName(name);
@@ -92,6 +117,17 @@ public class FoxService {
     }
 
     return lastActions;
+  }
+
+  public ArrayList<String> findFoxImages() {
+    HashMap<String, Fox> foxHashMap = foxRepository.findAll();
+    ArrayList<String> occupiedImages = new ArrayList<>();
+
+    for (String foxName : foxHashMap.keySet()) {
+      Fox fox = foxHashMap.get(foxName);
+      occupiedImages.add(fox.getImageURL());
+    }
+    return occupiedImages;
   }
 
 }

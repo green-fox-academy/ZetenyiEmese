@@ -6,13 +6,12 @@
 <body>
 
 <div>
-    <h1>Welcome to Programmer Fox Club!</h1>
-    <p>Please provide a name, so you can associate it to your pet!</p>
+    <p style="font-size: 20px">Please log in with your pet name!</p>
 
-    <form action="/login"  method="post">
+    <form action="/foxclub/login"  method="post">
         <label for="name">Name:</label>
-        <input type="text" name="name" id="name" required>
-        <button type="submit">Go</button>
+        <input type="text" id="name" name="name" autofocus required>
+        <input type="submit" value="Login">
     </form>
 </div>
 

@@ -8,20 +8,20 @@
 
 <div th:object="${fox}">
     <div>
-        <a th:href="'/?name=' + *{name}" style="color:darkblue">Information</a>
+        <a th:href="'/foxclub/info?name=' + *{name}" style="color:darkblue">Information</a>
     </div>
     <div>
-        <a th:href="'/nutritionStore?name=' + *{name}" style="color:darkblue">Nutrition Store</a>
+        <a th:href="'/foxclub/nutritionStore?name=' + *{name}" style="color:darkblue">Nutrition Store</a>
     </div>
     <div>
-        <a th:href="'/trickCenter?name=' + *{name}" style="color:darkblue">Trick Center</a>
+        <a th:href="'/foxclub/trickCenter?name=' + *{name}" style="color:darkblue">Trick Center</a>
     </div>
     <div>
-        <a th:href="'/actionHistory?name=' + *{name}" style="color:darkblue">Action History</a>
+        <a th:href="'/foxclub/actionHistory?name=' + *{name}" style="color:darkblue">Action History</a>
     </div>
     <br>
 
-    <form th:action="'/nutritionStore?name=' + *{name}" method="post">
+    <form th:action="'/foxclub/nutritionStore?name=' + *{name}" method="post">
         <div>
             <label for="food">Food:</label>
             <select id="food" name="food">

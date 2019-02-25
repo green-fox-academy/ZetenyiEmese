@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Foximages</title>
+</head>
+<body>
+
+<div>
+    <p th:text="'Choose an image for your pet ' + ${name} + '!'" style="font-size:20px"></p>
+
+    <div>
+        <a th:each="image:${freeimages}" th:href="'/foxclub/create?name=' + ${name} + '&imageURL=' + ${image}"><img th:src="${image}" width="120"></a>
+    </div>
+</div>
+
+</body>
+</html>

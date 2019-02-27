@@ -1,30 +1,40 @@
 package com.greenfoxacademy.programmerfoxclub.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Fox {
 
+  private static Integer energyBurnRate = 2;
   private String name;
   private String imageURL;
   private String food;
   private String drink;
+  private Long startEnergyLevel;
+  private LocalDateTime feedTime;
   private ArrayList<String> tricks;
   private ArrayList<String> actions;
 
-  public Fox() {
-  }
+//  public Fox() {
+//  }
 
-  public Fox(String name) {
-    this(name, "");
-  }
+//  public Fox(String name) {
+//    this(name, null, null, null);
+//  }
 
-  public Fox(String name, String imageURL) {
+  public Fox(String name, String imageURL, String food, Long startEnergyLevel) {
     this.name = name;
     this.imageURL = imageURL;
-    food = "grass";
+    this.food = food;
     drink = "water";
+    this.startEnergyLevel = startEnergyLevel;
+    feedTime = LocalDateTime.now();
     tricks = new ArrayList<>();
     actions = new ArrayList<>();
+  }
+
+  public static Integer getEnergyBurnRate() {
+    return energyBurnRate;
   }
 
   public String getName() {
@@ -43,6 +53,14 @@ public class Fox {
     return drink;
   }
 
+  public Long getStartEnergyLevel() {
+    return startEnergyLevel;
+  }
+
+  public LocalDateTime getFeedTime() {
+    return feedTime;
+  }
+
   public ArrayList<String> getTricks() {
     return tricks;
   }
@@ -57,6 +75,14 @@ public class Fox {
 
   public void setDrink(String drink) {
     this.drink = drink;
+  }
+
+  public void setStartEnergyLevel(Long startEnergyLevel) {
+    this.startEnergyLevel = startEnergyLevel;
+  }
+
+  public void setFeedTime(LocalDateTime feedTime) {
+    this.feedTime = feedTime;
   }
 
   public int countTricks() {

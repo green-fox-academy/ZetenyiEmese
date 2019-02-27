@@ -1,0 +1,16 @@
+.welcome{
+    position: absolute;
+    top: 80px;
+    left: 125px;
+}
+
+h3{
+    color: dimgray;
+    background-color:blanchedalmond ;
+}
+
+body{
+    background-image: url(img/foxes2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}

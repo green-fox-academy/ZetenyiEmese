@@ -3,6 +3,13 @@
 <head>
     <title>Information</title>
     <meta charset="utf-8" />
+    <script>
+        function timedRefresh(timeoutPeriod) {
+            setTimeout("location.reload(true);",timeoutPeriod);
+        }
+
+        window.onload = timedRefresh(5000);
+    </script>
 </head>
 <body>
 
@@ -30,7 +37,14 @@
         <img th:src="*{imageURL}" width="130px" height="auto">
     </div>
 
-    <p th:text="'This is ' + *{name} + '. Currently living on ' + *{food} + ' and ' + *{drink} + '. He knows ' + ${fox.countTricks()} + ' tricks.'"></p>
+
+    <div style="font-size: 20px">
+        <p th:if="${hungry}"><span th:text="'This is ' + *{name} + '.'"></span> <span style="color: red">He is currently hungry!</span></p>
+        <div th:unless="${hungry}">
+            <p th:text="'This is ' + *{name} + '. Currently living on ' + *{food} + ' and ' + *{drink} + '. He knows ' + ${fox.countTricks()} + ' tricks.'"></p>
+            <span>Current energy level:</span> <span style="color:red" th:text="${energylevel} + '/' + *{startEnergyLevel}"></span>
+        </div>
+    </div>
 
     <h1>Known tricks</h1>
     <p th:if="*{tricks.isEmpty()}">You know no tricks yet.

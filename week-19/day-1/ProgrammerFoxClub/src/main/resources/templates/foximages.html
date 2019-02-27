@@ -10,7 +10,7 @@
     <p th:text="'Choose an image for your pet ' + ${name} + '!'" style="font-size:20px"></p>
 
     <div>
-        <a th:each="image:${freeimages}" th:href="'/foxclub/create?name=' + ${name} + '&imageURL=' + ${image}"><img th:src="${image}" width="120"></a>
+        <a th:each="image:${freeimages}" th:href="'/foxclub/create?name=' + ${name} + '&imageURL=' + ${image}"><img th:src="${image}" style = "width:auto; height:120px"></a>
     </div>
 </div>
 

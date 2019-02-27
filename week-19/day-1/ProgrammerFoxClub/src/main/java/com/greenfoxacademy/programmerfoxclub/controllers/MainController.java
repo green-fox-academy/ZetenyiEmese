@@ -36,39 +36,35 @@ public class MainController {
     return "welcome";
   }
 
-  //szeretnénk bejelentkezni egy már létező róka nevével:
   @GetMapping("/foxclub/login")
   public String showLoginForm(Model model) {
     return "login";
   }
 
-  //szeretnénk létrehozni egy új rókát (névvel és képpel):
   @GetMapping("/foxclub/register")
-  public String showRegisterForm(@ModelAttribute Fox fox, Model model) {
-    model.addAttribute("fox", fox); //üresen jelenik meg a kitöltési mező (de ha sikertelen loginolás után kerülök ide, akkor nem üres, hanem a login oldalon megadott név jelenik meg benne)
+  public String showRegisterForm(Model model) {
+    model.addAttribute("name", null);
     return "register";
   }
 
-  //a loginolás után meg kell vizsgálni, hogy létezik-e ilyen nevű róka, ha igen, megjelenítem az infooldalát, ha nem, akkor létre kell hozni őt a regisztrációs oldalon
   @PostMapping("/foxclub/login")
   public String postLoginForm(@ModelAttribute(value = "name") String name, Model model) {
     if (foxService.checkFoxByName(name)) {
-      return "redirect:/foxclub/info?name=" + name; //ha már van ilyen nevű róka, akor megjelenítem az info oldalt erről a rókáról
+      return "redirect:/foxclub/info?name=" + name;
 
-    } else { //ha még nincs ilyen nevű róka, akkor előbb regisztrálni kell ezzel a névvel:
+    } else {
       model.addAttribute("warning", name + ", you are not yet registered. Register here!");
-      model.addAttribute("fox", new Fox(name)); //így töltöm fel a regisztrációs form mezőjét azzal a névvel, amit a login oldalon megadtam (hogy ne üresen jelenjen meg)
+      model.addAttribute("name", name);
       return "register";
     }
   }
 
-  //ide érkezik a vezérlés a sima regisztrálás után, illetve azután is, hogy nem sikerült beloginolni, mert előbb regisztrálni kell:
   @PostMapping("/foxclub/register")
   public String postRegisterForm(@ModelAttribute(value = "name") String name, Model model) {
-    if (foxService.checkFoxByName(name)) { //ha a sima regisztráláskor kiderül, hogy már van ilyen nevű róka, akkor nem kell regisztrálni, hanem megjelenítem az info oldalt eről a rókáról
+    if (foxService.checkFoxByName(name)) {
       return "redirect:/foxclub/info?name=" + name;
 
-    } else { //itt kerül sor a tényleges regisztrálásra, vagyis választani kell előbb egy róka képet, majd létrehozni a rókát a megadott névvel és kiválasztott képpel:
+    } else {
       model.addAttribute("name", name);
       ArrayList<String> occupiedImages = foxService.findFoxImages();
       model.addAttribute("freeimages", imageService.findFreeImages(occupiedImages));
@@ -90,64 +86,59 @@ public class MainController {
 
   @GetMapping("/foxclub/info")
   public String showInformationPage(@RequestParam String name, Model model) {
-    model.addAttribute("fox", foxService.findFoxByName(name));
+    Fox fox = foxService.findFoxByName(name);
+    model.addAttribute("fox", fox);
+    model.addAttribute("hungry", foxService.isFoxHungry(name));
+    model.addAttribute("energylevel", foxService.currentEnergyLevel(fox));
     model.addAttribute("lastactions", foxService.findLastActions(name));
     return "info";
   }
 
-//  @GetMapping("/")
-//  public String showInformationPage(@RequestParam(required = false) String name, Model model) {
-//    if (name == null) {
-//      return "login";
-//    }
-//    model.addAttribute("fox", foxService.findOrCreateFoxByName(name));
-//    model.addAttribute("lastactions", foxService.findLastActions(name));
-//    return "index";
-//  }
-
-//  @GetMapping("/login")
-//  public String showLoginForm() {
-//    return "login";
-//  }
-//
-//  @PostMapping("/login")
-//  public String postLoginForm(@RequestParam String name) {
-//    return "redirect:/?name=" + name;
-//  }
-
   @GetMapping("/foxclub/nutritionStore")
   public String showNutritionPage(@RequestParam String name, Model model) {
-    model.addAttribute("fox", foxService.findFoxByName(name));
+    initFox(name, model);
     model.addAttribute("foods", foodAndDrinkService.findAllFoods());
     model.addAttribute("drinks", foodAndDrinkService.findAllDrinks());
     return "nutrition";
   }
 
   @PostMapping("/foxclub/nutritionStore")
-  public String showNutritionPage(@RequestParam String name, @ModelAttribute(value = "food") String food, @ModelAttribute(value = "drink") String drink, Model model) {
+  public String showNutritionPage(@RequestParam String name, @ModelAttribute(value = "food") String food,
+                                  @ModelAttribute(value = "drink") String drink) {
     foxService.setFoodAndDrinkForFox(name, food, drink);
     return "redirect:/foxclub/info?name=" + name;
   }
 
   @GetMapping("/foxclub/trickCenter")
-  public String showTrickCenterPage(@RequestParam String name, Model model) {
+  public String showTrickCenterPage(@RequestParam String name, @RequestParam(required = false) String warning, Model model) {
     Fox fox = foxService.findFoxByName(name);
     model.addAttribute("fox", fox);
+    if (warning != null) {
+      model.addAttribute("warning", warning);
+    }
     model.addAttribute("tricks", trickService.findTricksNotKnown(fox));
     return "trickcenter";
   }
 
   @PostMapping("/foxclub/trickCenter")
-  public String showTrickCenterPage(@RequestParam String name, @ModelAttribute(value = "trick") String trick, Model model) {
-    foxService.addTrickForFox(name, trick);
-    return "redirect:/foxclub/info?name=" + name;
+  public String showTrickCenterPage(@RequestParam String name, @ModelAttribute(value = "trick") String trick) {
+    if (foxService.addTrickForFox(name, trick)) {
+      return "redirect:/foxclub/info?name=" + name;
+    } else {
+      String warning = name + " can not concentrate, he is hungry. Feed him first enabling him to learn!";
+      return "redirect:/foxclub/trickCenter?name=" + name + "&warning=" + warning;
+    }
   }
 
   @GetMapping("/foxclub/actionHistory")
   public String showActionHistoryPage(@RequestParam String name, Model model) {
+    initFox(name, model);
+    return "actionhistory";
+  }
+
+  private void initFox(String name, Model model) {
     Fox fox = foxService.findFoxByName(name);
     model.addAttribute("fox", fox);
-    return "actionhistory";
   }
 
 }

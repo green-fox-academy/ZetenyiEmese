@@ -38,29 +38,97 @@ public class UtilityController {
     return "emailvalidation";
   }
 
+
+//  //Megoldás1:
 //  //localhost:8080/useful/emailvalidation
 //  @GetMapping("/useful/emailvalidation")
 //  public String showEmailForm() {
-//    return "emailvalidationForm";
+//    return "emailvalidation-form";
+//  }
+//
+//  @PostMapping("/useful/emailvalidation")
+//  public String showEmailSubmit(@RequestParam String email, Model model) {
+//    boolean isValid = utilityService.validateEmail(email);
+//    model.addAttribute("isValid", isValid);
+//    model.addAttribute("email", email);
+//    return "emailvalidation-form";
 //  }
 
-  //localhost:8080/useful/emailvalidation
-  @GetMapping("/useful/emailvalidation")
+
+
+//  //Megoldás2:
+//  //localhost:8080/useful/emailvalidation2
+//  @GetMapping("/useful/emailvalidation2")
+//  public String showEmailForm(Model model) {
+//    Email email = new Email("is@this.valid");
+//    boolean isValid = utilityService.validateEmail(email.getAddress());
+//    model.addAttribute("isValid", isValid);
+//    model.addAttribute("email", email);
+//    return "emailvalidation-form2";
+//  }
+//
+//  @PostMapping("/useful/emailvalidation2")
+//  public String showEmailSubmit(@ModelAttribute Email email, Model model) {
+//    boolean isValid = utilityService.validateEmail(email.getAddress());
+//    model.addAttribute("isValid", isValid);
+//    model.addAttribute("email", email);
+//    return "emailvalidation-form2";
+//  }
+
+
+
+//  //Megoldás3:
+//  //localhost:8080/useful/emailvalidation3
+//  @GetMapping("/useful/emailvalidation3")
+//  public String showEmailForm(Model model, @ModelAttribute Email email) {
+//    model.addAttribute("email", email);
+//    return "emailvalidation-form2";
+//  }
+//
+//  @PostMapping("/useful/emailvalidation2")
+//  public String showEmailSubmit(@ModelAttribute Email email, Model model) {
+//    boolean isValid = utilityService.validateEmail(email.getAddress());
+//    model.addAttribute("isValid", isValid);
+//    model.addAttribute("email", email);
+//    return "emailvalidation-form2";
+//  }
+
+
+
+//  //Megoldás4:
+//  //localhost:8080/useful/emailvalidation4
+//  @GetMapping("/useful/emailvalidation4")
+//  public String showEmailForm(Model model) {
+//    model.addAttribute("email", new Email()); //ehhez meg kell írni az üres konstruktort, ami eddig nem kellett!!
+//    return "emailvalidation-form2";
+//  }
+//
+//  @PostMapping("/useful/emailvalidation2")
+//  public String showEmailSubmit(@ModelAttribute Email email, Model model) {
+//    boolean isValid = utilityService.validateEmail(email.getAddress());
+//    model.addAttribute("isValid", isValid);
+//    model.addAttribute("email", email);
+//    return "emailvalidation-form2";
+//  }
+
+
+
+  //Megoldás5:
+  //localhost:8080/useful/emailvalidation5
+  @GetMapping("/useful/emailvalidation5")
   public String showEmailForm(Model model) {
-    Email email = new Email("is@this.valid");
-    boolean isValid = utilityService.validateEmail(email.getAddress());
-    model.addAttribute("isValid", isValid);
-    model.addAttribute("email", email);
-    return "emailvalidationForm2";
+//    model.addAttribute("email", null);
+    return "emailvalidation-form3";
   }
 
-  @PostMapping("/useful/emailvalidation")
-  public String showEmailSubmit(@ModelAttribute Email email, Model model) {
-    boolean isValid = utilityService.validateEmail(email.getAddress());
+  @PostMapping("/useful/emailvalidation5")
+  public String showEmailSubmit(@ModelAttribute(value = "email") String email, Model model) {
+    boolean isValid = utilityService.validateEmail(email);
     model.addAttribute("isValid", isValid);
     model.addAttribute("email", email);
-    return "emailvalidationForm2";
+    return "emailvalidation-form3";
   }
+
 
   //localhost:8080/useful/encode?text=example&number=1
   @GetMapping("/useful/encode")

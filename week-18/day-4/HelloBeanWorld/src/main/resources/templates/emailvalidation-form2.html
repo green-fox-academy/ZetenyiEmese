@@ -7,18 +7,18 @@
 <body>
 
 <div>
-    <form th:object="${email}" action="/useful/emailvalidation"  method="post">
+    <form action="/useful/emailvalidation2"  method="post">
         <h2>Enter an email to check:</h2>
         <label for="email">Email:</label>
-        <input type="text" name="email" id="email" th:field="${email.address}">
+        <input type="text" name="email" id="email" th:field="${email.address}" required autofocus>
 
         <button type="submit">Check</button>
     </form>
 
-    <div th:object="${email}" th:if="${isValid}!=null">
+    <div th:if="${isValid}!=null">
         <div th:style="${isValid} ? 'color:green' : 'color:red'">
-            <p th:if="${isValid}" th:text="${email.address} + ' ,is a valid email address'"></p>
-            <p th:unless="${isValid}" th:text="${email.address} + ' ,is not a valid email address'"></p>
+            <p th:if="${isValid}" th:text="${email.address} + ': is a valid email address'"></p>
+            <p th:unless="${isValid}" th:text="${email.address} + ': is not a valid email address'"></p>
         </div>
     </div>
     <br>

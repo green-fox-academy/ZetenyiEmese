@@ -20,8 +20,8 @@
 
     <div th:if="${isValid}!=null">
         <div th:style="${isValid} ? 'color:green' : 'color:red'">
-            <p th:if="${isValid}" th:text="${email} + ' ,is a valid email address'"></p>
-            <p th:unless="${isValid}" th:text="${email} + ' ,is not a valid email address'"></p>
+            <p th:if="${isValid}" th:text="${email} + ': is a valid email address'"></p>
+            <p th:unless="${isValid}" th:text="${email} + ': is not a valid email address'"></p>
         </div>
     </div>
     <br>

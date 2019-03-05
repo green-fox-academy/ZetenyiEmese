@@ -1,6 +1,5 @@
 package com.greenfoxacademy.programmerfoxclub.services;
 
-import com.greenfoxacademy.programmerfoxclub.models.Fox;
 import com.greenfoxacademy.programmerfoxclub.repositories.FoodAndDrinkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

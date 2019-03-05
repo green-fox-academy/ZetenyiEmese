@@ -3,7 +3,6 @@ package com.greenfoxacademy.programmerfoxclub.controllers;
 import com.greenfoxacademy.programmerfoxclub.models.Fox;
 import com.greenfoxacademy.programmerfoxclub.services.FoodAndDrinkService;
 import com.greenfoxacademy.programmerfoxclub.services.FoxService;
-import com.greenfoxacademy.programmerfoxclub.services.ImageService;
 import com.greenfoxacademy.programmerfoxclub.services.TrickService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,20 +12,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-
 @Controller
 public class MainController {
 
   private FoxService foxService;
-  private ImageService imageService;
   private FoodAndDrinkService foodAndDrinkService;
   private TrickService trickService;
 
   @Autowired
-  public MainController(FoxService foxService, ImageService imageService, FoodAndDrinkService foodAndDrinkService, TrickService trickService) {
+  public MainController(FoxService foxService, FoodAndDrinkService foodAndDrinkService, TrickService trickService) {
     this.foxService = foxService;
-    this.imageService = imageService;
     this.foodAndDrinkService = foodAndDrinkService;
     this.trickService = trickService;
   }
@@ -43,7 +38,7 @@ public class MainController {
 
   @GetMapping("/foxclub/register")
   public String showRegisterForm(Model model) {
-    model.addAttribute("name", null);
+    //model.addAttribute("name", null);
     return "register";
   }
 
@@ -66,8 +61,7 @@ public class MainController {
 
     } else {
       model.addAttribute("name", name);
-      ArrayList<String> occupiedImages = foxService.findFoxImages();
-      model.addAttribute("freeimages", imageService.findFreeImages(occupiedImages));
+      model.addAttribute("freeimages", foxService.findFreeImages());
       return "foximages";
     }
   }
@@ -86,10 +80,9 @@ public class MainController {
 
   @GetMapping("/foxclub/info")
   public String showInformationPage(@RequestParam String name, Model model) {
-    Fox fox = foxService.findFoxByName(name);
-    model.addAttribute("fox", fox);
+    initFox(name, model);
     model.addAttribute("hungry", foxService.isFoxHungry(name));
-    model.addAttribute("energylevel", foxService.currentEnergyLevel(fox));
+    model.addAttribute("energylevel", foxService.currentEnergyLevel(name));
     model.addAttribute("lastactions", foxService.findLastActions(name));
     return "info";
   }
@@ -111,12 +104,11 @@ public class MainController {
 
   @GetMapping("/foxclub/trickCenter")
   public String showTrickCenterPage(@RequestParam String name, @RequestParam(required = false) String warning, Model model) {
-    Fox fox = foxService.findFoxByName(name);
-    model.addAttribute("fox", fox);
-    if (warning != null) {
-      model.addAttribute("warning", warning);
-    }
-    model.addAttribute("tricks", trickService.findTricksNotKnown(fox));
+    initFox(name, model);
+//    if (warning != null) {
+    model.addAttribute("warning", warning);
+//    }
+    model.addAttribute("tricks", trickService.findTricksNotKnown(name));
     return "trickcenter";
   }
 
@@ -124,8 +116,9 @@ public class MainController {
   public String showTrickCenterPage(@RequestParam String name, @ModelAttribute(value = "trick") String trick) {
     if (foxService.addTrickForFox(name, trick)) {
       return "redirect:/foxclub/info?name=" + name;
+
     } else {
-      String warning = name + " can not concentrate, he is hungry. Feed him first enabling him to learn!";
+      String warning = name + " can not concentrate, he is hungry. Feed him first enabling him to learn: " + trick;
       return "redirect:/foxclub/trickCenter?name=" + name + "&warning=" + warning;
     }
   }

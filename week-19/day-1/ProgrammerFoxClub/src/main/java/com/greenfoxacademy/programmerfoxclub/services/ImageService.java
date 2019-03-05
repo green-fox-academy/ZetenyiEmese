@@ -20,16 +20,4 @@ public class ImageService {
     return imageRepository.findAll();
   }
 
-  public ArrayList<String> findFreeImages(ArrayList<String> occupiedImages) {
-    ArrayList<String> freeImages = new ArrayList<>();
-    ArrayList<String> allImages = imageRepository.findAll();
-
-    for (String image : allImages) {
-      if (!occupiedImages.contains(image)) {
-        freeImages.add(image);
-      }
-    }
-    return freeImages;
-  }
-
 }

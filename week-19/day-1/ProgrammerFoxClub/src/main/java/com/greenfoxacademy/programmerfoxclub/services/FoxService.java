@@ -3,6 +3,7 @@ package com.greenfoxacademy.programmerfoxclub.services;
 import com.greenfoxacademy.programmerfoxclub.models.Fox;
 import com.greenfoxacademy.programmerfoxclub.repositories.FoodAndDrinkRepository;
 import com.greenfoxacademy.programmerfoxclub.repositories.FoxRepository;
+import com.greenfoxacademy.programmerfoxclub.repositories.ImageRepository;
 import com.greenfoxacademy.programmerfoxclub.repositories.TrickRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +21,15 @@ public class FoxService {
   private FoxRepository foxRepository;
   private FoodAndDrinkRepository foodAndDrinkRepository;
   private TrickRepository trickRepository;
+  private ImageRepository imageRepository;
 
   @Autowired
-  public FoxService(FoxRepository foxRepository, FoodAndDrinkRepository foodAndDrinkRepository, TrickRepository trickRepository) {
+  public FoxService(FoxRepository foxRepository, FoodAndDrinkRepository foodAndDrinkRepository,
+                    TrickRepository trickRepository, ImageRepository imageRepository) {
     this.foxRepository = foxRepository;
     this.foodAndDrinkRepository = foodAndDrinkRepository;
     this.trickRepository = trickRepository;
+    this.imageRepository = imageRepository;
   }
 
   public Fox createFoxByName(String name, String imageURL) {
@@ -33,7 +37,7 @@ public class FoxService {
     if (foxRepository.findAll().containsKey(name)) {
       fox = foxRepository.findByName(name);
     } else {
-      fox = new Fox(name, imageURL, "salad", 100L); //TODO!
+      fox = new Fox(name, imageURL, "salad", (long) foodAndDrinkRepository.findEnergyContent("salad"), "water");
       foxRepository.save(fox);
     }
     return fox;
@@ -58,52 +62,52 @@ public class FoxService {
   }
 
   public boolean isFoxHungry(String name) {
+    return currentEnergyLevel(name) < 10;
+  }
+
+  public long currentEnergyLevel(String name) {
     Fox fox = findFoxByName(name);
+    long currentEnergyLevel = fox.getStartEnergyLevel() - duration(fox) * Fox.getEnergyBurnRate();
+    return currentEnergyLevel > 0 ? currentEnergyLevel : 0;
+  }
+
+  private long duration(Fox fox) {
     LocalDateTime now = LocalDateTime.now();
-    LocalDateTime feedTime = fox.getFeedTime();
-    long duration = Duration.between(feedTime, now).getSeconds();
-    return fox.getStartEnergyLevel() - duration * Fox.getEnergyBurnRate() < 10;
+    LocalDateTime previousFeedTime = fox.getFeedTime();
+    long duration = Duration.between(previousFeedTime, now).getSeconds();
+    return duration;
   }
 
   public void setFoodAndDrinkForFox(String name, String newFood, String newDrink) {
-    Fox fox = foxRepository.findByName(name);
-    setFoodForFox(fox, newFood);
-    setDrinkForFox(fox, newDrink);
+    setFoodForFox(name, newFood);
+    setDrinkForFox(name, newDrink);
   }
 
-  private void setFoodForFox(Fox fox, String newFood) {
+  private void setFoodForFox(String name, String newFood) {
+    Fox fox = findFoxByName(name);
     String currentFood = fox.getFood();
     fox.setFood(newFood);
-    setStartEnergyLevelForFox(fox, newFood);
+    fox.setStartEnergyLevel(currentEnergyLevel(name) + foodAndDrinkRepository.findEnergyContent(newFood));
     fox.setFeedTime(LocalDateTime.now());
-    String action = createFormattedDateTime() + ": Food has been changed from: " + currentFood + " to: " + newFood;
-    fox.getActions().add(action);
+    addFoodActionForFox(fox, currentFood, newFood);
   }
 
-  private void setStartEnergyLevelForFox(Fox fox, String newFood) {
-    long currentEnergyLevel = currentEnergyLevel(fox);
-    if (currentEnergyLevel < 0) {
-      currentEnergyLevel = 0;
-    }
-    fox.setStartEnergyLevel(currentEnergyLevel + foodAndDrinkRepository.findEnergyContent(newFood));
-  }
-
-  private void setDrinkForFox(Fox fox, String newDrink) {
+  private void setDrinkForFox(String name, String newDrink) {
+    Fox fox = findFoxByName(name);
     String currentDrink = fox.getDrink();
     fox.setDrink(newDrink);
-    String action = createFormattedDateTime() + ": Drink has been changed from: " + currentDrink + " to: " + newDrink;
-    fox.getActions().add(action);
+    addDrinkActionForFox(fox, currentDrink, newDrink);
   }
 
   public boolean addTrickForFox(String name, String newTrick) {
-    Fox fox = foxRepository.findByName(name);
+    Fox fox = findFoxByName(name);
     ArrayList<String> tricks = fox.getTricks();
 
-    long currentEnergyLevel = currentEnergyLevel(fox);
+    long currentEnergyLevel = currentEnergyLevel(name);
     int trickEnergyNeed = trickRepository.findEnergyNeed(newTrick);
-    boolean isFoxEnoughEnergic = currentEnergyLevel > trickEnergyNeed;
+    boolean hasFoxEnoughEnergy = currentEnergyLevel > trickEnergyNeed;
 
-    if (!tricks.contains(newTrick) && isFoxEnoughEnergic) {
+    if (!tricks.contains(newTrick) && hasFoxEnoughEnergy) {
       tricks.add(newTrick);
       fox.setStartEnergyLevel(fox.getStartEnergyLevel() - trickEnergyNeed);
       addTrickActionForFox(fox, newTrick);
@@ -112,18 +116,22 @@ public class FoxService {
     return false;
   }
 
+  private void addFoodActionForFox(Fox fox, String currentFood, String newFood) {
+    ArrayList<String> actions = fox.getActions();
+    String action = createFormattedDateTime() + ": Food has been changed from: " + currentFood + " to: " + newFood;
+    actions.add(action);
+  }
+
+  private void addDrinkActionForFox(Fox fox, String currentDrink, String newDrink) {
+    ArrayList<String> actions = fox.getActions();
+    String action = createFormattedDateTime() + ": Drink has been changed from: " + currentDrink + " to: " + newDrink;
+    actions.add(action);
+  }
+
   private void addTrickActionForFox(Fox fox, String newTrick) {
     ArrayList<String> actions = fox.getActions();
     String action = createFormattedDateTime() + ": Learned to: " + newTrick;
     actions.add(action);
-  }
-
-  public long currentEnergyLevel(Fox fox) {
-    LocalDateTime now = LocalDateTime.now();
-    LocalDateTime previousFeedTime = fox.getFeedTime();
-    long duration = Duration.between(previousFeedTime, now).getSeconds();
-    long currentEnergyLevel = fox.getStartEnergyLevel() - duration * Fox.getEnergyBurnRate();
-    return currentEnergyLevel;
   }
 
   private String createFormattedDateTime() {
@@ -133,7 +141,7 @@ public class FoxService {
   }
 
   public ArrayList<String> findLastActions(String name) {
-    Fox fox = foxRepository.findByName(name);
+    Fox fox = findFoxByName(name);
     ArrayList<String> actions = fox.getActions();
     ArrayList<String> lastActions = new ArrayList<>();
     int size = actions.size();
@@ -149,7 +157,20 @@ public class FoxService {
     return lastActions;
   }
 
-  public ArrayList<String> findFoxImages() {
+  public ArrayList<String> findFreeImages() {
+    ArrayList<String> occupiedImages = findFoxImages();
+    ArrayList<String> allImages = imageRepository.findAll();
+    ArrayList<String> freeImages = new ArrayList<>();
+
+    for (String image : allImages) {
+      if (!occupiedImages.contains(image)) {
+        freeImages.add(image);
+      }
+    }
+    return freeImages;
+  }
+
+  private ArrayList<String> findFoxImages() {
     HashMap<String, Fox> foxHashMap = foxRepository.findAll();
     ArrayList<String> occupiedImages = new ArrayList<>();
 

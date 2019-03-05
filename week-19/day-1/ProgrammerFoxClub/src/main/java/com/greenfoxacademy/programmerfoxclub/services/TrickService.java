@@ -1,6 +1,7 @@
 package com.greenfoxacademy.programmerfoxclub.services;
 
 import com.greenfoxacademy.programmerfoxclub.models.Fox;
+import com.greenfoxacademy.programmerfoxclub.repositories.FoxRepository;
 import com.greenfoxacademy.programmerfoxclub.repositories.TrickRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,12 @@ import java.util.HashMap;
 public class TrickService {
 
   private TrickRepository trickRepository;
+  private FoxRepository foxRepository;
 
   @Autowired
-  public TrickService(TrickRepository trickRepository) {
+  public TrickService(TrickRepository trickRepository, FoxRepository foxRepository) {
     this.trickRepository = trickRepository;
+    this.foxRepository = foxRepository;
   }
 
   public ArrayList<String>  findAllTricks() {
@@ -28,7 +31,8 @@ public class TrickService {
     return tricks;
   }
 
-  public ArrayList<String> findTricksNotKnown(Fox fox) {
+  public ArrayList<String> findTricksNotKnown(String name) {
+    Fox fox = foxRepository.findByName(name);
     ArrayList<String> tricksNotKnown = new ArrayList<>();
     ArrayList<String> allTricks = findAllTricks();
     ArrayList<String> tricksAlreadyKnown = fox.getTricks();

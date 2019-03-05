@@ -11,12 +11,14 @@ public class ImageRepository {
 
   public ImageRepository() {
     this.images = new ArrayList<>();
-    images.add("/img/image-fox1.jpg");
-    images.add("/img/image-fox2.jpg");
-    images.add("/img/image-fox3.jpg");
-    images.add("/img/image-fox5.png");
-    images.add("/img/image-fox7.jpg");
-    images.add("/img/image-fox8.jpg");
+    images.add("/img/fox-image1.jpg");
+    images.add("/img/fox-image2.jpg");
+    images.add("/img/fox-image3.jpg");
+    images.add("/img/fox-image4.jpg");
+    images.add("/img/fox-image5.png");
+    images.add("/img/fox-image6.jpg");
+    images.add("/img/fox-image7.jpg");
+    images.add("/img/fox-image8.jpg");
   }
 
   public ArrayList<String> findAll() {

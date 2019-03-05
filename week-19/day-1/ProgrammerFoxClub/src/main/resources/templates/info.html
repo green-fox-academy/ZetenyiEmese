@@ -2,63 +2,74 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Information</title>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <script>
         function timedRefresh(timeoutPeriod) {
-            setTimeout("location.reload(true);",timeoutPeriod);
+            setTimeout("location.reload(true);", timeoutPeriod);
         }
-
         window.onload = timedRefresh(5000);
     </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<body>
 
-<div th:object="${fox}">
-    <div>
-        <a th:href="'/foxclub/info/?name=' + *{name}" style="color:darkblue">Information</a>
-    </div>
-    <div>
-        <a th:href="'/foxclub/nutritionStore?name=' + *{name}" style="color:darkblue">Nutrition Store</a>
-    </div>
-    <div>
-        <a th:href="'/foxclub/trickCenter?name=' + *{name}" style="color:darkblue">Trick Center</a>
-    </div>
-    <div>
-        <a th:href="'/foxclub/actionHistory?name=' + *{name}" style="color:darkblue">Action History</a>
-    </div>
-    <div>
-        <a href="/foxclub/showPets" style="color:darkred">List of all pets</a>
-    </div>
-    <div>
-        <a href="/foxclub/register" style="color:darkred">Register new pet</a>
-    </div>
+<body th:object="${fox}">
 
-    <div>
-        <img th:src="*{imageURL}" width="130px" height="auto">
-    </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Programmer Fox Club</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav" style="margin-left: 30px">
+                <a class="nav-item nav-link" href="/foxclub/showPets">List all pets</a>
+                <a class="nav-item nav-link" href="/foxclub/register">Register new pet</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link" th:href="'/foxclub/info/?name=' + *{name}">Information<span
+                        class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" th:href="'/foxclub/nutritionStore?name=' + *{name}">Nutrition Store</a>
+                <a class="nav-item nav-link" th:href="'/foxclub/trickCenter?name=' + *{name}">Trick Center</a>
+                <a class="nav-item nav-link" th:href="'/foxclub/actionHistory?name=' + *{name}">Action History</a>
 
-
-    <div style="font-size: 20px">
-        <p th:if="${hungry}"><span th:text="'This is ' + *{name} + '.'"></span> <span style="color: red">He is currently hungry!</span></p>
-        <div th:unless="${hungry}">
-            <p th:text="'This is ' + *{name} + '. Currently living on ' + *{food} + ' and ' + *{drink} + '. He knows ' + ${fox.countTricks()} + ' tricks.'"></p>
-            <span>Current energy level:</span> <span style="color:red" th:text="${energylevel} + '/' + *{startEnergyLevel}"></span>
+                <a class="nav-item nav-link" style="color: blueviolet" href="/foxclub">Log Out</a>
+            </div>
         </div>
     </div>
+</nav>
 
-    <h1>Known tricks</h1>
-    <p th:if="*{tricks.isEmpty()}">You know no tricks yet.
-        <a th:href="'/foxclub/trickCenter?name=' + *{name}" style="color:darkblue">Go and learn some.</a></p>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-4 text-center">
+            <img th:src="*{imageURL}" width="160px" height="auto">
+            <h4 th:text="'This is ' + *{name} + '.'"></h4>
+            <p th:if="${hungry}" style="color:red">He is currently hungry!</p>
+            <div th:unless="${hungry}">
+                <p>Currently living on <span style="color:darkblue" th:text="*{food}"></span> and <span
+                        style="color:darkblue" th:text="*{drink}"></span>.</p>
+                <p>He/she knows <span style="color:darkblue" th:text="${fox.countTricks()}"></span> trick(s).</p>
+                <p>Current energy level: <span style="color:red"
+                                               th:text="${energylevel} + '/' + *{startEnergyLevel}"></span></p>
+            </div>
+        </div>
+        <div class="col-8">
+            <h1>Known tricks</h1>
+            <p th:if="*{tricks.isEmpty()}">You know no tricks yet.
+                <a th:href="'/foxclub/trickCenter?name=' + *{name}" style="color:darkblue">Go and learn some.</a>
+            </p>
+            <ul>
+                <li th:each="trick:*{tricks}" th:text="${trick}"></li>
+            </ul>
 
-    <ul>
-        <li th:each="trick:*{tricks}" th:text="${trick}"></li>
-    </ul>
-
-    <p th:if="${lastactions.isEmpty()}">No actions have been made yet.</p>
-    <h1 th:unless="${lastactions.isEmpty()}">Action History</h1>
-    <ul>
-        <li th:each="action:${lastactions}" th:text="${action}"></li>
-    </ul>
+            <p th:if="${lastactions.isEmpty()}">No actions have been made yet.</p>
+            <h1 th:unless="${lastactions.isEmpty()}">Action History</h1>
+            <ul>
+                <li th:each="action:${lastactions}" th:text="${action}"></li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 </body>

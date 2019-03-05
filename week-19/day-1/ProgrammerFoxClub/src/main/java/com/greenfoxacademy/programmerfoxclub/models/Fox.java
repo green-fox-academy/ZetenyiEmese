@@ -22,11 +22,11 @@ public class Fox {
 //    this(name, null, null, null);
 //  }
 
-  public Fox(String name, String imageURL, String food, Long startEnergyLevel) {
+  public Fox(String name, String imageURL, String food, Long startEnergyLevel, String drink) {
     this.name = name;
     this.imageURL = imageURL;
     this.food = food;
-    drink = "water";
+    this.drink = drink;
     this.startEnergyLevel = startEnergyLevel;
     feedTime = LocalDateTime.now();
     tricks = new ArrayList<>();

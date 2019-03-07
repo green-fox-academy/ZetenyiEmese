@@ -46,18 +46,23 @@ public class NumberConverter {
       return result;
 
     } else if (calculateInputLength(input) == 2) {
-      String result = numberMap.get((input / 10) * 10) +
-              (input % 10 == 0 ? "" : "-" + convertNumberToString(input % 10));
+      String result = numberMap.get(input / 10 * 10) +
+                     (input % 10 == 0 ? "" : "-" + convertNumberToString(input % 10));
       return result;
 
     } else if (calculateInputLength(input) == 3) {
       String result = numberMap.get(input / 100) + " hundred" +
-              (input % 100 == 0 ? "" : " and " + convertNumberToString(input % 100));
+                     (input % 100 == 0 ? "" : " and " + convertNumberToString(input % 100));
       return result;
 
     } else if (calculateInputLength(input) == 4) {
+//      String result = numberMap.get(input / 1000) + " thousand" +
+//                    (input % 1000 == 0 ? "" : " " + convertNumberToString(input % 1000));
+
       String result = numberMap.get(input / 1000) + " thousand" +
-              (input % 1000 == 0 ? "" : " " + convertNumberToString(input % 1000));
+                      (input % 1000 == 0 ? "" :
+                      ((input % 1000) / 100 == 0 ? " and " + convertNumberToString(input % 1000) : " " + convertNumberToString(input % 1000)));
+
       return result;
     }
 

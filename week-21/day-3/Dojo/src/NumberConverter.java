@@ -39,34 +39,58 @@ public class NumberConverter {
     numberMap.put(1000000, "million");
   }
 
-  public String convertNumberToString(int input) {
+  public String convertAmountInNumbersToWords(String inputString) {
+    try {
+      int inputNumber = convertStringToNumber(inputString);
+      String result = convertNumberToString(inputNumber) + " dollars";
+      //    System.out.println(result);
+      return result;
+
+    } catch (NumberFormatException ex) {
+      System.out.println("Can't convert the amount to a number!");
+      return "";
+
+    } catch (Exception ex) {
+      System.out.println("Something went wrong!");
+      return "";
+    }
+  }
+
+  private String convertNumberToString(int input) {
+    int mod;
 
     if (calculateInputLength(input) == 1) {
       String result = numberMap.get(input);
       return result;
 
     } else if (calculateInputLength(input) == 2) {
+      mod = input % 10;
       String result = numberMap.get(input / 10 * 10) +
-                     (input % 10 == 0 ? "" : "-" + convertNumberToString(input % 10));
+              (mod == 0 ? "" : "-" + convertNumberToString(mod));
       return result;
 
     } else if (calculateInputLength(input) == 3) {
+      mod = input % 100;
       String result = numberMap.get(input / 100) + " hundred" +
-                     (input % 100 == 0 ? "" : " and " + convertNumberToString(input % 100));
+              (mod == 0 ? "" : " and " + convertNumberToString(mod));
       return result;
 
-    } else if (calculateInputLength(input) == 4) {
-//      String result = numberMap.get(input / 1000) + " thousand" +
-//                    (input % 1000 == 0 ? "" : " " + convertNumberToString(input % 1000));
-
-      String result = numberMap.get(input / 1000) + " thousand" +
-                      (input % 1000 == 0 ? "" :
-                      ((input % 1000) / 100 == 0 ? " and " + convertNumberToString(input % 1000) : " " + convertNumberToString(input % 1000)));
-
+    } else if (calculateInputLength(input) <= 6) {
+      mod = input % 1000;
+      String result = convertNumberToString(input / 1000) + " thousand" +
+              (mod == 0 ? "" : (mod / 100 == 0 ? " and " + convertNumberToString(mod) : " " + convertNumberToString(mod)));
       return result;
     }
 
     return "error";
+  }
+
+  private int convertStringToNumber(String string) throws NumberFormatException, Exception {
+//    int length = string.length();
+//    return Integer.parseInt(string.substring(0, length - 5));
+    int indexOfDot = string.indexOf('.');
+    String numberString = string.substring(0, indexOfDot);
+    return Integer.parseInt(numberString);
   }
 
   private int calculateInputLength(int input) {

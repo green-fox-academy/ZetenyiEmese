@@ -19,151 +19,192 @@ public class NumberConverterTest {
   }
 
   @Test
-  public void convertNumberToString_shouldReturnSevenWhen7() {
-    int input = 7;
-    String expected = "seven";
+  public void convertAmountInNumbersToWords_shouldReturnSevenWhen7String() {
+    String input = "7.00 $";
+    String expected = "seven dollars";
 
-    String result = numberConverter.convertNumberToString(input);
-
-    assertEquals(expected, result);
-  }
-
-  @Test
-  public void convertNumberToString_shouldReturnTwentythreeWhen23() {
-    int input = 23;
-    String expected = "twenty-three";
-
-    String result = numberConverter.convertNumberToString(input);
+    String result = numberConverter.convertAmountInNumbersToWords(input);
 
     assertEquals(expected, result);
   }
 
   @Test
-  public void convertNumberToString_shouldReturnNinetynineWhen99() {
-    int input = 99;
-    String expected = "ninety-nine";
+  public void convertAmountInNumbersToWords_shouldReturnTwentythreeWhen23String() {
+    String input = "23.00 $";
+    String expected = "twenty-three dollars";
 
-    String result = numberConverter.convertNumberToString(input);
-
-    assertEquals(expected, result);
-  }
-
-  @Test
-  public void convertNumberToString_shouldReturnCorrectAnswerWhen40() {
-    int input = 40;
-    String expected = "forty";
-
-    String result = numberConverter.convertNumberToString(input);
+    String result = numberConverter.convertAmountInNumbersToWords(input);
 
     assertEquals(expected, result);
   }
 
   @Test
-  public void convertNumberToString_shouldReturnCorrectAnswerWhen125() {
-    int input = 125;
-    String expected = "one hundred and twenty-five";
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen40String() {
+    String input = "40.00 $";
+    String expected = "forty dollars";
 
-    String result = numberConverter.convertNumberToString(input);
-
-    assertEquals(expected, result);
-  }
-
-  @Test
-  public void convertNumberToString_shouldReturnCorrectAnswerWhen768() {
-    int input = 768;
-    String expected = "seven hundred and sixty-eight";
-
-    String result = numberConverter.convertNumberToString(input);
+    String result = numberConverter.convertAmountInNumbersToWords(input);
 
     assertEquals(expected, result);
   }
 
   @Test
-  public void convertNumberToString_shouldReturnCorrectAnswerWhen105() {
-    int input = 105;
-    String expected = "one hundred and five";
+  public void convertAmountInNumbersToWords_shouldReturnNinetynineWhen99String() {
+    String input = "99.00 $";
+    String expected = "ninety-nine dollars";
 
-    String result = numberConverter.convertNumberToString(input);
-
-    assertEquals(expected, result);
-  }
-
-  @Test
-  public void convertNumberToString_shouldReturnCorrectAnswerWhen200() {
-    int input = 200;
-    String expected = "two hundred";
-
-    String result = numberConverter.convertNumberToString(input);
+    String result = numberConverter.convertAmountInNumbersToWords(input);
 
     assertEquals(expected, result);
   }
 
   @Test
-  public void convertNumberToString_shouldReturnCorrectAnswerWhen380() {
-    int input = 380;
-    String expected = "three hundred and eighty";
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen125String() {
+    String input = "125.00 $";
+    String expected = "one hundred and twenty-five dollars";
 
-    String result = numberConverter.convertNumberToString(input);
-
-    assertEquals(expected, result);
-  }
-
-  @Test
-  public void convertNumberToString_shouldReturnCorrectAnswerWhen3584() {
-    int input = 3584;
-    String expected = "three thousand five hundred and eighty-four";
-
-    String result = numberConverter.convertNumberToString(input);
+    String result = numberConverter.convertAmountInNumbersToWords(input);
 
     assertEquals(expected, result);
   }
 
   @Test
-  public void convertNumberToString_shouldReturnCorrectAnswerWhen1000() {
-    int input = 1000;
-    String expected = "one thousand";
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen105String() {
+    String input = "105.00 $";
+    String expected = "one hundred and five dollars";
 
-    String result = numberConverter.convertNumberToString(input);
-
-    assertEquals(expected, result);
-  }
-
-  @Test
-  public void convertNumberToString_shouldReturnCorrectAnswerWhen7804() {
-    int input = 7804;
-    String expected = "seven thousand eight hundred and four";
-
-    String result = numberConverter.convertNumberToString(input);
+    String result = numberConverter.convertAmountInNumbersToWords(input);
 
     assertEquals(expected, result);
   }
 
   @Test
-  public void convertNumberToString_shouldReturnCorrectAnswerWhen5030() {
-    int input = 5030;
-    String expected = "five thousand and thirty";
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen200String() {
+    String input = "200.00 $";
+    String expected = "two hundred dollars";
 
-    String result = numberConverter.convertNumberToString(input);
-
-    assertEquals(expected, result);
-  }
-
-  @Test
-  public void convertNumberToString_shouldReturnCorrectAnswerWhen6900() {
-    int input = 6900;
-    String expected = "six thousand nine hundred";
-
-    String result = numberConverter.convertNumberToString(input);
+    String result = numberConverter.convertAmountInNumbersToWords(input);
 
     assertEquals(expected, result);
   }
 
   @Test
-  public void convertNumberToString_shouldReturnCorrectAnswerWhen2007() {
-    int input = 2007;
-    String expected = "two thousand and seven";
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen380String() {
+    String input = "380.00 $";
+    String expected = "three hundred and eighty dollars";
 
-    String result = numberConverter.convertNumberToString(input);
+    String result = numberConverter.convertAmountInNumbersToWords(input);
+
+    assertEquals(expected, result);
+  }
+
+  @Test
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen768String() {
+    String input = "768.00 $";
+    String expected = "seven hundred and sixty-eight dollars";
+
+    String result = numberConverter.convertAmountInNumbersToWords(input);
+
+    assertEquals(expected, result);
+  }
+
+  @Test
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen3584String() {
+    String input = "3584.00 $";
+    String expected = "three thousand five hundred and eighty-four dollars";
+
+    String result = numberConverter.convertAmountInNumbersToWords(input);
+
+    assertEquals(expected, result);
+  }
+
+  @Test
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen1000String() {
+    String input = "1000.00 $";
+    String expected = "one thousand dollars";
+
+    String result = numberConverter.convertAmountInNumbersToWords(input);
+
+    assertEquals(expected, result);
+  }
+
+  @Test
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen7804String() {
+    String input = "7804.00 $";
+    String expected = "seven thousand eight hundred and four dollars";
+
+    String result = numberConverter.convertAmountInNumbersToWords(input);
+
+    assertEquals(expected, result);
+  }
+
+
+  @Test
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen6900String() {
+    String input = "6900.00 $";
+    String expected = "six thousand nine hundred dollars";
+
+    String result = numberConverter.convertAmountInNumbersToWords(input);
+
+    assertEquals(expected, result);
+  }
+
+  @Test
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen2007String() {
+    String input = "2007.00 $";
+    String expected = "two thousand and seven dollars";
+
+    String result = numberConverter.convertAmountInNumbersToWords(input);
+
+    assertEquals(expected, result);
+  }
+
+  @Test
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen6080String() {
+    String inputString = "6080.00 $";
+    String expected = "six thousand and eighty dollars";
+
+    String result = numberConverter.convertAmountInNumbersToWords(inputString);
+
+    assertEquals(expected, result);
+  }
+
+  @Test
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen56381String() {
+    String input = "56381.00 $";
+    String expected = "fifty-six thousand three hundred and eighty-one dollars";
+
+    String result = numberConverter.convertAmountInNumbersToWords(input);
+
+    assertEquals(expected, result);
+  }
+
+  @Test
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen100000String() {
+    String inputString = "100000.00 $";
+    String expected = "one hundred thousand dollars";
+
+    String result = numberConverter.convertAmountInNumbersToWords(inputString);
+
+    assertEquals(expected, result);
+  }
+
+  @Test
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen456080String() {
+    String inputString = "456080.00 $";
+    String expected = "four hundred and fifty-six thousand and eighty dollars";
+
+    String result = numberConverter.convertAmountInNumbersToWords(inputString);
+
+    assertEquals(expected, result);
+  }
+
+  @Test
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen803044String() {
+    String inputString = "803044.00 $";
+    String expected = "eight hundred and three thousand and forty-four dollars";
+
+    String result = numberConverter.convertAmountInNumbersToWords(inputString);
 
     assertEquals(expected, result);
   }

@@ -57,5 +57,5 @@ public class IndexTest {
 
     assertEquals(expectedValue, result);
   }
-}
 
+}

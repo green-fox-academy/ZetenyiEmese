@@ -29,6 +29,16 @@ public class NumberConverterTest {
   }
 
   @Test
+  public void convertAmountInNumbersToWords_shouldReturnTwelveWhen12String() {
+    String input = "12.00 $";
+    String expected = "twelve dollars";
+
+    String result = numberConverter.convertAmountInNumbersToWords(input);
+
+    assertEquals(expected, result);
+  }
+
+  @Test
   public void convertAmountInNumbersToWords_shouldReturnTwentythreeWhen23String() {
     String input = "23.00 $";
     String expected = "twenty-three dollars";
@@ -203,6 +213,16 @@ public class NumberConverterTest {
   public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen803044String() {
     String inputString = "803044.00 $";
     String expected = "eight hundred and three thousand and forty-four dollars";
+
+    String result = numberConverter.convertAmountInNumbersToWords(inputString);
+
+    assertEquals(expected, result);
+  }
+
+  @Test
+  public void convertAmountInNumbersToWords_shouldReturnCorrectAnswerWhen472915String() {
+    String inputString = "472915.00 $";
+    String expected = "four hundred and seventy-two thousand nine hundred and fifteen dollars";
 
     String result = numberConverter.convertAmountInNumbersToWords(inputString);
 

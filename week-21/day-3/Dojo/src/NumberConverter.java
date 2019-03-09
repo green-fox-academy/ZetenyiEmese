@@ -18,7 +18,7 @@ public class NumberConverter {
     numberMap.put(9, "nine");
     numberMap.put(10, "ten");
     numberMap.put(11, "eleven");
-    numberMap.put(12, "tvelve");
+    numberMap.put(12, "twelve");
     numberMap.put(13, "thirteen");
     numberMap.put(14, "fourteen");
     numberMap.put(15, "fifteen");
@@ -58,26 +58,30 @@ public class NumberConverter {
 
   private String convertNumberToString(int input) {
     int mod;
+    String result;
 
     if (calculateInputLength(input) == 1) {
-      String result = numberMap.get(input);
-      return result;
+      return numberMap.get(input);
 
     } else if (calculateInputLength(input) == 2) {
-      mod = input % 10;
-      String result = numberMap.get(input / 10 * 10) +
-              (mod == 0 ? "" : "-" + convertNumberToString(mod));
-      return result;
+      if (numberMap.containsKey(input)) {
+        return numberMap.get(input);
+
+      } else {
+        mod = input % 10;
+        result = numberMap.get(input / 10 * 10) + "-" + convertNumberToString(mod);
+        return result;
+      }
 
     } else if (calculateInputLength(input) == 3) {
       mod = input % 100;
-      String result = numberMap.get(input / 100) + " hundred" +
+      result = numberMap.get(input / 100) + " hundred" +
               (mod == 0 ? "" : " and " + convertNumberToString(mod));
       return result;
 
     } else if (calculateInputLength(input) <= 6) {
       mod = input % 1000;
-      String result = convertNumberToString(input / 1000) + " thousand" +
+      result = convertNumberToString(input / 1000) + " thousand" +
               (mod == 0 ? "" : (mod / 100 == 0 ? " and " + convertNumberToString(mod) : " " + convertNumberToString(mod)));
       return result;
     }

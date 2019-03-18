@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Todos</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+<h1>Todos for today:</h1>
+
+<div style="font-size: 20px">
+    <form action="/todo/" method="get">
+        <label for="description">Search by description:</label>
+        <input type="text" id="description" name="descriptionPart" th:value="${descriptionPart}" placeholder="todo description">
+        <input type="submit" value="Search">
+    </form>
+</div>
+
+<br>
+<div>
+    <a href="/todo/add" style="font-size: 20px">Add new todo</a>
+</div>
+<br>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>ACTION</th>
+        <th>CREATED AT</th>
+        <th>DONE</th>
+        <th>URGENT</th>
+    </tr>
+    <tr th:each="todo:${todos}">
+        <td th:text="${todo.todoId}"></td>
+        <td><a th:href="'/todo/' + ${todo.todoId} + '/details'" th:text="${todo.description}"></a></td>
+        <td th:text="${todo.createdAt}"></td>
+        <td th:text="${todo.done}"></td>
+        <td th:text="${todo.urgent}"></td>
+
+        <td>
+            <form th:action="'/todo/' + ${todo.todoId} + '/delete'" method="post">
+                <input type="submit" value="delete">
+            </form>
+        </td>
+
+        <td><a th:href="'/todo/' + ${todo.todoId} + '/edit'">edit</a></td>
+    </tr>
+</table>
+</body>
+</html>

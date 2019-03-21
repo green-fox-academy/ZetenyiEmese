@@ -11,8 +11,8 @@
 
 <div style="font-size: 20px">
     <form action="/todo/" method="get">
-        <!--<label for="description">Search by description:</label>-->
-        <input type="text" id="description" name="descriptionPart" th:value="${descriptionPart}" placeholder="Enter todo description">
+        <input type="text" name="descriptionPart" th:value="${descriptionPart}" placeholder="Enter todo description">
+        <input type="text" name="assigneeNamePart" th:value="${assigneeNamePart}" placeholder="Enter assignee name">
         <input type="submit" value="Search">
     </form>
 </div>
@@ -38,7 +38,10 @@
         <td><a th:href="'/todo/' + ${todo.todoId} + '/details'" th:text="${todo.description}"></a></td>
         <!--<td th:text="${todo.createdAt}"></td>-->
         <td th:text="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-        <td th:text="${todo.assignee == null} ? '---' : ${todo.assignee.name}"></td>
+        <!--<td th:text="${todo.assignee == null} ? '-&#45;&#45;' : ${todo.assignee.name}"></td>-->
+        <!--<td><a th:href="'/assignee/' + ${todo.assignee?.assigneeId} + '/details'" th:text="${todo.assignee?.name}"></a></td>-->
+        <td th:if="${todo.assignee!=null}"><a th:href="'/assignee/' + ${todo.assignee.assigneeId} + '/details'" th:text="${todo.assignee.name}"></a></td>
+        <td th:if="${todo.assignee==null}">---</td>
         <td th:text="${todo.urgent}"></td>
         <td th:text="${todo.done}"></td>
 

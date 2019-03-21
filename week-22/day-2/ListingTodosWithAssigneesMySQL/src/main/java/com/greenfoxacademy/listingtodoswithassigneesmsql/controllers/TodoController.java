@@ -1,6 +1,5 @@
 package com.greenfoxacademy.listingtodoswithassigneesmsql.controllers;
 
-import com.greenfoxacademy.listingtodoswithassigneesmsql.models.Assignee;
 import com.greenfoxacademy.listingtodoswithassigneesmsql.models.Todo;
 import com.greenfoxacademy.listingtodoswithassigneesmsql.services.AssigneeService;
 import com.greenfoxacademy.listingtodoswithassigneesmsql.services.TodoService;
@@ -29,19 +28,24 @@ public class TodoController {
 //  public String showTodos(@RequestParam(required = false) Boolean isActive,
 //                          @ModelAttribute(value = "descriptionPart") String descriptionPart, Model model) {
     public String showTodos(@RequestParam(required = false) Boolean isActive,
-                            @RequestParam(required = false) String descriptionPart, Model model) {
+                            @RequestParam(required = false) String descriptionPart,
+                            @RequestParam(required = false) String assigneeNamePart, Model model) {
     List<Todo> filteredTodos;
 
     if (isActive != null) {
       filteredTodos = todoService.findTodoByDone(!isActive);
+    } else if (descriptionPart != null && !descriptionPart.isEmpty() && assigneeNamePart != null && !assigneeNamePart.isEmpty()) {
+      filteredTodos = todoService.findTodosByDescriptionContainingAndAssigneeNameContaining(descriptionPart, assigneeNamePart);
     } else if (descriptionPart != null && !descriptionPart.isEmpty()) {
       filteredTodos = todoService.findTodosByDescriptionContaining(descriptionPart);
+    } else if (assigneeNamePart != null && !assigneeNamePart.isEmpty()) {
+      filteredTodos = todoService.findTodosByAssigneeNameContaining(assigneeNamePart);
     } else {
-      //todoRepository.findAll().forEach(filteredTodos::add);
       filteredTodos = todoService.findAllTodos();
     }
 
     model.addAttribute("descriptionPart", descriptionPart);
+    model.addAttribute("assigneeNamePart", assigneeNamePart);
     model.addAttribute("todos", filteredTodos);
     return "todo_list";
   }

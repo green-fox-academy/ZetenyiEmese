@@ -53,4 +53,12 @@ public class TodoService {
     return todoRepository.findTodosByAssignee_AssigneeId(assigneeId);
   }
 
+  public ArrayList<Todo> findTodosByAssigneeNameContaining(String assigneeNamePart) {
+    return todoRepository.findTodosByAssignee_NameContaining(assigneeNamePart);
+  }
+
+  public ArrayList<Todo> findTodosByDescriptionContainingAndAssigneeNameContaining(String descriptionPart, String assigneeNamePart) {
+    return todoRepository.findTodosByDescriptionContainingAndAssignee_NameContaining(descriptionPart, assigneeNamePart);
+  }
+
 }

@@ -15,4 +15,6 @@ public interface TodoRepository extends CrudRepository<Todo, Long> {
   public ArrayList<Todo> findTodosByDescriptionContaining(String desc);
 //  public ArrayList<Todo> findTodosByAssignee(Assignee assignee);
   public ArrayList<Todo> findTodosByAssignee_AssigneeId(long assigneeId);
+  public ArrayList<Todo> findTodosByAssignee_NameContaining(String assigneeNamePart);
+  public ArrayList<Todo> findTodosByDescriptionContainingAndAssignee_NameContaining(String descriptionPart, String assigneeNamePart);
 }

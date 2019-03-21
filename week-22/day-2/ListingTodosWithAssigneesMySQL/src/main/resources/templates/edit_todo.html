@@ -15,7 +15,7 @@
 
     <div>
         <label for="description">DESCRIPTION:</label>
-        <input type="text" id="description" name="description" th:field="${todo.description}">
+        <input type="text" id="description" name="description" th:field="${todo.description}" autofocus>
     </div>
 
     <div>
@@ -28,8 +28,18 @@
         <input type="checkbox" id="done" name="done" th:field="${todo.done}">
     </div>
 
-    <input type="submit" value="Submit">
-    <a href="/todo/">Cancel</a>
+    <label for="assig">SELECT AN ASSIGNEE:</label>
+    <select id="assig" name="assignee">
+        <option value="">none</option>
+        <option th:each="assignee: ${assignees}" th:text="${assignee.name}"
+                th:value="${assignee.assigneeId}" th:selected="${assignee.assigneeId==todo.assignee?.assigneeId}"></option>
+    </select>
+    <br>
+
+    <div>
+        <input type="submit" value="Submit">
+        <a href="/todo/">Cancel</a>
+    </div>
 </form>
 
 </body>

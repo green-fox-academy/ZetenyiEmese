@@ -1,9 +1,6 @@
 package com.greenfoxacademy.listingtodoswithassigneesmsql.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,6 +13,9 @@ public class Todo {
   private LocalDateTime createdAt;
   private boolean urgent;
   private boolean done;
+  @ManyToOne
+  @JoinColumn(name = "assigneeId")
+  private Assignee assignee;
 
   //az üres konstruktor kell az adatbázis miatt:
   public Todo() {
@@ -47,6 +47,10 @@ public class Todo {
     return done;
   }
 
+  public Assignee getAssignee() {
+    return assignee;
+  }
+
   //ezek a setterek kellenek az editáláshoz, amikor a formból érkező todo-t a Spring össze akarja állítani
   public void setTodoId(long todoId) {
     this.todoId = todoId;
@@ -66,6 +70,10 @@ public class Todo {
 
   public void setDone(boolean done) {
     this.done = done;
+  }
+
+  public void setAssignee(Assignee assignee) {
+    this.assignee = assignee;
   }
 
 }

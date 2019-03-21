@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new assignee</title>
+</head>
+<body>
+<h1>Add new assignee:</h1>
+
+<form action="/assignee/addAssignee" method="post">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" autofocus required>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+    </div>
+    <br>
+
+    <div>
+        <input type="submit" value="Submit">
+        <a href="/assignee/">Cancel</a>
+    </div>
+</form>
+</body>
+</html>

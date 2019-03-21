@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit assignee</title>
+</head>
+<body>
+<h1>Edit assignee:</h1>
+
+<form action="/assignee/edit" method="post">
+    <input type="hidden" name="assigneeId" th:field="${assignee.assigneeId}">
+    <!--<input type="hidden" name="assigneeId" th:value="${assignee.assigneeId}">-->
+
+    <div>
+        <label for="name">NAME:</label>
+        <input type="text" id="name" name="name" th:field="${assignee.name}" autofocus>
+    </div>
+    <br>
+
+    <div>
+        <input type="submit" value="Submit">
+        <a href="/assignee/">Cancel</a>
+    </div>
+</form>
+
+</body>
+</html>

@@ -11,15 +11,16 @@
 
 <div style="font-size: 20px">
     <form action="/todo/" method="get">
-        <label for="description">Search by description:</label>
-        <input type="text" id="description" name="descriptionPart" th:value="${descriptionPart}" placeholder="todo description">
+        <!--<label for="description">Search by description:</label>-->
+        <input type="text" id="description" name="descriptionPart" th:value="${descriptionPart}" placeholder="Enter todo description">
         <input type="submit" value="Search">
     </form>
 </div>
 
 <br>
-<div>
-    <a href="/todo/add" style="font-size: 20px">Add new todo</a>
+<div style="font-size: 20px">
+    <a href="/todo/addTodo">Add new</a>
+    <a href="/assignee/" style="color: black">Assignees</a>
 </div>
 <br>
 
@@ -28,15 +29,18 @@
         <th>ID</th>
         <th>ACTION</th>
         <th>CREATED AT</th>
-        <th>DONE</th>
+        <th>ASSIGNED TO</th>
         <th>URGENT</th>
+        <th>DONE</th>
     </tr>
     <tr th:each="todo:${todos}">
         <td th:text="${todo.todoId}"></td>
         <td><a th:href="'/todo/' + ${todo.todoId} + '/details'" th:text="${todo.description}"></a></td>
-        <td th:text="${todo.createdAt}"></td>
-        <td th:text="${todo.done}"></td>
+        <!--<td th:text="${todo.createdAt}"></td>-->
+        <td th:text="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${todo.assignee == null} ? '---' : ${todo.assignee.name}"></td>
         <td th:text="${todo.urgent}"></td>
+        <td th:text="${todo.done}"></td>
 
         <td>
             <form th:action="'/todo/' + ${todo.todoId} + '/delete'" method="post">

@@ -29,7 +29,16 @@
         <span th:text="${todo.done}"></span>
     </div>
 
-    <a href="/todo/">Back</a>
+    <div>
+        <span>ASSIGNEE:</span>
+        <span th:if="${todo.assignee == null}" >none</span>
+        <span th:if="${todo.assignee != null}" th:text="${todo.assignee.name}"></span>
+    </div>
+    <br>
+
+    <div>
+        <a href="/todo/">Back</a>
+    </div>
 </div>
 </body>
 </html>

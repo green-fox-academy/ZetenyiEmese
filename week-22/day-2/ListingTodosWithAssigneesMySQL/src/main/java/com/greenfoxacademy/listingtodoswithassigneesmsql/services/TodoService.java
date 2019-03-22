@@ -6,6 +6,7 @@ import com.greenfoxacademy.listingtodoswithassigneesmsql.repositories.TodoReposi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -33,7 +34,7 @@ public class TodoService {
     return todos;
   }
 
-  public Optional<Todo> findTodoById(long todoId){
+  public Optional<Todo> findTodoById(long todoId) {
     return todoRepository.findById(todoId);
   }
 
@@ -41,8 +42,8 @@ public class TodoService {
     return todoRepository.findTodoByDone(done);
   }
 
-  public ArrayList<Todo> findTodosByDescriptionContaining(String descriptionPart) {
-    return todoRepository.findTodosByDescriptionContaining(descriptionPart);
+  public ArrayList<Todo> findTodosByDescriptionContaining(String description) {
+    return todoRepository.findTodosByDescriptionContaining(description);
   }
 
 //  public ArrayList<Todo> findTodosByAssignee(Assignee assignee) {
@@ -53,12 +54,56 @@ public class TodoService {
     return todoRepository.findTodosByAssignee_AssigneeId(assigneeId);
   }
 
-  public ArrayList<Todo> findTodosByAssigneeNameContaining(String assigneeNamePart) {
-    return todoRepository.findTodosByAssignee_NameContaining(assigneeNamePart);
+  public ArrayList<Todo> findTodosByAssigneeNameContaining(String name) {
+    return todoRepository.findTodosByAssignee_NameContaining(name);
   }
 
-  public ArrayList<Todo> findTodosByDescriptionContainingAndAssigneeNameContaining(String descriptionPart, String assigneeNamePart) {
-    return todoRepository.findTodosByDescriptionContainingAndAssignee_NameContaining(descriptionPart, assigneeNamePart);
+  public ArrayList<Todo> findTodosByDescriptionContainingAndAssigneeNameContaining(String description, String name) {
+    return todoRepository.findTodosByDescriptionContainingAndAssignee_NameContaining(description, name);
+  }
+
+  public ArrayList<Todo> findTodosByDueDate(LocalDate duedate) {
+    return todoRepository.findTodosByDueDate(duedate);
+  }
+
+  public ArrayList<Todo> findTodosByDescriptionAndNameAndDuedate(String description, String name, LocalDate duedate) {
+    ArrayList<Todo> resultFilteredTodos = findAllTodos();
+
+    if (description != null && !description.isEmpty()) {
+      resultFilteredTodos = todoRepository.findTodosByDescriptionContaining(description);
+    }
+
+    if (name != null && !name.isEmpty()) {
+      resultFilteredTodos = findTodosBy(name, resultFilteredTodos);
+    }
+
+    if (duedate != null) {
+      resultFilteredTodos = findTodosBy(duedate, resultFilteredTodos);
+    }
+
+    return resultFilteredTodos;
+  }
+
+  private ArrayList<Todo> findTodosBy(String name, ArrayList<Todo> todos) {
+    ArrayList<Todo> searchedTodos = new ArrayList<>();
+
+    for (Todo todo : todos) {
+      if (todo.getAssignee() != null && todo.getAssignee().getName().toLowerCase().contains(name.toLowerCase())) {
+        searchedTodos.add(todo);
+      }
+    }
+    return searchedTodos;
+  }
+
+  private ArrayList<Todo> findTodosBy(LocalDate date, ArrayList<Todo> todos) {
+    ArrayList<Todo> searchedTodos = new ArrayList<>();
+
+    for (Todo todo : todos) {
+      if (todo.getDueDate() != null && todo.getDueDate().equals(date)) {
+        searchedTodos.add(todo);
+      }
+    }
+    return searchedTodos;
   }
 
 }

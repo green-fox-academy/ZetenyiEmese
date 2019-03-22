@@ -1,6 +1,9 @@
 package com.greenfoxacademy.listingtodoswithassigneesmsql.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -9,10 +12,16 @@ public class Todo {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long todoId;
+
   private String description;
   private LocalDateTime createdAt;
   private boolean urgent;
   private boolean done;
+
+  //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd")
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  private LocalDate dueDate;
+
   @ManyToOne
   @JoinColumn(name = "assigneeId")
   private Assignee assignee;
@@ -47,6 +56,10 @@ public class Todo {
     return done;
   }
 
+  public LocalDate getDueDate() {
+    return dueDate;
+  }
+
   public Assignee getAssignee() {
     return assignee;
   }
@@ -70,6 +83,10 @@ public class Todo {
 
   public void setDone(boolean done) {
     this.done = done;
+  }
+
+  public void setDueDate(LocalDate dueDate) {
+    this.dueDate = dueDate;
   }
 
   public void setAssignee(Assignee assignee) {

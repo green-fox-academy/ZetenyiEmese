@@ -8,8 +8,10 @@
 <body>
 <h1>Edit todo:</h1>
 
+<p th:text="${error}"></p>
+
 <!--<form th:action="'/todo/' + ${todo.todoId} + '/edit'" method="post">-->
-<form action="/todo/edit" method="post">
+<form th:unless="${error}" action="/todo/edit" method="post">
     <input type="hidden" name="todoId" th:field="${todo.todoId}">
     <!--<input type="hidden" name="todoId" th:value="${todo.todoId}">-->
 
@@ -28,12 +30,20 @@
         <input type="checkbox" id="done" name="done" th:field="${todo.done}">
     </div>
 
-    <label for="assig">SELECT AN ASSIGNEE:</label>
+    <label for="assig">ASSIGNEE:</label>
     <select id="assig" name="assignee">
         <option value="">none</option>
-        <option th:each="assignee: ${assignees}" th:text="${assignee.name}"
-                th:value="${assignee.assigneeId}" th:selected="${assignee.assigneeId==todo.assignee?.assigneeId}"></option>
+        <option th:each="assignee: ${assignees}"
+                th:text="${assignee.name}"
+                th:value="${assignee.assigneeId}"
+                th:selected="${assignee.assigneeId==todo.assignee?.assigneeId}">
+        </option>
     </select>
+
+    <div>
+        <label for="duedate">DUEDATE:</label>
+        <input type="date" id="duedate" name="dueDate" th:field="${todo.dueDate}">
+    </div>
     <br>
 
     <div>

@@ -4,10 +4,13 @@ import com.greenfoxacademy.listingtodoswithassigneesmsql.models.Todo;
 import com.greenfoxacademy.listingtodoswithassigneesmsql.services.AssigneeService;
 import com.greenfoxacademy.listingtodoswithassigneesmsql.services.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,25 +30,21 @@ public class TodoController {
   @GetMapping("/")
 //  public String showTodos(@RequestParam(required = false) Boolean isActive,
 //                          @ModelAttribute(value = "descriptionPart") String descriptionPart, Model model) {
-    public String showTodos(@RequestParam(required = false) Boolean isActive,
-                            @RequestParam(required = false) String descriptionPart,
-                            @RequestParam(required = false) String assigneeNamePart, Model model) {
-    List<Todo> filteredTodos;
+  public String showTodos(@RequestParam(required = false) Boolean isActive,
+                          @RequestParam(required = false) String description,
+                          @RequestParam(required = false) String name,
+                          @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate duedate, Model model) {
+    ArrayList<Todo> filteredTodos;
 
     if (isActive != null) {
       filteredTodos = todoService.findTodoByDone(!isActive);
-    } else if (descriptionPart != null && !descriptionPart.isEmpty() && assigneeNamePart != null && !assigneeNamePart.isEmpty()) {
-      filteredTodos = todoService.findTodosByDescriptionContainingAndAssigneeNameContaining(descriptionPart, assigneeNamePart);
-    } else if (descriptionPart != null && !descriptionPart.isEmpty()) {
-      filteredTodos = todoService.findTodosByDescriptionContaining(descriptionPart);
-    } else if (assigneeNamePart != null && !assigneeNamePart.isEmpty()) {
-      filteredTodos = todoService.findTodosByAssigneeNameContaining(assigneeNamePart);
     } else {
-      filteredTodos = todoService.findAllTodos();
+      filteredTodos = todoService.findTodosByDescriptionAndNameAndDuedate(description, name, duedate);
     }
 
-    model.addAttribute("descriptionPart", descriptionPart);
-    model.addAttribute("assigneeNamePart", assigneeNamePart);
+    model.addAttribute("description", description);
+    model.addAttribute("name", name);
+    model.addAttribute("duedate", duedate);
     model.addAttribute("todos", filteredTodos);
     return "todo_list";
   }
@@ -87,12 +86,8 @@ public class TodoController {
 
   @GetMapping("/{todoId}/edit")
   public String editTodo(@PathVariable long todoId, Model model) {
-    Optional<Todo> todoOptionalInDatabase = todoService.findTodoById(todoId);
-
-    if (todoOptionalInDatabase.isPresent()) {
-      model.addAttribute("todo", todoOptionalInDatabase.get());
-      model.addAttribute("assignees", assigneeService.findAllAssignees());
-    }
+    findTodoAndAddToModel(todoId, model);
+    model.addAttribute("assignees", assigneeService.findAllAssignees());
     return "edit_todo";
   }
 
@@ -106,6 +101,7 @@ public class TodoController {
       todoInDataBase.setUrgent(todoComingFromTheForm.isUrgent());
       todoInDataBase.setDone(todoComingFromTheForm.isDone());
       todoInDataBase.setAssignee(todoComingFromTheForm.getAssignee());
+      todoInDataBase.setDueDate(todoComingFromTheForm.getDueDate());
       todoService.addTodo(todoInDataBase); //felülírja a régi todo-t  az újjal, mert ugyanaz az id-jük
     }
     return "redirect:/todo/";
@@ -126,12 +122,18 @@ public class TodoController {
 
   @GetMapping("/{todoId}/details")
   public String detailsTodo(@PathVariable long todoId, Model model) {
-    Optional<Todo> todoOptionalInDatabase = todoService.findTodoById(todoId);
+    findTodoAndAddToModel(todoId, model);
+    return "todo_details";
+  }
+
+  private void findTodoAndAddToModel(long id, Model model) {
+    Optional<Todo> todoOptionalInDatabase = todoService.findTodoById(id);
 
     if (todoOptionalInDatabase.isPresent()) {
       model.addAttribute("todo", todoOptionalInDatabase.get());
+    } else {
+      model.addAttribute("error", "No todo found!");
     }
-    return "todo_details";
   }
 
 }

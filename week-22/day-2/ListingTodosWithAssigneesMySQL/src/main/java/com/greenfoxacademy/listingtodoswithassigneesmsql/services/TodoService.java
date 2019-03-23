@@ -6,6 +6,7 @@ import com.greenfoxacademy.listingtodoswithassigneesmsql.repositories.TodoReposi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -66,22 +67,34 @@ public class TodoService {
     return todoRepository.findTodosByDueDate(duedate);
   }
 
-  public ArrayList<Todo> findTodosByDescriptionAndNameAndDuedate(String description, String name, LocalDate duedate) {
-    ArrayList<Todo> resultFilteredTodos = findAllTodos();
+  public ArrayList<Todo> findTodosByDescriptionAndNameAndDuedate(String description, String name, LocalDate dueDate) {
+    ArrayList<Todo> filteredTodos = findAllTodos();
 
     if (description != null && !description.isEmpty()) {
-      resultFilteredTodos = todoRepository.findTodosByDescriptionContaining(description);
+      filteredTodos = todoRepository.findTodosByDescriptionContaining(description);
     }
 
     if (name != null && !name.isEmpty()) {
-      resultFilteredTodos = findTodosBy(name, resultFilteredTodos);
+//      filteredTodos = findTodosBy(name, filteredTodos);
+      filteredTodos = findCommonTodos(filteredTodos, todoRepository.findTodosByAssignee_NameContaining(name));
     }
 
-    if (duedate != null) {
-      resultFilteredTodos = findTodosBy(duedate, resultFilteredTodos);
+    if (dueDate != null) {
+//      filteredTodos = findTodosBy(dueDate, filteredTodos);
+      filteredTodos = findCommonTodos(filteredTodos, todoRepository.findTodosByDueDate(dueDate));
     }
 
-    return resultFilteredTodos;
+    return filteredTodos;
+  }
+
+  private ArrayList<Todo> findCommonTodos(ArrayList<Todo> todoList1, ArrayList<Todo> todoList2) {
+    ArrayList<Todo> resultList = new ArrayList<>();
+    for (Todo todo : todoList1) {
+      if (todoList2.contains(todo)){
+        resultList.add(todo);
+      }
+    }
+    return resultList;
   }
 
   private ArrayList<Todo> findTodosBy(String name, ArrayList<Todo> todos) {

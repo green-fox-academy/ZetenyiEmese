@@ -33,18 +33,19 @@ public class TodoController {
   public String showTodos(@RequestParam(required = false) Boolean isActive,
                           @RequestParam(required = false) String description,
                           @RequestParam(required = false) String name,
-                          @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate duedate, Model model) {
+                          @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dueDate, Model model) {
     ArrayList<Todo> filteredTodos;
 
     if (isActive != null) {
       filteredTodos = todoService.findTodoByDone(!isActive);
+      model.addAttribute("isActive", isActive);
     } else {
-      filteredTodos = todoService.findTodosByDescriptionAndNameAndDuedate(description, name, duedate);
+      filteredTodos = todoService.findTodosByDescriptionAndNameAndDuedate(description, name, dueDate);
     }
 
     model.addAttribute("description", description);
     model.addAttribute("name", name);
-    model.addAttribute("duedate", duedate);
+    model.addAttribute("dueDate", dueDate);
     model.addAttribute("todos", filteredTodos);
     return "todo_list";
   }

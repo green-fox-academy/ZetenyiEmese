@@ -13,15 +13,17 @@
     <form action="/todo/" method="get">
         <input type="text" name="description" th:value="${description}" placeholder="Enter todo description">
         <input type="text" name="name" th:value="${name}" placeholder="Enter assignee name">
-        <input type="date" name="duedate" th:value="${duedate}" placeholder="Enter duedate">
+        <input type="date" name="dueDate" th:value="${dueDate}" placeholder="Enter duedate">
         <input type="submit" value="Search">
     </form>
 </div>
 
 <br>
 <div style="font-size: 20px">
-    <a href="/todo/addTodo">Add new</a>
-    <a href="/assignee/" style="color: black">Assignees</a>
+    <a href="/todo/addTodo">Add new todo</a>
+</div>
+<div style="font-size: 20px">
+    <a href="/assignee/">List of assignees</a>
 </div>
 <br>
 
@@ -41,7 +43,7 @@
 
         <!--<td th:text="${todo.createdAt}"></td>-->
         <td th:text="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-        <td th:text="${todo.dueDate == null} ? '---' : ${todo.dueDate}"></td>
+        <td th:text="${todo.dueDate==null} ? '---' : ${todo.dueDate}"></td>
 
         <!--<td th:text="${todo.assignee == null} ? '-&#45;&#45;' : ${todo.assignee.name}"></td>-->
         <!--<td><a th:href="'/assignee/' + ${todo.assignee?.assigneeId} + '/details'" th:text="${todo.assignee?.name}"></a></td>-->
@@ -60,5 +62,29 @@
         <td><a th:href="'/todo/' + ${todo.todoId} + '/edit'">edit</a></td>
     </tr>
 </table>
+<br>
+<div style="font-size: 20px">
+    <a href="/todo/">List all tasks</a>
+</div>
+
+<div th:if="${isActive==null}" style="font-size: 20px">
+    <div>
+        <a href="/todo/?isActive=true">List undone tasks</a>
+    </div>
+    <div>
+        <a href="/todo/?isActive=false">List tasks already done</a>
+    </div>
+</div>
+
+<div th:if="${isActive}" style="font-size: 20px">
+    <a href="/todo/?isActive=false">List tasks already done</a>
+</div>
+
+<div th:if="${isActive!=null}">
+    <div th:if="${!isActive}" style="font-size: 20px">
+        <a href="/todo/?isActive=true">List undone tasks</a>
+    </div>
+</div>
+
 </body>
 </html>

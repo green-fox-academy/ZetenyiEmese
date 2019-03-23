@@ -8,9 +8,9 @@
 </head>
 <body>
 <h1>Assignees:</h1>
+
 <div style="font-size: 20px">
-    <a href="/assignee/addAssignee">Add new</a>
-    <a href="/todo/" style="color: black">Back</a>
+    <a href="/assignee/addAssignee">Add new assignee</a>
 </div>
 <br>
 
@@ -23,7 +23,7 @@
     <tr th:each="assignee:${assignees}">
         <td th:text="${assignee.assigneeId}"></td>
         <!--<td th:text="${assignee.name}"></a></td>-->
-        <td><a th:href="'/assignee/' + ${assignee.assigneeId} + '/details'" th:text="${assignee.name}"></a></td>
+        <td><a th:href="'/assignee/' + ${assignee.assigneeId} + '/details/1'" th:text="${assignee.name}"></a></td>
         <td th:text="${assignee.email}"></td>
 
         <td>
@@ -35,5 +35,10 @@
         <td><a th:href="'/assignee/' + ${assignee.assigneeId} + '/edit'">edit</a></td>
     </tr>
 </table>
+<br>
+<div style="font-size: 20px">
+    <a href="/todo/" style="color: black">Back</a>
+</div>
+
 </body>
 </html>

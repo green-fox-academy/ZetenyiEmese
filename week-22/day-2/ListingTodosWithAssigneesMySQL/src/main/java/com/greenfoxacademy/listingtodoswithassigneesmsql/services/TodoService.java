@@ -39,8 +39,8 @@ public class TodoService {
     return todoRepository.findById(todoId);
   }
 
-  public ArrayList<Todo> findTodoByDone(boolean done) {
-    return todoRepository.findTodoByDone(done);
+  public ArrayList<Todo> findTodosByDone(boolean done) {
+    return todoRepository.findTodosByDone(done);
   }
 
   public ArrayList<Todo> findTodosByDescriptionContaining(String description) {

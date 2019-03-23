@@ -49,17 +49,13 @@ public class AssigneeController {
 
   @GetMapping("/{assigneeId}/edit")
   public String editAssignee(@PathVariable long assigneeId, Model model) {
-    Optional<Assignee> assigneeOptionalInDatabase = assigneeService.findAssignee(assigneeId);
-
-    if (assigneeOptionalInDatabase.isPresent()) {
-      model.addAttribute("assignee", assigneeOptionalInDatabase.get());
-    }
+    findAssigneeAndAddToModel(assigneeId, model);
     return "edit_assignee";
   }
 
   @PostMapping("/edit")
   public String editAssignee(@ModelAttribute Assignee assigneeComingFromTheForm) {
-    Optional<Assignee> assigneeOptionalInDatabase = assigneeService.findAssignee(assigneeComingFromTheForm.getAssigneeId());
+    Optional<Assignee> assigneeOptionalInDatabase = assigneeService.findAssigneeById(assigneeComingFromTheForm.getAssigneeId());
 
     if (assigneeOptionalInDatabase.isPresent()) {
       Assignee assigneeInDataBase = assigneeOptionalInDatabase.get();
@@ -69,17 +65,23 @@ public class AssigneeController {
     return "redirect:/assignee/";
   }
 
-  @GetMapping("/{assigneeId}/details")
-  public String detailsAssignee(@PathVariable long assigneeId, Model model) {
-    Optional<Assignee> assigneeOptionalInDatabase = assigneeService.findAssignee(assigneeId);
+  @GetMapping("/{assigneeId}/details/{from}")
+  public String detailsAssignee(@PathVariable long assigneeId, @PathVariable int from, Model model) {
+    findAssigneeAndAddToModel(assigneeId, model);
+//      model.addAttribute("todos", todoService.findTodosByAssignee(assigneeInDatabase));
+    model.addAttribute("todos", todoService.findTodosByAssignee(assigneeId));
+    model.addAttribute("from", from);
+    return "assignee_details";
+  }
+
+  private void findAssigneeAndAddToModel(long id, Model model) {
+    Optional<Assignee> assigneeOptionalInDatabase = assigneeService.findAssigneeById(id);
 
     if (assigneeOptionalInDatabase.isPresent()) {
-      Assignee assigneeInDatabase = assigneeOptionalInDatabase.get();
-      model.addAttribute("assignee", assigneeInDatabase);
-//      model.addAttribute("todos", todoService.findTodosByAssignee(assigneeInDatabase));
-      model.addAttribute("todos", todoService.findTodosByAssignee(assigneeId));
+      model.addAttribute("assignee", assigneeOptionalInDatabase.get());
+    } else {
+      model.addAttribute("error", "No assignee found!");
     }
-    return "assignee_details";
   }
 
 }

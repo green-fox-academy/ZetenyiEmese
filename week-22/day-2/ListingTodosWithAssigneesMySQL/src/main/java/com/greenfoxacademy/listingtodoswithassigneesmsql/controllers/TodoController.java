@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -28,8 +27,6 @@ public class TodoController {
   }
 
   @GetMapping("/")
-//  public String showTodos(@RequestParam(required = false) Boolean isActive,
-//                          @ModelAttribute(value = "descriptionPart") String descriptionPart, Model model) {
   public String showTodos(@RequestParam(required = false) Boolean isActive,
                           @RequestParam(required = false) String description,
                           @RequestParam(required = false) String name,
@@ -37,8 +34,7 @@ public class TodoController {
     ArrayList<Todo> filteredTodos;
 
     if (isActive != null) {
-      filteredTodos = todoService.findTodoByDone(!isActive);
-      model.addAttribute("isActive", isActive);
+      filteredTodos = todoService.findTodosByDone(!isActive);
     } else {
       filteredTodos = todoService.findTodosByDescriptionAndNameAndDuedate(description, name, dueDate);
     }
@@ -47,26 +43,9 @@ public class TodoController {
     model.addAttribute("name", name);
     model.addAttribute("dueDate", dueDate);
     model.addAttribute("todos", filteredTodos);
+    model.addAttribute("isActive", isActive);
     return "todo_list";
   }
-
-//  @GetMapping("/")
-//  public String showTodos(@RequestParam(required = false) Boolean isActive,
-//                          @ModelAttribute Todo todo, Model model) {
-//    List<Todo> filteredTodos = new ArrayList<>();
-//
-//    if (isActive != null) {
-//      filteredTodos = todoService.findByDone(!isActive);
-//    } else if (todo.getDescription() != null) {
-//      filteredTodos = todoService.findTodosByDescriptionContaining(todo.getDescription());
-//    } else {
-//      //todoRepository.findAll().forEach(filteredTodos::add);
-//      filteredTodos = todoService.findAllTodos();
-//    }
-//
-//    model.addAttribute("todos", filteredTodos);
-//    return "todolist";
-//  }
 
   @GetMapping("/addTodo")
   public String addTodo() {
@@ -107,19 +86,6 @@ public class TodoController {
     }
     return "redirect:/todo/";
   }
-
-//  @PostMapping("/{todoId}/edit")
-//  public String editTodoAssignee(@PathVariable long todoId, @ModelAttribute(value = "assigneeId") String name) {
-//    Optional<Todo> todoOptionalInDatabase = todoService.findTodo(todoId);
-//    Optional<Assignee> assigneeOptionalInDatabase = assigneeService.findAssigneeByName(name);
-//
-//    if (todoOptionalInDatabase.isPresent() && assigneeOptionalInDatabase.isPresent()) {
-//      Todo todoInDataBase = todoOptionalInDatabase.get();
-//      todoInDataBase.setAssignee(assigneeOptionalInDatabase.get());
-//      todoService.addTodo(todoInDataBase); //felülírja a régi todo-t  az újjal, mert ugyanaz az id-jük
-//    }
-//    return "redirect:/todo/";
-//  }
 
   @GetMapping("/{todoId}/details")
   public String detailsTodo(@PathVariable long todoId, Model model) {

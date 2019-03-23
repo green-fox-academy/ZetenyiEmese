@@ -8,7 +8,9 @@
 <body>
 <h1>Assignee details:</h1>
 
-<div style="font-size: 20px">
+<p th:text="${error}"></p>
+
+<div th:unless="${error}" style="font-size: 20px">
     <div>
         <span>NAME:</span>
         <span th:text="${assignee.name}"></span>
@@ -28,7 +30,10 @@
     </div>
     <br>
 
-    <div>
+    <div th:if="${from==0}">
+        <a href="/todo/">Back</a>
+    </div>
+    <div th:if="${from==1}">
         <a href="/assignee/">Back</a>
     </div>
 </div>

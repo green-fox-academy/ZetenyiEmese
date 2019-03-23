@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 @Repository
 public interface TodoRepository extends CrudRepository<Todo, Long> {
-  public ArrayList<Todo> findTodoByDone(boolean done);
-  public ArrayList<Todo> findTodoByUrgent(boolean urgent);
+  public ArrayList<Todo> findTodosByDone(boolean done);
+  public ArrayList<Todo> findTodosByUrgent(boolean urgent);
   public ArrayList<Todo> findTodosByDescriptionContaining(String description);
 //  public ArrayList<Todo> findTodosByAssignee(Assignee assignee);
   public ArrayList<Todo> findTodosByAssignee_AssigneeId(long assigneeId);

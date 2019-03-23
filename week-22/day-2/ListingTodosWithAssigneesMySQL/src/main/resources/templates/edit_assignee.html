@@ -8,7 +8,9 @@
 <body>
 <h1>Edit assignee:</h1>
 
-<form action="/assignee/edit" method="post">
+<p th:text="${error}"></p>
+
+<form th:unless="${error}" action="/assignee/edit" method="post">
     <input type="hidden" name="assigneeId" th:field="${assignee.assigneeId}">
     <!--<input type="hidden" name="assigneeId" th:value="${assignee.assigneeId}">-->
 

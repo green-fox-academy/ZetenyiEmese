@@ -47,7 +47,8 @@
 
         <!--<td th:text="${todo.assignee == null} ? '-&#45;&#45;' : ${todo.assignee.name}"></td>-->
         <!--<td><a th:href="'/assignee/' + ${todo.assignee?.assigneeId} + '/details'" th:text="${todo.assignee?.name}"></a></td>-->
-        <td th:if="${todo.assignee!=null}"><a th:href="'/assignee/' + ${todo.assignee.assigneeId} + '/details'" th:text="${todo.assignee.name}"></a></td>
+        <td th:if="${todo.assignee!=null}">
+            <a th:href="'/assignee/' + ${todo.assignee.assigneeId} + '/details/0'" th:text="${todo.assignee.name}"></a></td>
         <td th:if="${todo.assignee==null}">---</td>
 
         <td th:text="${todo.urgent}"></td>

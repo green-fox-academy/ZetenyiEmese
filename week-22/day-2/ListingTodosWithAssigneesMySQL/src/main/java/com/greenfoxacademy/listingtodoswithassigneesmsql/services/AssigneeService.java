@@ -1,7 +1,6 @@
 package com.greenfoxacademy.listingtodoswithassigneesmsql.services;
 
 import com.greenfoxacademy.listingtodoswithassigneesmsql.models.Assignee;
-import com.greenfoxacademy.listingtodoswithassigneesmsql.models.Todo;
 import com.greenfoxacademy.listingtodoswithassigneesmsql.repositories.AssigneeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,7 @@ public class AssigneeService {
     return assignees;
   }
 
-  public Optional<Assignee> findAssignee(long assigneeId){
+  public Optional<Assignee> findAssigneeById(long assigneeId){
     return assigneeRepository.findById(assigneeId);
   }
 

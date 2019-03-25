@@ -3,28 +3,33 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Todo details:</title>
+    <title>Todo details</title>
 </head>
 <body>
-    <h1>Details:</h1>
+    <h1>Todo details:</h1>
 
     <div style="font-size: 20px">
-    <div>
-        <span>Todo description:</span>
-        <span th:text="${todo.description}"></span>
-    </div>
+        <div>
+            <span>DESCRIPTION:</span>
+            <span th:text="${todo.description}"></span>
+        </div>
 
-    <div>
-        <span>Urgent:</span>
-        <span th:text="${todo.urgent}"></span>
-    </div>
+        <div>
+            <span>CREATED AT:</span>
+            <span th:text="${todo.createdAt}"></span>
+        </div>
 
-    <div>
-        <span>Done:</span>
-        <span th:text="${todo.done}"></span>
-    </div>
+        <div>
+            <span>URGENT:</span>
+            <span th:text="${todo.urgent}"></span>
+        </div>
 
-    <a href="/todo/">Back</a>
+        <div>
+            <span>DONE:</span>
+            <span th:text="${todo.done}"></span>
+        </div>
+
+        <a href="/todo/">Back</a>
     </div>
 </body>
 </html>

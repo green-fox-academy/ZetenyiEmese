@@ -24,7 +24,7 @@ public class TodoController {
 
   @GetMapping("/")
   public String list(@RequestParam(required = false) Boolean isActive, Model model) {
-    List<Todo> todos = new ArrayList<>();
+    List<Todo> todos;
 
     if (isActive != null) {
       todos = todoRepository.findByDone(!isActive);
@@ -81,12 +81,12 @@ public class TodoController {
     Optional<Todo> todoOptionalInDatabase = todoRepository.findById(todoComingFromTheForm.getId());
 
     if (todoOptionalInDatabase.isPresent()) {
-//      Todo todoInDataBase = todoOptionalInDatabase.get();
-//      todoInDataBase.setDescription(todoComingFromTheForm.getDescription());
-//      todoInDataBase.setUrgent(todoComingFromTheForm.isUrgent());
-//      todoInDataBase.setDone(todoComingFromTheForm.isDone());
-//      todoRepository.save(todoInDataBase);
-      todoRepository.save(todoComingFromTheForm); //felülírja a régi todot az új, formos todoval, hiszen ugyanaz az id-jük
+      Todo todoInDataBase = todoOptionalInDatabase.get();
+      todoInDataBase.setDescription(todoComingFromTheForm.getDescription());
+      todoInDataBase.setUrgent(todoComingFromTheForm.isUrgent());
+      todoInDataBase.setDone(todoComingFromTheForm.isDone());
+      todoRepository.save(todoInDataBase);
+      //todoRepository.save(todoComingFromTheForm); //felülírja a régi todot az új, formos todoval, hiszen ugyanaz az id-jük
     }
     return "redirect:/todo/";
   }

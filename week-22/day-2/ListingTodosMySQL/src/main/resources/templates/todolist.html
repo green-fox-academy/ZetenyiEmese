@@ -18,6 +18,7 @@
         <tr>
             <th>ID</th>
             <th>ACTION</th>
+            <th>CREATED AT</th>
             <th>DONE</th>
             <th>URGENT</th>
         </tr>
@@ -25,6 +26,7 @@
             <td th:text="${todo.id}"></td>
             <!--<td th:text="${todo.description}"></td>-->
             <td><a th:href="'/todo/' + ${todo.id} + '/details'" th:text="${todo.description}"></a></td>
+            <td th:text="${todo.createdAt}"></td>
             <td th:text="${todo.done}"></td>
             <td th:text="${todo.urgent}"></td>
 

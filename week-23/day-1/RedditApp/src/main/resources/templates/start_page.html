@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+</head>
+
+<body>
+
+<div style="font-size: 20px">
+    <div>
+        <a href="/login">Submit new post</a>
+    </div>
+    <div style="text-align: right">
+        <a href="/login">LOG IN</a>
+        <a href="/register">SIGN UP</a>
+    </div>
+
+    <h1>Trending posts</h1>
+
+    <table>
+        <tr th:each="post:${posts}">
+            <td th:text="${post.vote}"></td>
+
+            <td>
+                <form action="/login" method="get">
+                    <input type="submit" value="+">
+                </form>
+            </td>
+
+            <td>
+                <form action="/login" method="get">
+                    <input type="submit" value="-">
+                </form>
+            </td>
+
+            <td><a th:href="${post.url}" th:text="${post.title}"></a></td>
+            <td style="font-size: 16px" th:text="'Posted by ' + ${post.user.username}"></td>
+            <td style="font-size: 16px" th:text="'at ' + ${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

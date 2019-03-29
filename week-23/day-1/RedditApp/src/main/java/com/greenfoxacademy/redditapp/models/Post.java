@@ -2,6 +2,8 @@ package com.greenfoxacademy.redditapp.models;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Post {
@@ -19,6 +21,9 @@ public class Post {
   @JoinColumn(name = "userId")
   private User user;
 
+  @ManyToMany
+  private List<User> voters;
+
   public Post() {
   }
 
@@ -27,7 +32,8 @@ public class Post {
     this.url = url;
     this.user = user;
     createdAt = LocalDateTime.now();
-    vote = 50;
+    vote = 0;
+    voters = new ArrayList<>();
   }
 
   public long getId() {
@@ -54,6 +60,10 @@ public class Post {
     return user;
   }
 
+  public List<User> getVoters() {
+    return voters;
+  }
+
   public void setId(long id) {
     this.id = id;
   }
@@ -76,6 +86,10 @@ public class Post {
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  public void setVoters(List<User> voters) {
+    this.voters = voters;
   }
 
 }

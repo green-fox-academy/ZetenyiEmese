@@ -27,9 +27,9 @@ public class PostController {
 
   @GetMapping("")
   public String start(Model model) {
-    model.addAttribute("posts", postService.findAllPosts());
-    model.addAttribute("allPosts", true);
-    return "post_list";
+//    model.addAttribute("posts", postService.findAllPosts());
+    model.addAttribute("posts", postService.findAllPostsInVoteOrder());
+    return "start_page";
   }
 
   @GetMapping("/{userId}/{allPosts}")
@@ -40,10 +40,12 @@ public class PostController {
       model.addAttribute("user", userOptionalInDatabase.get());
 
       if (allPosts) {
-        model.addAttribute("posts", postService.findAllPosts());
+//        model.addAttribute("posts", postService.findAllPosts());
+        model.addAttribute("posts", postService.findAllPostsInVoteOrder());
         model.addAttribute("allPosts", true);
       } else {
-        model.addAttribute("posts", postService.findPostsByUser(userId));
+//        model.addAttribute("posts", postService.findPostsByUser(userId));
+        model.addAttribute("posts", postService.findPostsByUserInVoteOrder(userId));
         model.addAttribute("allPosts", false);
       }
 
@@ -64,11 +66,29 @@ public class PostController {
   }
 
   @PostMapping("/{userId}/submit")
-  public String submitNewPost(@PathVariable long userId, @ModelAttribute(value = "title") String title,
-                                                         @ModelAttribute(value = "url") String url) {
+  public String submitNewPost(@PathVariable long userId,
+                              @ModelAttribute(value = "title") String title,
+                              @ModelAttribute(value = "url") String url) {
     postService.addPost(title, url, userId);
     return "redirect:/" + userId + "/false";
   }
 
+  @PostMapping("/{userId}/delete/{postId}")
+  public String deletePost(@PathVariable long userId, @PathVariable long postId) {
+    postService.deletePost(userId, postId);
+    return "redirect:/" + userId + "/false";
+  }
+
+  @PostMapping("/{userId}/upvote/{postId}")
+  public String upvotePost(@PathVariable long userId, @PathVariable long postId) {
+    postService.votePost(userId, postId, "up");
+    return "redirect:/" + userId + "/true";
+  }
+
+  @PostMapping("/{userId}/downvote/{postId}")
+  public String downvotePost(@PathVariable long userId, @PathVariable long postId) {
+    postService.votePost(userId, postId, "down");
+    return "redirect:/" + userId + "/true";
+  }
 
 }

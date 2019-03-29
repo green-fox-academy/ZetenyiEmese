@@ -20,7 +20,6 @@ public class LoginController {
 
   @GetMapping("/register")
   public String showRegisterForm(Model model) {
-    //model.addAttribute("username", null);
     return "register";
   }
 

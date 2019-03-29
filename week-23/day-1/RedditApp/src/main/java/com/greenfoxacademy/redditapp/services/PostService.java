@@ -28,6 +28,14 @@ public class PostService {
     return posts;
   }
 
+  public ArrayList<Post> findAllPostsInVoteOrder() {
+    return postRepository.findAllByOrderByVoteDesc();
+  }
+
+  public ArrayList<Post> findPostsByUserInVoteOrder(long userId) {
+    return postRepository.findPostsByUser_IdOrderByVoteDesc(userId);
+  }
+
   public Optional<Post> findPostById(long postId) {
     return postRepository.findById(postId);
   }
@@ -37,13 +45,60 @@ public class PostService {
   }
 
   public boolean addPost(String title, String url, long userId) {
-    Optional<User> userOptionalInDatabase = userRepository.findById(userId);
-
-    if (userOptionalInDatabase.isPresent()) {
-      postRepository.save(new Post(title, url, userOptionalInDatabase.get()));
+    if (isUserInDatabase(userId)) {
+      postRepository.save(new Post(title, url, userRepository.findById(userId).get()));
       return true;
     }
     return false;
+  }
+
+  public void deletePost(long userId, long postId) {
+    if (isUserInDatabase(userId) && isPostInDatabase(postId)) {
+      User userInDB = userRepository.findById(userId).get();
+      Post postInDB = postRepository.findById(postId).get();
+
+      if (isUserOwnerOfPost(userInDB, postInDB)) {
+        postRepository.deleteById(postId);
+      }
+    }
+  }
+
+  public void votePost(long userId, long postId, String direction) {
+    if (isUserInDatabase(userId) && isPostInDatabase(postId)) {
+      User userInDB = userRepository.findById(userId).get();
+      Post postInDB = postRepository.findById(postId).get();
+
+      if (isPostVoteableByUser(userInDB, postInDB)) {
+        if (direction.equals("up")) {
+          postInDB.setVote(postInDB.getVote() + 1);
+        } else if (direction.equals("down")) {
+          postInDB.setVote(postInDB.getVote() - 1);
+        }
+
+        postInDB.getVoters().add(userInDB);
+        postRepository.save(postInDB);
+      }
+    }
+  }
+
+  private boolean isPostVoteableByUser(User user, Post post) {
+    return !isUserOwnerOfPost(user, post) && !isUserVoterOfPost(user, post);
+  }
+
+  private boolean isUserOwnerOfPost(User user, Post post) {
+    return post.getUser().equals(user);
+  }
+
+  private boolean isUserVoterOfPost(User user, Post post) {
+    return postRepository.findPostsByVotersIs(user).contains(post);
+  }
+
+  private boolean isUserInDatabase(long userId) {
+    return userRepository.existsById(userId);
+  }
+
+  private boolean isPostInDatabase(long postId) {
+    return postRepository.existsById(postId);
   }
 
 }

@@ -7,17 +7,8 @@
 </head>
 
 <body>
-<div th:if="${user==null}" style="font-size: 20px">
-    <div>
-        <a href="/register">Submit new post</a>
-    </div>
-    <div style="text-align: right">
-        <a href="/login">LOG IN</a>
-        <a href="/register">SIGN UP</a>
-    </div>
-</div>
 
-<div th:if="${user!=null && allPosts!=null}" style="font-size: 20px">
+<div th:if="${allPosts!=null}" style="font-size: 20px">
     <div>
         <a th:href="'/' + ${user.id} + '/submit'">Submit new post</a>
     </div>
@@ -34,16 +25,53 @@
     <div style="text-align: right">
         <a href="/">Log out</a>
     </div>
-</div>
 
-<div th:if="${allPosts!=null}" style="text-align: center">
-    <h1 th:if="${allPosts}">Trending posts</h1>
-    <h1 th:if="${!allPosts}">Your posts</h1>
+    <div>
+        <h1 th:if="${allPosts}">Trending posts</h1>
+        <h1 th:if="${!allPosts}">Your posts</h1>
 
-    <div th:each="post:${posts}" style="font-size: 20px">
-        <span th:text="${post.vote}"></span>
-        <span><a th:href="${post.url}" th:text="${post.title}"></a></span>
-        <br>
+        <table>
+            <tr th:each="post:${posts}">
+            <!--<tr th:each="post:${user.posts}">-->
+                <!--<td>-->
+                    <!--<form th:action="'/' + ${user.id} + '/upvote/' + ${post.id}" method="post">-->
+                        <!--<input type="submit" value="+">-->
+                    <!--</form>-->
+                    <!--<div>-->
+                        <!--<p th:text="${post.vote}"></p>-->
+                    <!--</div>-->
+                    <!--<form th:action="'/' + ${user.id} + '/downvotevote/' + ${post.id}" method="post">-->
+                        <!--<input type="submit" value="-">-->
+                    <!--</form>-->
+                <!--</td>-->
+
+                <td th:text="${post.vote}"></td>
+
+                <td th:if="${allPosts}">
+                    <form th:action="'/' + ${user.id} + '/upvote/' + ${post.id}" method="post">
+                        <input type="submit" value="+">
+                    </form>
+                </td>
+
+                <td th:if="${allPosts}">
+                    <form th:action="'/' + ${user.id} + '/downvote/' + ${post.id}" method="post">
+                        <input type="submit" value="-">
+                    </form>
+                </td>
+
+                <td><a th:href="${post.url}" th:text="${post.title}"></a></td>
+                <td style="font-size: 16px" th:if="${allPosts}" th:text="'Posted by ' + ${post.user.username}"></td>
+                <td style="font-size: 16px" th:text="'at ' + ${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+
+                <td th:if="${!allPosts}">
+                    <form th:action="'/' + ${user.id} + '/delete/' + ${post.id}" method="post">
+                        <input type="submit" value="delete">
+                    </form>
+                </td>
+
+                <!--<td><a th:href="'/' + ${user.id} + '/edit/' + ${post.id}">edit</a></td>-->
+            </tr>
+        </table>
     </div>
 </div>
 

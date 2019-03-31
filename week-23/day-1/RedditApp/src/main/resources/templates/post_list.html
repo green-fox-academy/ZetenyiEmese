@@ -8,15 +8,19 @@
 
 <body>
 
-<div th:if="${allPosts!=null}" style="font-size: 20px">
+<div th:if="${error}">
+    <p th:text="${error}"></p>
+</div>
+
+<div th:unless="${error}" style="font-size: 20px">
     <div>
         <a th:href="'/' + ${user.id} + '/submit'">Submit new post</a>
     </div>
     <div th:if="${allPosts}">
-        <a th:href="'/' + ${user.id} + '/false'">Show my posts</a>
+        <a th:href="'/' + ${user.id} + '?allPosts=false'">Show my posts</a>
     </div>
     <div th:if="${!allPosts}">
-        <a th:href="'/' + ${user.id} + '/true'">Show all posts</a>
+        <a th:href="'/' + ${user.id} + '?allPosts=true'">Show all posts</a>
     </div>
 
     <div style="text-align: right">

@@ -2,45 +2,97 @@
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Posts</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
 
 <body>
 
-<div style="font-size: 20px">
-    <div>
-        <a href="/login">Submit new post</a>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: darkred">
+    <div class="container-fluid">
+        <img src="https://unixtitan.net/images/transparent-reddit-logo-4.png" style="height: 55px; width: auto">
+        <span class="navbar-brand mb-0 h1">Reddit application</span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav" style="margin-left: 30px">
+                <a class="nav-item nav-link active" href="/login">Submit new post<span
+                        class="sr-only">(current)</span></a>
+            </div>
+
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link" href="/login">Log in</a>
+                <a class="nav-item nav-link" href="/register">Sign up</a>
+            </div>
+        </div>
     </div>
-    <div style="text-align: right">
-        <a href="/login">LOG IN</a>
-        <a href="/register">SIGN UP</a>
-    </div>
+</nav>
 
-    <h1>Trending posts</h1>
+<h1 style="text-align: center; margin-top: 20px; margin-bottom: 20px">Trending posts</h1>
 
-    <table>
-        <tr th:each="post:${posts}">
-            <td th:text="${post.vote}"></td>
+<table class="table table-hover">
+    <tbody>
+    <tr th:each="post:${posts}">
+        <!--<td class="justify-content-center">-->
+        <!--<div style="text-align: center">-->
+        <!--<form action="/login" method="get">-->
+        <!--&lt;!&ndash;<input type="submit" value="+">&ndash;&gt;-->
+        <!--<button class="btn btn-outline-danger"><i class="fas fa-angle-up"></i></button>-->
+        <!--</form>-->
+        <!--</div>-->
+        <!--<div style="text-align: center" class="align-middle">-->
+        <!--<p th:text="${post.vote}"></p>-->
+        <!--</div>-->
+        <!--<div style="text-align: center">-->
+        <!--<form action="/login" method="get">-->
+        <!--&lt;!&ndash;<input type="submit" value="-">&ndash;&gt;-->
+        <!--<button class="btn btn-outline-info"><i class="fas fa-angle-down"></i></button>-->
+        <!--</form>-->
+        <!--</div>-->
+        <!--</td>-->
 
-            <td>
-                <form action="/login" method="get">
-                    <input type="submit" value="+">
-                </form>
-            </td>
+        <td class="align-middle">
+            <p th:text="${post.vote}"></p>
+        </td>
+        <td>
+            <form action="/login" method="get">
+                <!--<input type="submit" value="+">-->
+                <button class="btn btn-outline-danger"><i class="fas fa-angle-up"></i></button>
+            </form>
 
-            <td>
-                <form action="/login" method="get">
-                    <input type="submit" value="-">
-                </form>
-            </td>
+            <form action="/login" method="get">
+                <!--<input type="submit" value="-">-->
+                <button class="btn btn-outline-info"><i class="fas fa-angle-down"></i></button>
+            </form>
+        </td>
 
-            <td><a th:href="${post.url}" th:text="${post.title}"></a></td>
-            <td style="font-size: 16px" th:text="'Posted by ' + ${post.user.username}"></td>
-            <td style="font-size: 16px" th:text="'at ' + ${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-        </tr>
-    </table>
-</div>
+        <td class="align-middle">
+            <div style="font-size: 12px">
+                <span th:text="'Posted by ' + ${post.user.username}"></span>
+                <span th:text="'at ' + ${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+            </div>
+            <div style="font-size: 25px">
+                <a th:href="${post.url}" th:text="${post.title}"></a>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:each="n:${pageNumbers}">
+            <a class="page-link" th:href="'/?page=' + ${n}" th:text="${n}"></a>
+        </li>
+    </ul>
+</nav>
 
 </body>
 </html>

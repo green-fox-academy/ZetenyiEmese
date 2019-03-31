@@ -44,6 +44,41 @@ public class PostService {
     return postRepository.findPostsByUser_Id(userId);
   }
 
+  public int findNumberOfPages() {
+    return (findAllPosts().size() - 1) / 10 + 1;
+  }
+
+  public ArrayList<Integer> findPageNumberList() {
+    int numberOfPages = findNumberOfPages();
+    ArrayList<Integer> listOfPageNumbers = new ArrayList<>();
+
+    for (int i = 1; i <= numberOfPages; i++) {
+      listOfPageNumbers.add(i);
+    }
+    return listOfPageNumbers;
+  }
+
+  public ArrayList<Post> findPostsForPage(int pageNumber) {
+    ArrayList<Post> posts = new ArrayList<>();
+    int numberOfPosts = findAllPosts().size();
+    int maxPageNumber = findNumberOfPages();
+
+    if (pageNumber < 1) {
+      pageNumber = 1;
+    }
+    if (pageNumber > maxPageNumber) {
+      pageNumber = maxPageNumber;
+    }
+
+    int from = (pageNumber - 1) * 10 + 1; //minimum = 1
+    int til = (pageNumber - 1) * 10 + 10;
+
+    for (int i = from; i <= numberOfPosts && i <= til; i++) {
+      posts.add(findAllPostsInVoteOrder().get(i - 1));
+    }
+    return posts;
+  }
+
   public boolean addPost(String title, String url, long userId) {
     if (isUserInDatabase(userId)) {
       postRepository.save(new Post(title, url, userRepository.findById(userId).get()));

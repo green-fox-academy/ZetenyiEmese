@@ -35,7 +35,7 @@ public class LoginController {
     } else {
       userService.addUser(username, password, email);
       long userId = userService.findIdForUserWithName(username);
-      return "redirect:/" + userId + "/true";
+      return "redirect:/" + userId + "?allPosts=true";
     }
   }
 
@@ -59,7 +59,7 @@ public class LoginController {
 
     } else {
       long userId = userService.findIdForUserWithName(username);
-      return "redirect:/" + userId + "/true";
+      return "redirect:/" + userId + "?allPosts=true";
     }
   }
 

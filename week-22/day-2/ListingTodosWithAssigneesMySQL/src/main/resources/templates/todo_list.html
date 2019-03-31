@@ -4,53 +4,99 @@
 <head>
     <title>Todos</title>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" type="text/css" href="/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
+
 <body>
-<h1>Todos for today:</h1>
 
-<div style="font-size: 20px">
-    <form action="/todo/" method="get">
-        <input type="text" name="description" th:value="${description}" placeholder="Enter todo description">
-        <input type="text" name="name" th:value="${name}" placeholder="Enter assignee name">
-        <input type="date" name="dueDate" th:value="${dueDate}" placeholder="Enter duedate">
-        <input type="submit" value="Search">
-    </form>
-</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <!--<a class="navbar-brand" style="font-size: x-large">Todos for today</a>-->
+        <span class="navbar-brand mb-0 h1">Todos for today</span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav" style="margin-left: 30px">
+                <a class="nav-item nav-link active" href="/todo/addTodo">Add new todo<span
+                        class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="/assignee/">All assignees</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link" href="/todo/">All tasks</a>
 
+                <span th:if="${isActive==null}">
+                        <a class="nav-item nav-link" href="/todo/?isActive=true">Undone tasks</a>
+                </span>
+
+                <span th:if="${isActive==null}">
+                        <a class="nav-item nav-link" href="/todo/?isActive=false">Tasks already done</a>
+                </span>
+
+                <span th:if="${isActive}">
+                    <a class="nav-item nav-link" href="/todo/?isActive=false">Tasks already done</a>
+                </span>
+
+                <span th:if="${isActive!=null}">
+                    <a th:if="${!isActive}" class="nav-item nav-link" href="/todo/?isActive=true">Undone tasks</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</nav>
 <br>
-<div style="font-size: 20px">
-    <a href="/todo/addTodo">Add new todo</a>
-</div>
-<div style="font-size: 20px">
-    <a href="/assignee/">List of assignees</a>
-</div>
-<br>
 
-<table>
+<form action="/todo/" method="get">
+    <div class="form-row align-items-center">
+        <div class="col-auto">
+            <!--<label class="sr-only" for="inlineFormInput">Name</label>-->
+            <input type="text" class="form-control mb-2" name="description" th:value="${description}"
+                   placeholder="Enter todo description">
+        </div>
+        <div class="col-auto">
+            <!--<label class="sr-only" for="inlineFormInput">Name</label>-->
+            <input type="text" class="form-control mb-2" name="name" th:value="${name}"
+                   placeholder="Enter assignee name">
+        </div>
+        <div class="col-auto">
+            <!--<label class="sr-only" for="inlineFormInput">Name</label>-->
+            <input type="date" class="form-control mb-2" name="dueDate" th:value="${dueDate}"
+                   placeholder="Enter duedate">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-hover">
+    <thead class="thead-light">
     <tr>
-        <th>ID</th>
-        <th>ACTION</th>
-        <th>CREATED AT</th>
-        <th>DUEDATE</th>
-        <th>ASSIGNEE</th>
-        <th>URGENT</th>
-        <th>DONE</th>
+        <th scope="col">ID</th>
+        <th scope="col">ACTION</th>
+        <th scope="col">CREATED AT</th>
+        <th scope="col">DUEDATE</th>
+        <th scope="col">ASSIGNEE</th>
+        <th scope="col">URGENT</th>
+        <th scope="col">DONE</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
     </tr>
-    <tr th:each="todo:${todos}">
-        <td th:text="${todo.todoId}"></td>
-        <td><a th:href="'/todo/' + ${todo.todoId} + '/details'" th:text="${todo.description}"></a></td>
+    </thead>
 
-        <!--<td th:text="${todo.createdAt}"></td>-->
+    <tbody>
+    <tr th:each="todo:${todos}">
+        <th scope="row" th:text="${todo.todoId}"></th>
+        <td><a th:href="'/todo/' + ${todo.todoId} + '/details'" th:text="${todo.description}"></a></td>
         <td th:text="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
         <td th:text="${todo.dueDate==null} ? '---' : ${todo.dueDate}"></td>
-
-        <!--<td th:text="${todo.assignee == null} ? '-&#45;&#45;' : ${todo.assignee.name}"></td>-->
-        <!--<td><a th:href="'/assignee/' + ${todo.assignee?.assigneeId} + '/details'" th:text="${todo.assignee?.name}"></a></td>-->
         <td th:if="${todo.assignee!=null}">
-            <a th:href="'/assignee/' + ${todo.assignee.assigneeId} + '/details/0'" th:text="${todo.assignee.name}"></a></td>
+            <a th:href="'/assignee/' + ${todo.assignee.assigneeId} + '/details/0'" th:text="${todo.assignee.name}"></a>
+        </td>
         <td th:if="${todo.assignee==null}">---</td>
-
         <td th:text="${todo.urgent}"></td>
         <td th:text="${todo.done}"></td>
 
@@ -62,30 +108,8 @@
 
         <td><a th:href="'/todo/' + ${todo.todoId} + '/edit'">edit</a></td>
     </tr>
+    </tbody>
 </table>
-<br>
-<div style="font-size: 20px">
-    <a href="/todo/">List all tasks</a>
-</div>
-
-<div th:if="${isActive==null}" style="font-size: 20px">
-    <div>
-        <a href="/todo/?isActive=true">List undone tasks</a>
-    </div>
-    <div>
-        <a href="/todo/?isActive=false">List tasks already done</a>
-    </div>
-</div>
-
-<div th:if="${isActive}" style="font-size: 20px">
-    <a href="/todo/?isActive=false">List tasks already done</a>
-</div>
-
-<div th:if="${isActive!=null}">
-    <div th:if="${!isActive}" style="font-size: 20px">
-        <a href="/todo/?isActive=true">List undone tasks</a>
-    </div>
-</div>
 
 </body>
 </html>

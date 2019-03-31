@@ -2,6 +2,7 @@ package com.greenfoxacademy.listingtodoswithassigneesmsql.services;
 
 import com.greenfoxacademy.listingtodoswithassigneesmsql.models.Assignee;
 import com.greenfoxacademy.listingtodoswithassigneesmsql.repositories.AssigneeRepository;
+import com.greenfoxacademy.listingtodoswithassigneesmsql.repositories.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,12 @@ import java.util.Optional;
 public class AssigneeService {
 
   private AssigneeRepository assigneeRepository;
+  private TodoRepository todoRepository;
 
   @Autowired
-  public AssigneeService(AssigneeRepository assigneeRepository) {
+  public AssigneeService(AssigneeRepository assigneeRepository, TodoRepository todoRepository) {
     this.assigneeRepository = assigneeRepository;
+    this.todoRepository = todoRepository;
   }
 
   public void addAssignee(Assignee assignee) {
@@ -23,7 +26,9 @@ public class AssigneeService {
   }
 
   public void deleteAssignee(long assigneeId) {
-    assigneeRepository.deleteById(assigneeId);
+    if (todoRepository.findTodosByAssignee_AssigneeId(assigneeId).isEmpty()) {
+      assigneeRepository.deleteById(assigneeId);
+    }
   }
 
   public ArrayList<Assignee> findAllAssignees() {

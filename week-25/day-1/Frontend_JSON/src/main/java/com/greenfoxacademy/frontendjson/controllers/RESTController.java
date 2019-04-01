@@ -1,6 +1,6 @@
 package com.greenfoxacademy.frontendjson.controllers;
 
-import com.greenfoxacademy.frontendjson.*;
+import com.greenfoxacademy.frontendjson.models.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

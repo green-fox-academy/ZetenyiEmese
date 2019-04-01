@@ -1,4 +1,4 @@
-package com.greenfoxacademy.frontendjson;
+package com.greenfoxacademy.frontendjson.models;
 
 public class MyError {
 

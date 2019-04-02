@@ -15,4 +15,9 @@ public class Until {
     this.until = until;
   }
 
+  @Override
+  public String toString() {
+    return "until=" + until;
+  }
+
 }

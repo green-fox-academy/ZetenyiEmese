@@ -2,19 +2,24 @@ package com.greenfoxacademy.frontendjson.controllers;
 
 import com.greenfoxacademy.frontendjson.models.*;
 import com.greenfoxacademy.frontendjson.services.ArrayService;
+import com.greenfoxacademy.frontendjson.services.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 public class RESTController {
 
   private ArrayService arrayService;
+  private LogService logService;
 
   @Autowired
-  public RESTController(ArrayService arrayService) {
+  public RESTController(ArrayService arrayService, LogService logService) {
     this.arrayService = arrayService;
+    this.logService = logService;
   }
 
 //  @GetMapping("/doubling")
@@ -24,6 +29,8 @@ public class RESTController {
 
   @GetMapping("/doubling")
   public Object doubleInput(@RequestParam(required = false) Integer input) {
+    logService.addLog(new Log("/doubling", "input=" + input));
+
     if (input != null) {
       return new Doubling(input);
     } else {
@@ -34,6 +41,8 @@ public class RESTController {
   @GetMapping("/greeter")
   public Object greetSomebody(@RequestParam(required = false) String name,
                               @RequestParam(required = false) String title) {
+    logService.addLog(new Log("/greeter", "name=" + name + "&" + "title=" + title));
+
     if (name != null && title != null) {
       return new Greeting(name, title);
     } else if (name == null && title == null) {
@@ -47,6 +56,8 @@ public class RESTController {
 
   @GetMapping("/appenda/{appendable}")
   public Object appendA(@PathVariable String appendable) {
+    logService.addLog(new Log("/appenda/" + appendable, appendable));
+
     if (appendable != null) {
       return new AppendA(appendable);
     } else {
@@ -58,22 +69,28 @@ public class RESTController {
   public Object doAction(@PathVariable(name = "action") String act,
                          @RequestBody(required = false) Until until) {
     if (until != null) {
+      logService.addLog(new Log("/dountil/" + act, until.toString()));
+
       if (act.equals("sum")) {
         return new Sum(until.getUntil());
       } else if (act.equals("factor")) {
         return new Factorial(until.getUntil());
-      } else{
+      } else {
         return new Error("Please provide a valid operation to perform!");
       }
 
-    } else {
-      return new MyError("Please provide a number!"); //ha nem küldünk JSON-t
+    } else { //ha nem küldünk JSON-t
+      logService.addLog(new Log("/dountil/" + act, "no data"));
+      return new MyError("Please provide a number!");
     }
   }
 
   @PostMapping("/arrays")
   public ResponseEntity<Object> doArrayHandling(@RequestBody(required = false) ArrayHandler arrayHandler) {
+
     if (arrayHandler != null) { //ha üres, vagy hiányos JSON-t küldünk, akkor is felépül az arrayHandler objektum (nem lesz null!)
+      logService.addLog(new Log("/arrays", arrayHandler.toString()));
+
       String action = arrayHandler.getWhat();
       int[] numbers = arrayHandler.getNumbers();
 
@@ -84,18 +101,27 @@ public class RESTController {
           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide a valid operation to perform!"));
         }
 
-      } else if (action == null && numbers == null){ //ha üres JSON-t küldünk
+      } else if (action == null && numbers == null) { //ha üres JSON-t küldünk
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide what to do!"));
 
-      } else if (action == null){ //ha hiányos JSON-t küldünk
+      } else if (action == null) { //ha hiányos JSON-t küldünk
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide what to do with the numbers!"));
 
       } else {  //ha hiányos JSON-t küldünk
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide the numbers!"));
       }
+
+    } else { //ha nem küldünk JSON-t
+      logService.addLog(new Log("/arrays", "no data"));
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide what to do, what to do!"));
     }
 
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide what to do, what to do!")); //ha nem küldünk JSON-t
+  }
+
+  @GetMapping("/log")
+  public LogList getAllLogs() {
+    ArrayList<Log> logs = logService.findAllLogs();
+    return new LogList(logs, logs.size());
   }
 
   @GetMapping("/error")

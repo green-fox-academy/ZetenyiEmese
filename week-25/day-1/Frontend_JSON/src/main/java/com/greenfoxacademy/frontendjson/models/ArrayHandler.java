@@ -1,5 +1,7 @@
 package com.greenfoxacademy.frontendjson.models;
 
+import java.util.Arrays;
+
 public class ArrayHandler {
 
   private String what;
@@ -22,6 +24,12 @@ public class ArrayHandler {
 
   public void setNumbers(int[] numbers) {
     this.numbers = numbers;
+  }
+
+  @Override
+  public String toString() {
+    return "what=" + what +
+            ", numbers=" + Arrays.toString(numbers);
   }
 
 }

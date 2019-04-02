@@ -1,10 +1,10 @@
 package com.greenfoxacademy.frontendjson.models;
 
-public class Appended {
+public class AppendA {
 
   private String appended;
 
-  public Appended(String appendable) {
+  public AppendA(String appendable) {
     appended = appendable + "a";
   }
 

@@ -1,10 +1,21 @@
 package com.greenfoxacademy.frontendjson.controllers;
 
 import com.greenfoxacademy.frontendjson.models.*;
+import com.greenfoxacademy.frontendjson.services.ArrayService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RESTController {
+
+  private ArrayService arrayService;
+
+  @Autowired
+  public RESTController(ArrayService arrayService) {
+    this.arrayService = arrayService;
+  }
 
 //  @GetMapping("/doubling")
 //  public Integer doubling(@RequestParam int input){
@@ -34,28 +45,57 @@ public class RESTController {
     }
   }
 
-  @GetMapping("appenda/{appendable}")
+  @GetMapping("/appenda/{appendable}")
   public Object appendA(@PathVariable String appendable) {
     if (appendable != null) {
-      return new Appended(appendable);
+      return new AppendA(appendable);
     } else {
       return "redirect:/error";
     }
   }
 
-  @PostMapping("dountil/{action}")
-  public Object doAction(@PathVariable String action, @RequestBody Until jsonUntil) {
-    if (jsonUntil != null) {
-      if (action.equals("sum")) {
-        return new Sum(jsonUntil.getUntil());
-      } else if (action.equals("factor")) {
-        return new Factorial(jsonUntil.getUntil());
-      } else {
-        return "redirect:/error";
+  @PostMapping("/dountil/{action}")
+  public Object doAction(@PathVariable(name = "action") String act,
+                         @RequestBody(required = false) Until until) {
+    if (until != null) {
+      if (act.equals("sum")) {
+        return new Sum(until.getUntil());
+      } else if (act.equals("factor")) {
+        return new Factorial(until.getUntil());
+      } else{
+        return new Error("Please provide a valid operation to perform!");
       }
+
     } else {
-      return new MyError("Please provide a number!");
+      return new MyError("Please provide a number!"); //ha nem küldünk JSON-t
     }
+  }
+
+  @PostMapping("/arrays")
+  public ResponseEntity<Object> doArrayHandling(@RequestBody(required = false) ArrayHandler arrayHandler) {
+    if (arrayHandler != null) { //ha üres, vagy hiányos JSON-t küldünk, akkor is felépül az arrayHandler objektum (nem lesz null!)
+      String action = arrayHandler.getWhat();
+      int[] numbers = arrayHandler.getNumbers();
+
+      if (action != null && numbers != null) {
+        if (action.equals("sum") || action.equals("multiply") || action.equals("double")) {
+          return ResponseEntity.status(HttpStatus.OK).body(arrayService.handleArray(action, numbers));
+        } else {
+          return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide a valid operation to perform!"));
+        }
+
+      } else if (action == null && numbers == null){ //ha üres JSON-t küldünk
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide what to do!"));
+
+      } else if (action == null){ //ha hiányos JSON-t küldünk
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide what to do with the numbers!"));
+
+      } else {  //ha hiányos JSON-t küldünk
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide the numbers!"));
+      }
+    }
+
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide what to do, what to do!")); //ha nem küldünk JSON-t
   }
 
   @GetMapping("/error")

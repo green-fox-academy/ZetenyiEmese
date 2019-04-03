@@ -3,6 +3,7 @@ package com.greenfoxacademy.frontendjson.controllers;
 import com.greenfoxacademy.frontendjson.models.*;
 import com.greenfoxacademy.frontendjson.services.ArrayService;
 import com.greenfoxacademy.frontendjson.services.LogService;
+import com.greenfoxacademy.frontendjson.services.SithService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +16,13 @@ public class RESTController {
 
   private ArrayService arrayService;
   private LogService logService;
+  private SithService sithService;
 
   @Autowired
-  public RESTController(ArrayService arrayService, LogService logService) {
+  public RESTController(ArrayService arrayService, LogService logService, SithService sithService) {
     this.arrayService = arrayService;
     this.logService = logService;
+    this.sithService = sithService;
   }
 
 //  @GetMapping("/doubling")
@@ -55,7 +58,7 @@ public class RESTController {
   }
 
   @GetMapping("/appenda/{appendable}")
-  public Object appendA(@PathVariable String appendable) {
+  public Object appendA(@PathVariable(required = false) String appendable) {
     logService.addLog(new Log("/appenda/" + appendable, appendable));
 
     if (appendable != null) {
@@ -115,7 +118,14 @@ public class RESTController {
       logService.addLog(new Log("/arrays", "no data"));
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide what to do, what to do!"));
     }
+  }
 
+  @PostMapping("/sith")
+  public ResponseEntity<Object> transformText(@RequestBody(required = false) Text text) {
+    if (text != null && text.getText() != null) {
+      return ResponseEntity.status(HttpStatus.OK).body(sithService.transformText(text));
+    }
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Feed me some text you have to, padawan young you are. Hmmm."));
   }
 
   @GetMapping("/log")
@@ -126,7 +136,7 @@ public class RESTController {
 
   @GetMapping("/error")
   public String error() {
-    return "404";
+    return "My 404";
   }
 
 }

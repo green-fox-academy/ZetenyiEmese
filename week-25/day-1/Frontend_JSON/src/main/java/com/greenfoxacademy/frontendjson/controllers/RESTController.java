@@ -74,15 +74,19 @@ public class RESTController {
     if (until != null) {
       logService.addLog(new Log("/dountil/" + act, until.toString()));
 
-      if (act.equals("sum")) {
-        return new Sum(until.getUntil());
-      } else if (act.equals("factor")) {
-        return new Factorial(until.getUntil());
-      } else {
-        return new Error("Please provide a valid operation to perform!");
+      if (until.getUntil() > 0) {
+        if (act.equals("sum")) {
+          return new Sum(until.getUntil());
+        } else if (act.equals("factor")) {
+          return new Factorial(until.getUntil());
+        } else {
+          return new MyError("Please provide a valid operation to perform!");
+        }
+      } else { //ha üres JSON-t küldünk:
+        return new MyError("Please provide a number!");
       }
 
-    } else { //ha nem küldünk JSON-t
+    } else { //ha nem küldünk JSON-t:
       logService.addLog(new Log("/dountil/" + act, "no data"));
       return new MyError("Please provide a number!");
     }
@@ -104,17 +108,17 @@ public class RESTController {
           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide a valid operation to perform!"));
         }
 
-      } else if (action == null && numbers == null) { //ha üres JSON-t küldünk
+      } else if (action == null && numbers == null) { //ha üres JSON-t küldünk:
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide what to do!"));
 
-      } else if (action == null) { //ha hiányos JSON-t küldünk
+      } else if (action == null) { //ha hiányos JSON-t küldünk:
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide what to do with the numbers!"));
 
-      } else {  //ha hiányos JSON-t küldünk
+      } else {  //ha hiányos JSON-t küldünk:
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide the numbers!"));
       }
 
-    } else { //ha nem küldünk JSON-t
+    } else { //ha nem küldünk JSON-t:
       logService.addLog(new Log("/arrays", "no data"));
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyError("Please provide what to do, what to do!"));
     }

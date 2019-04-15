@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="../static/style.css">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Todos</title>
@@ -8,45 +7,45 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-    <h1>Todos for today:</h1>
-    <div>
-        <a href="/todo/add" style="font-size: 20px">Add new todo</a>
-        <br>
-    </div>
+<h1>Todos for today:</h1>
+<div>
+    <a href="/todo/add" style="font-size: 20px">Add new todo</a>
+    <br>
+</div>
 
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>ACTION</th>
-            <th>CREATED AT</th>
-            <th>DONE</th>
-            <th>URGENT</th>
-        </tr>
-        <tr th:each="todo:${todos}">
-            <td th:text="${todo.id}"></td>
-            <!--<td th:text="${todo.description}"></td>-->
-            <td><a th:href="'/todo/' + ${todo.id} + '/details'" th:text="${todo.description}"></a></td>
-            <td th:text="${todo.createdAt}"></td>
-            <td th:text="${todo.done}"></td>
-            <td th:text="${todo.urgent}"></td>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>ACTION</th>
+        <th>CREATED AT</th>
+        <th>DONE</th>
+        <th>URGENT</th>
+    </tr>
+    <tr th:each="todo:${todos}">
+        <td th:text="${todo.id}"></td>
+        <!--<td th:text="${todo.description}"></td>-->
+        <td><a th:href="'/todo/' + ${todo.id} + '/details'" th:text="${todo.description}"></a></td>
+        <td th:text="${todo.createdAt}"></td>
+        <td th:text="${todo.done}"></td>
+        <td th:text="${todo.urgent}"></td>
 
-            <!--<td><a th:href="'/todo/' + ${todo.id} + '/delete'">delete</a></td>-->
+        <!--<td><a th:href="'/todo/' + ${todo.id} + '/delete'">delete</a></td>-->
 
-            <td>
-                <form th:action="'/todo/' + ${todo.id} + '/delete'" method="post">
-                    <input type="submit" value="delete">
-                </form>
-            </td>
+        <td>
+            <form th:action="'/todo/' + ${todo.id} + '/delete'" method="post">
+                <input type="submit" value="delete">
+            </form>
+        </td>
 
-            <!--<td>-->
-                <!--<form action="/todo/delete" method="post">-->
-                    <!--<input type="hidden" name="todoId" th:value="${todo.id}">-->
-                    <!--<input type="submit" value="delete">-->
-                <!--</form>-->
-            <!--</td>-->
+        <!--<td>-->
+        <!--<form action="/todo/delete" method="post">-->
+        <!--<input type="hidden" name="todoId" th:value="${todo.id}">-->
+        <!--<input type="submit" value="delete">-->
+        <!--</form>-->
+        <!--</td>-->
 
-            <td><a th:href="'/todo/' + ${todo.id} + '/edit'">edit</a></td>
-        </tr>
-    </table>
+        <td><a th:href="'/todo/' + ${todo.id} + '/edit'">edit</a></td>
+    </tr>
+</table>
 </body>
 </html>

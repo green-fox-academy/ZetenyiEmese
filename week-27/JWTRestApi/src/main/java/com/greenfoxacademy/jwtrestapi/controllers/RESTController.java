@@ -2,6 +2,7 @@ package com.greenfoxacademy.jwtrestapi.controllers;
 
 import com.greenfoxacademy.jwtrestapi.models.JsonTodo;
 import com.greenfoxacademy.jwtrestapi.models.JsonUser;
+import com.greenfoxacademy.jwtrestapi.models.Todo;
 import com.greenfoxacademy.jwtrestapi.security.jwt.JWTUtility;
 import com.greenfoxacademy.jwtrestapi.services.TodoService;
 import com.greenfoxacademy.jwtrestapi.services.UserService;
@@ -10,6 +11,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 public class RESTController {
@@ -58,7 +61,15 @@ public class RESTController {
   @PostMapping("api/addTodo")
   public ResponseEntity<String> addTodo(@RequestHeader("Authorization") String token, @RequestBody JsonTodo jsonTodo){
     todoService.saveTodo(JWTUtility.retrieveUsername(token), jsonTodo);
-    return ResponseEntity.status(HttpStatus.OK).body("The Todo was added!");
+//    return ResponseEntity.status(HttpStatus.OK).body("The Todo was added!");
+    return ResponseEntity.status(HttpStatus.OK).header("Authorization", token).body("The Todo was added!");
+  }
+
+  @GetMapping("api/listTodos")
+  public ResponseEntity<Object> listTodos(@RequestHeader("Authorization") String token){
+    ArrayList<Todo> todos = todoService.findTodosByUser(JWTUtility.retrieveUsername(token));
+//    return ResponseEntity.status(HttpStatus.OK).body(todos);
+    return ResponseEntity.status(HttpStatus.OK).header("Authorization", token).body(todos);
   }
 
 }

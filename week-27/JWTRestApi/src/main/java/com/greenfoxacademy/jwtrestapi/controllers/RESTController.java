@@ -1,5 +1,6 @@
 package com.greenfoxacademy.jwtrestapi.controllers;
 
+import com.greenfoxacademy.jwtrestapi.models.JsonTodo;
 import com.greenfoxacademy.jwtrestapi.models.JsonUser;
 import com.greenfoxacademy.jwtrestapi.security.jwt.JWTUtility;
 import com.greenfoxacademy.jwtrestapi.services.TodoService;
@@ -8,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RESTController {
@@ -55,6 +53,12 @@ public class RESTController {
     HttpHeaders headers = new HttpHeaders();
     headers.add("Authorization", "Bearer " + JWTUtility.generateToken(username));
     return new ResponseEntity<>(headers, HttpStatus.OK);
+  }
+
+  @PostMapping("api/addTodo")
+  public ResponseEntity<String> addTodo(@RequestHeader("Authorization") String token, @RequestBody JsonTodo jsonTodo){
+    todoService.saveTodo(JWTUtility.retrieveUsername(token), jsonTodo);
+    return ResponseEntity.status(HttpStatus.OK).body("The Todo was added!");
   }
 
 }
